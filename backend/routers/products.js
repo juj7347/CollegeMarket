@@ -7,15 +7,15 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/uploads')
+        cb(null, 'public/uploads');
     },
     filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        cb(null, file.fieldname + '-' + uniqueSuffix)
+        const fileName = file.originalname.split(' ').join('-');
+        cb(null, fileName + '-' + Date.now());
     }
 })
 
-const upload = multer({ storage: storage })
+const uploadOptions = multer({ storage: storage })
 
 router.get(`/`, async (req, res)=>{
     const productList = await Product.find();
