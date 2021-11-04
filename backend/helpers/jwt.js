@@ -22,9 +22,9 @@ async function isRevoked(req, payload, done) { //check if admin
     if(!payload.isAdmin) {
         done(null, true); //reject token
     }
-    else {
-        done();
-    }
+    
+    done();
+ 
 }
 
 module.exports = authJwt;

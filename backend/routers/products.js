@@ -51,17 +51,19 @@ router.get(`/`, async (req,res)=>{
     res.send(productList);
 })
 
-router.post(`/`, async (req, res)=>{
+router.post(`/`, uploadOptions.single('image'), async (req, res)=>{
     const category = await Category.findById(req.body.category);
     if(!category) {
         return res.status(400).send('Invalid Category');
     }
+    const fileName =  req.fileName;
+    const basePath = `${req.protocol}://${req.get('host')}/public/upload/`;
 
-    const product = new Product({
+    let product = new Product({
         name: req.body.name,
         description: req.body.description,
         richDescription: req.body.richDescription,
-        image: req.body.image,
+        image: fileName,
         price: req.body.price,
         category: req.body.category,
         dataCreated: req.body.dataCreated
