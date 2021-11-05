@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator, FlatList, Text } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
+import { Container, Icon, Item, Input, Text } from 'native-base';
 
 import ProductList from './ProductList';
 
@@ -18,18 +19,24 @@ const ProductContainer = () => {
     }, [])
 
     return (
-        
-            <View>
-                <Text>Product Container</Text>
-                <FlatList
-                    data={products}
-                    renderItem={({item}) => <ProductList
-                        key={item.id}
-                        item={item}
-                    />}
-                    numColumns = {2}
+            <Container>
+                <Input
+                    placeholder="Search"
+                    //onFocus={}
+                    //onChangeTetxt={(text)=>}
                 />
-            </View>
+                <View>
+                    <Text>Product Container</Text>
+                    <FlatList
+                        data={products}
+                        renderItem={({item}) => <ProductList
+                            key={item.id}
+                            item={item}
+                        />}
+                        numColumns = {2}
+                    />
+                </View>
+            </Container>
     )
 }
 
