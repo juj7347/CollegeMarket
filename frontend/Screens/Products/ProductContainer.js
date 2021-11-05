@@ -8,9 +8,11 @@ const data = require('../../assets/data/products.json');
 const ProductContainer = () => {
 
     const [products, setProducts] = useState([]);
+    const [productsFiltered, setProductsFiltered] = useState([]);
 
     useEffect(() => {
         setProducts(data);
+        setProductsFiltered(data);
 
         return () => {
             setProducts([]);
