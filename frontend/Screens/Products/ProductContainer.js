@@ -3,30 +3,64 @@ import { View, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
 import { Container, Icon, Item, Input, Text } from 'native-base';
 
 import ProductList from './ProductList';
+import CategoryFilter from './CategoryFilter';
 
 const data = require('../../assets/data/products.json');
+const productCategories = require('../../assets/data/products.json');
 
 const ProductContainer = () => {
 
     const [products, setProducts] = useState([]);
+    const [productsFiltered, setProductsFiltered] = useState([]);
+
+    const [categories, setCategories] = useState([]);
+    const [active, setActive] = useState();
+    const [initialState, setInitialState] = useState([]);
+    const [productsCtg, setProductsCtg] = useState([]);
 
     useEffect(() => {
         setProducts(data);
+        setProductsFiltered(data);
+
+        setCategories(productCategories);
+        setActive(-1);
+        setInitialState(data);
 
         return () => {
             setProducts([]);
+            setProductsFiltered([]);
+
+            setCategories([]);
+            setActive();
+            setInitialState([]);
         }
     }, [])
 
+    //Categories
+    const changeCtg = (ctg) => {
+        {
+            ctg === 'all'
+                ? [setProductsCtg(initialState), setActive(true)]
+                : [setProductsCtg(
+                    products.filter((i) => i.category._id === ctg),
+                    setActive(true)
+                ),
+                ]
+        }
+    }
+
     return (
-            <Container>
-                <Input
-                    placeholder="Search"
-                    //onFocus={}
-                    //onChangeTetxt={(text)=>}
-                />
+            //<Container>
                 <View>
-                    <Text>Product Container</Text>
+                    <View>
+                        <CategoryFilter
+                            categories={categories}
+                            categoryFilter={changeCtg}
+                            productsCtg={productsCtg}
+                            active={active}
+                            setActive={setActive}
+                        />
+                    </View>
                     <FlatList
                         data={products}
                         renderItem={({item}) => <ProductList
@@ -36,7 +70,7 @@ const ProductContainer = () => {
                         numColumns = {2}
                     />
                 </View>
-            </Container>
+            //</Container>
     )
 }
 
