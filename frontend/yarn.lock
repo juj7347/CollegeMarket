@@ -4169,6 +4169,11 @@ hyphenate-style-name@^1.0.2, hyphenate-style-name@^1.0.3:
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.4.tgz#691879af8e220aea5750e8827db4ef62a54e361d"
   integrity sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==
 
+icons@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/icons/-/icons-1.0.0.tgz#260a56eef0acf327085adf7017a3032cdaef2126"
+  integrity sha512-7POum3AHKovjEEXg4ITL2opTzGjnN2UnUIhv5LsUX+SjKBsFMjRyANShrCubt0KQdNdcX2wAym+JXOt6LceuYA==
+
 iconv-lite@^0.4.17:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
@@ -6753,6 +6758,11 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
+
+vector@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/vector/-/vector-0.0.4.tgz#4ccb9a0b75f625020ae15a8465a9636764ad3652"
+  integrity sha1-TMuaC3X2JQIK4VqEZaljZ2StNlI=
 
 vlq@^1.0.0:
   version "1.0.1"
