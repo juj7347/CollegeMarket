@@ -8,7 +8,7 @@ import CategoryFilter from './CategoryFilter';
 const data = require('../../assets/data/products.json');
 const productCategories = require('../../assets/data/categories.json');
 
-var {height} = Dimensions.get('window');
+var {width, height} = Dimensions.get('window');
 
 const ProductContainer = () => {
 
@@ -54,7 +54,7 @@ const ProductContainer = () => {
     };
 
     return (
-            <Container>
+            <Container style={styles.container}>
                 <ScrollView>
                     <View>
                         <View>
@@ -89,6 +89,9 @@ const ProductContainer = () => {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        width: width
+    },
     listContainer: {
         /*
         height: height,
