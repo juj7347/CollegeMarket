@@ -1,4 +1,5 @@
 import React from "react";
+//native-base
 import {
   Text,
   Link,
@@ -12,11 +13,15 @@ import {
   VStack,
   Code,
 } from "native-base";
-
 import NativeBaseIcon from "./components/NativeBaseIcon";
 
+//Screens
 import ProductContainer from "./Screens/Products/ProductContainer";
 import Header from "./Shared/Header";
+
+//redux
+import { Provider} from 'react-redux';
+import store from "./Redux/store";
 
 // Define the config
 const config = {
@@ -54,7 +59,6 @@ export default function App() {
         </VStack>
       </Center>
       */}
-      <Header/>
       <ProductContainer/>
     </NativeBaseProvider>
   );

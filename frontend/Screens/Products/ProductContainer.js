@@ -54,7 +54,7 @@ const ProductContainer = () => {
     };
 
     return (
-            //<Container>
+            <Container>
                 <ScrollView>
                     <View>
                         <View>
@@ -84,8 +84,7 @@ const ProductContainer = () => {
                         )}
                     </View>
                 </ScrollView>
-
-            //</Container>
+            </Container>
     )
 }
 
