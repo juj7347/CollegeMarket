@@ -29,30 +29,28 @@ const ProductCard = (props) => {
             </Text>
             <Text style={styles.price}>${price}</Text>
 
-            {countInStock > 0 ? (
-                <View style={{ marginBottom: 60}}>
-                    <Button title={'Add'} color={'green'} />
-                </View>
-            ) : <Text style={{marginTop: 20}}>Currently Unavailable</Text>}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: width / 2 - 20,
+        width: width - 30,
         height: width / 1.7,
         padding: 10,
-        borderRadius: 10,
-        marginTop: 55,
+        marginTop: 35,
         marginBottom: 5,
-        marginLeft: 10,
+        marginLeft: 15,
         alignItems: 'center',
-        elevation: 8,
         backgroundColor: 'white',
+        borderTopColor: 'white',
+        borderBottomColor: 'black',
+        borderLeftColor: 'white',
+        borderRightColor: 'white',
+        borderWidth: 1
     },
     image: {
-        width: width / 2 - 20 - 10,
+        width: width - 20 - 10,
         height: width / 2 - 20 - 30,
         backgroundColor: 'transparent',
         position: 'absolute',
@@ -62,7 +60,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         height: width / 2 - 20 - 90,
         backgroundColor: 'transparent',
-        width: width / 2 - 20 - 10
+        width: width - 20 - 10
     },
     title: {
         fontWeight: "bold",
