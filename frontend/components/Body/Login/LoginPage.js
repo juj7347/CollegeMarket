@@ -51,7 +51,13 @@ export default function LoginPage() {
             <Input type="password" />
             <Link
               _text={{ fontSize: 'xs', fontWeight: '500', color: 'indigo.500' }}
-              alignSelf="flex-end"
+              
+              mt="1">
+              Forget ID?
+            </Link>
+            <Link
+              _text={{ fontSize: 'xs', fontWeight: '500', color: 'indigo.500' }}
+
               mt="1">
               Forget Password?
             </Link>
