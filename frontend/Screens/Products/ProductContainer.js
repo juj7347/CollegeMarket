@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator, FlatList, ScrollView, Dimensions } from 'react-native';
-import { Container, Icon, Item, Input, Text } from 'native-base';
+import { 
+    View, 
+    StyleSheet, 
+    ActivityIndicator, 
+    FlatList, 
+    ScrollView, 
+    Dimensions
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { 
+    Container, 
+    Text
+} from 'native-base';
 
 import ProductList from './ProductList';
 import CategoryFilter from './CategoryFilter';
+import SearchBar from './SearchBar';
 
 const data = require('../../assets/data/products.json');
 const productCategories = require('../../assets/data/categories.json');
@@ -13,12 +26,16 @@ var {width, height} = Dimensions.get('window');
 const ProductContainer = () => {
 
     const [products, setProducts] = useState([]);
-    const [productsFiltered, setProductsFiltered] = useState([]);
+    
 
+    //category
     const [categories, setCategories] = useState([]);
     const [active, setActive] = useState();
     const [initialState, setInitialState] = useState([]);
     const [productsCtg, setProductsCtg] = useState([]);
+
+    //search
+    const [productsFiltered, setProductsFiltered] = useState([]);
 
     useEffect(() => {
         setProducts(data);
@@ -53,8 +70,22 @@ const ProductContainer = () => {
         }
     };
 
+    //Search
+    const searchKeyword = (keyword) => {
+        {
+            keyword === ''
+                ? setProductsFiltered(productsCtg)
+                : setProductsFiltered(
+                    productsCtg.filter((i) => i.name.toLowerCase().includes(keyword))
+                );
+        }
+    }
+
     return (
-            <Container style={styles.container}>
+            <SafeAreaView>
+                <SearchBar
+                    searchFilter={searchKeyword}
+                />
                 <ScrollView>
                     <View>
                         <View>
@@ -66,7 +97,7 @@ const ProductContainer = () => {
                                 setActive={setActive}
                             />
                         </View>
-                        {productsCtg.length > 0 ? (
+                        {productsFiltered.length > 0 ? (
                             <View style={styles.listContainer}>
                                 {productsCtg.map((item)=>{
                                     return(
@@ -84,7 +115,7 @@ const ProductContainer = () => {
                         )}
                     </View>
                 </ScrollView>
-            </Container>
+            </SafeAreaView>
     )
 }
 
@@ -101,11 +132,11 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         backgroundColor: "gainsboro",
         */
-      },
-      center: {
-          justifyContent: 'center',
-          alignItems: 'center'
-      }
+    },
+    center: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 })
 
 export default ProductContainer;

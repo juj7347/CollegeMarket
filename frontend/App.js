@@ -15,12 +15,14 @@ import {
 } from "native-base";
 import NativeBaseIcon from "./components/NativeBaseIcon";
 
+import { SafeAreaView } from "react-native-safe-area-context";
+
 //Screens
 import ProductContainer from "./Screens/Products/ProductContainer";
 import Header from "./Shared/Header";
 
 //redux
-import { Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import store from "./Redux/store";
 
 // Define the config
