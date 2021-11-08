@@ -14,11 +14,15 @@ import {
     Text
 } from 'native-base';
 
+//connect
+import baseURL from '../../assets/common/baseURL';
+import axios from 'axios';
+
 import ProductList from './ProductList';
 import CategoryFilter from './CategoryFilter';
 import SearchBar from './SearchBar';
 
-const data = require('../../assets/data/products.json');
+
 const productCategories = require('../../assets/data/categories.json');
 
 var {width, height} = Dimensions.get('window');
@@ -38,13 +42,32 @@ const ProductContainer = () => {
     const [productsFiltered, setProductsFiltered] = useState([]);
 
     useEffect(() => {
-        setProducts(data);
-        setProductsFiltered(data);
-        setProductsCtg(data);
+        
 
-        setCategories(productCategories);
         setActive(-1);
-        setInitialState(data);
+        
+        //products
+        axios
+            .get(`${baseURL}products`)
+            .then((res) => {
+                setProducts(res.data);
+                setProductsFiltered(res.data);
+                setProductsCtg(res.data);
+                setInitialState(res.data);
+            })
+            .catch((err)=>{
+                console.log('Api call error');
+            })
+
+        //categories
+        axios
+            .get(`${baseURL}categories`)
+            .then((res) => {
+                setCategories(res.data)
+            })
+            .catch((err)=>{
+                console.log('Api call error');
+            })
 
         return () => {
             setProducts([]);
@@ -63,7 +86,7 @@ const ProductContainer = () => {
                 ? [setProductsCtg(initialState), setActive(true)]
                 : [
                     setProductsCtg(
-                        products.filter((i) => i.category.$oid === ctg),
+                        products.filter((i) => i.category._id === ctg),
                         setActive(true)
                     ),
                 ];
