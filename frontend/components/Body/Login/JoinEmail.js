@@ -14,22 +14,26 @@ import {
 
 export const JoinEmail = () => {
   return (
-    <ScrollView>
-        <Text mt = {20} ml = {5} fontSize = '3xl' fontWeight = 'bold'>학교 이메일을 입력해주세요</Text>
-        <Text ml = {5} fontWeight = 'light'>로그인 및 학교인증에 사용됩니다</Text>
+    <Box safeArea flex={1} p="2" w="90%" mx="auto" py="8">
+        <Heading size="lg" color="coolGray.800" fontWeight="600">
+          학교 이메일 인증
+        </Heading>
+        <Heading mt="1" color="coolGray.600" fontWeight="medium" size="xs">
+          로그인 및 인증에 사용됩니다.
+        </Heading>
         <Box mt = {5}>
             <Input size = "2xl" placeholder = "E-mail">
             </Input>
         </Box>
-        <Button mt="2" colorScheme="green" _text={{ color: 'white' }}>
+        <Button mt="2" colorScheme="indigo" _text={{ color: 'white' }}>
             다음
-        </Button>
-    </ScrollView>
+          </Button>
+    </Box>
   );
 }
 
 export default () => {
   return (
-        <JoinEmail />
+        <JoinEmail/>
   )
 }
