@@ -11,6 +11,7 @@ import {
   Input,
   Button,
 } from "native-base"
+
 export const JoinEmail = () => {
   return (
     <ScrollView>
