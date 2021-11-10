@@ -1,10 +1,11 @@
 import React, {useContext} from "react";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import { View } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/Ionicons";
 
 //Stack
 import HomeNavigator from "./HomeNavigator";
+import ChatNavigator from "./ChatNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -34,11 +35,11 @@ const Main = () => {
             />
             <Tab.Screen
                 name="Chat"
-                component={HomeNavigator}
+                component={ChatNavigator}
                 options={{
                     tabBarIcon: ({color}) => (
                         <Icon
-                            name="home"
+                            name="chatbox"
                             style={{position: "relative"}}
                             color={color}
                             size={30}
@@ -68,7 +69,7 @@ const Main = () => {
                 options={{
                     tabBarIcon: ({color}) => (
                         <Icon
-                            name="home"
+                            name="school"
                             style={{position: "relative"}}
                             color={color}
                             size={30}
@@ -83,7 +84,7 @@ const Main = () => {
                 options={{
                     tabBarIcon: ({color}) => (
                         <Icon
-                            name="user"
+                            name="md-person"
                             style={{position: "relative"}}
                             color={color}
                             size={30}

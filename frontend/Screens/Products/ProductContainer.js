@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { 
     View, 
     StyleSheet, 
@@ -14,6 +14,8 @@ import {
     Text
 } from 'native-base';
 
+import { useFocusEffect } from '@react-navigation/native';
+
 //connect
 import baseURL from '../../assets/common/baseURL';
 import axios from 'axios';
@@ -21,6 +23,7 @@ import axios from 'axios';
 import ProductList from './ProductList';
 import CategoryFilter from './CategoryFilter';
 import SearchBar from './SearchBar';
+import { backgroundColor } from 'styled-system';
 
 
 const productCategories = require('../../assets/data/categories.json');
@@ -41,43 +44,50 @@ const ProductContainer = (props) => {
     //search
     const [productsFiltered, setProductsFiltered] = useState([]);
 
-    useEffect(() => {
+    //loading
+    const [loading, setLoading] = useState(true);
+
+    useFocusEffect((
+        useCallback(
+            () => {
+                setActive(-1);
         
-
-        setActive(-1);
+                //products
+                axios
+                    .get(`${baseURL}products`)
+                    .then((res) => {
+                        setProducts(res.data);
+                        setProductsFiltered(res.data);
+                        setProductsCtg(res.data);
+                        setInitialState(res.data);
+                        setLoading(false);
+                    })
+                    .catch((err)=>{
+                        console.log('Api call error');
+                    })
         
-        //products
-        axios
-            .get(`${baseURL}products`)
-            .then((res) => {
-                setProducts(res.data);
-                setProductsFiltered(res.data);
-                setProductsCtg(res.data);
-                setInitialState(res.data);
-            })
-            .catch((err)=>{
-                console.log('Api call error');
-            })
-
-        //categories
-        axios
-            .get(`${baseURL}categories`)
-            .then((res) => {
-                setCategories(res.data)
-            })
-            .catch((err)=>{
-                console.log('Api call error');
-            })
-
-        return () => {
-            setProducts([]);
-            setProductsFiltered([]);
-
-            setCategories([]);
-            setActive();
-            setInitialState([]);
-        }
-    }, [])
+                //categories
+                axios
+                    .get(`${baseURL}categories`)
+                    .then((res) => {
+                        setCategories(res.data)
+                    })
+                    .catch((err)=>{
+                        console.log('Api call error');
+                    })
+        
+                return () => {
+                    setProducts([]);
+                    setProductsFiltered([]);
+        
+                    setCategories([]);
+                    setActive();
+                    setInitialState([]);
+                }
+            },[]
+        )
+    )
+  )
 
     //Categories
     const changeCtg = (ctg) => {
@@ -105,41 +115,50 @@ const ProductContainer = (props) => {
     }
 
     return (
-            <SafeAreaView>
-                <SearchBar
-                    searchFilter={searchKeyword}
-                />
-                <ScrollView>
+        <>
+        {!loading ? (
+        <SafeAreaView>
+            <SearchBar
+                searchFilter={searchKeyword}
+            />
+            <ScrollView>
+                <View>
                     <View>
-                        <View>
-                            <CategoryFilter
-                                categories={categories}
-                                categoryFilter={changeCtg}
-                                productsCtg={productsCtg}
-                                active={active}
-                                setActive={setActive}
-                            />
-                        </View>
-                        {productsFiltered.length > 0 ? (
-                            <View style={styles.listContainer}>
-                                {productsCtg.map((item)=>{
-                                    return(
-                                        <ProductList
-                                            key={item._id}
-                                            item={item}
-                                            navigation={props.navigation}
-                                        />
-                                    )
-                                })}
-                            </View>
-                        ) : (
-                            <View style={[styles.center, {height: height / 2}]}>
-                                <Text>No products</Text>
-                            </View>
-                        )}
+                        <CategoryFilter
+                            categories={categories}
+                            categoryFilter={changeCtg}
+                            productsCtg={productsCtg}
+                            active={active}
+                            setActive={setActive}
+                        />
                     </View>
-                </ScrollView>
-            </SafeAreaView>
+                    {productsFiltered.length > 0 ? (
+                        <View style={styles.listContainer}>
+                            {productsCtg.map((item)=>{
+                                return(
+                                    <ProductList
+                                        key={item._id}
+                                        item={item}
+                                        navigation={props.navigation}
+                                    />
+                                )
+                            })}
+                        </View>
+                    ) : (
+                        <View style={[styles.center, {height: height / 2}]}>
+                            <Text>No products</Text>
+                        </View>
+                    )}
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+        ) 
+        : (
+            <Container style={[styles.center, {backgroundColor: "#f2f2f2"}]}>
+                <ActivityIndicator size='large' color='red'/>
+            </Container>
+        )}
+        </>
     )
 }
 

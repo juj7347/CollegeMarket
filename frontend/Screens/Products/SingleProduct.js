@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Image, ScrollView, View, StyleSheet, Text, Button } from "react-native";
-import { Container } from "native-base";
+import { Container, Heading } from "native-base";
+
+import { connect } from "react-redux";
+import * as actions from '../../Redux/Actions/chatActions'
 
 const SingleProduct = (props) => {
 
@@ -16,11 +19,33 @@ const SingleProduct = (props) => {
                         resizeMode="contain"
                         style={styles.image}
                     />
-                    <Text>afdf</Text>
                 </View>
+                <View style={styles.contentContainer}>
+                    <Heading size='xl' style={styles.contentHeader}>{item.name}</Heading>
+                </View>
+                {/*Todo description*/}
             </ScrollView>
+            <View style={styles.bottomContainer}>
+                <Text style={styles.price}>{item.price}원</Text>
+            </View>
+            <View>
+                <Button
+                    title={"톡 하기"}
+                    color={'orange'}
+                    onPress={()=>{
+                        props.addItemToChat(item)
+                    }}
+                />
+            </View>
         </Container>
     )
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addItemToChat: (product) =>
+            dispatch(actions.addToChat({product}))
+    }
 }
 
 const styles = StyleSheet.create({
@@ -40,7 +65,28 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 250
+    },
+    contentContainer: {
+        marginTop: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    contentHeader: {
+        fontWeight: 'bold',
+        marginBottom: 20
+    },
+    bottomContainer: {
+        flexDirection: 'row',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        backgroundColor: 'white'
+    },
+    price: {
+        fontSize: 24,
+        margin: 20,
+        color: 'red'
     }
 })
-
-export default SingleProduct;
+//export default SingleProduct;
+export default connect(null, mapDispatchToProps)(SingleProduct);
