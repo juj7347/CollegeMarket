@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
         borderTopColor: 'white',
-        borderBottomColor: 'black',
+        borderBottomColor: 'gainsboro',
         borderLeftColor: 'white',
         borderRightColor: 'white',
         borderWidth: 1
