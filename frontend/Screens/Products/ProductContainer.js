@@ -25,9 +25,6 @@ import CategoryFilter from './CategoryFilter';
 import SearchBar from './SearchBar';
 import { backgroundColor } from 'styled-system';
 
-
-const productCategories = require('../../assets/data/categories.json');
-
 var {width, height} = Dimensions.get('window');
 
 const ProductContainer = (props) => {
