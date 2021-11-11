@@ -88,5 +88,5 @@ const styles = StyleSheet.create({
         color: 'red'
     }
 })
-//export default SingleProduct;
+
 export default connect(null, mapDispatchToProps)(SingleProduct);

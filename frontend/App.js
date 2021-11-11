@@ -38,12 +38,15 @@ const config = {
 // extend the theme
 export const theme = extendTheme({ config });
 
+//for test
+import ChatRoom from "./Screens/Chats/ChatRoom";
+
 export default function App() {
   return (
     <Provider store={store}>
       <NativeBaseProvider>
         <NavigationContainer>
-          <Main/>
+          <ChatRoom/>
         </NavigationContainer>
       </NativeBaseProvider>
     </Provider>
