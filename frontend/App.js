@@ -29,6 +29,9 @@ import Header from "./Shared/Header";
 import { Provider } from 'react-redux';
 import store from "./Redux/store";
 
+//toast
+import Toast from 'react-native-toast-message';
+
 // Define the config
 const config = {
   useSystemColorMode: false,
@@ -40,13 +43,16 @@ export const theme = extendTheme({ config });
 
 //for test
 import ChatRoom from "./Screens/Chats/ChatRoom";
+import LoginPage from "./components/Body/Login/LoginPage";
+import MainPage from "./components/Body/MainPage/MainPage";
 
 export default function App() {
   return (
     <Provider store={store}>
       <NativeBaseProvider>
         <NavigationContainer>
-          <ChatRoom/>
+          <Main/>
+          <Toast ref={(ref)=> Toast.setRef(ref)}/> {/*make toast available in entire application*/}
         </NavigationContainer>
       </NativeBaseProvider>
     </Provider>

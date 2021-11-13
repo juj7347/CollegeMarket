@@ -5,7 +5,7 @@ import Chat from "../Screens/Chats/Chat";
 
 const Stack = createStackNavigator();
 
-function MyStack() {
+function ChatStack() {
     return (
         <Stack.Navigator>
             <Stack.Screen
@@ -22,5 +22,5 @@ function MyStack() {
 }
 
 export default function ChatNavigator() {
-    return <MyStack />;
+    return <ChatStack />;
 }

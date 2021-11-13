@@ -19,7 +19,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import PopularItemList from './PopularItemList';
 import PopularStudyList from './PopularStudyList';
-export default function MainPage(){
+
+function MainPage(){
     return(
         <NativeBaseProvider>
                 <Box safeArea flex={0.9} p="2" w="90%" h = "70%" mx="auto" py="8" backgroundColor = 'gray.200'>
@@ -70,3 +71,5 @@ export default function MainPage(){
       </NativeBaseProvider>
     );
 };
+
+export default MainPage;
