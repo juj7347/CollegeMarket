@@ -15,6 +15,7 @@ import {
 } from "native-base";
 import NativeBaseIcon from "./components/NativeBaseIcon";
 import { NavigationContainer } from "@react-navigation/native";
+import { LogBox } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -45,6 +46,8 @@ export const theme = extendTheme({ config });
 import ChatRoom from "./Screens/Chats/ChatRoom";
 import LoginPage from "./components/Body/Login/LoginPage";
 import MainPage from "./components/Body/MainPage/MainPage";
+
+LogBox.ignoreAllLogs(true);
 
 export default function App() {
   return (

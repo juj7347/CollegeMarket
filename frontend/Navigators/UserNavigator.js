@@ -36,5 +36,5 @@ function UserStack() {
 }
 
 export default function UserNavigator() {
-    return <UserStack />
+    return <UserStack />;
 }
