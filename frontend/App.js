@@ -52,7 +52,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Main/>
-          <Toast ref={(ref)=> Toast.setRef(ref)}/> {/*make toast available in entire application*/}
+          <Toast ref={(ref)=> Toast.setRef(ref)}/>
         </NavigationContainer>
       </NativeBaseProvider>
     </Provider>

@@ -1,3 +1,7 @@
 export const ADD_TO_CHAT = "ADD_TO_CHAT";
 export const REMOVE_FROM_CHAT = "REMOVE_FROM_CHAT";
 export const CLEAR_CHAT = "CLEAR_CHAT";
+
+export const ADD_TO_WISHLIST = "ADD_TO_WISHLIST";
+export const REMOVE_FROM_WIHSLIST = "REMOVE_FROM_WISHLIST";
+export const CLEAR_WISHLIST = "CLEAR_WISHLIST";

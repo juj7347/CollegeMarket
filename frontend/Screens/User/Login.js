@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     }
 })
 
-//
+/*
 function LoginPage() {
     return (
       <Box safeArea flex={1} p="2" py="8" w="90%" mx="auto">
@@ -156,5 +156,5 @@ function LoginPage() {
       </Box>
     );
   }
-
+*/
 export default Login;
