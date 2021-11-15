@@ -1,11 +1,14 @@
 import React, {useContext} from "react";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { BorderlessButton } from "react-native-gesture-handler/";
 
 //Stack
 import HomeNavigator from "./HomeNavigator";
 import ChatNavigator from "./ChatNavigator";
+import CommunityNavigator from "./CommunityNavigator"
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +33,20 @@ const Main = () => {
                             size={30}
                         />
                     ),
-                    headerShown: false
+                    headerRight: (props) => {
+                        const navigation = useNavigation();
+                        return (
+                          <BorderlessButton
+                            onPress={() => navigation.navigate("SearchScreen")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-search"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </BorderlessButton>
+                        )
+                    }
                 }}
             />
             <Tab.Screen
@@ -45,7 +61,20 @@ const Main = () => {
                             size={30}
                         />
                     ),
-                    headerShown: false
+                    headerRight: (props) => {
+                        const navigation = useNavigation();
+                        return (
+                          <BorderlessButton
+                            onPress={() => navigation.navigate("SearchScreen")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-search"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </BorderlessButton>
+                        )
+                    }
                 }}
             />
             <Tab.Screen
@@ -60,12 +89,25 @@ const Main = () => {
                             size={30}
                         />
                     ),
-                    headerShown: false
+                    headerRight: (props) => {
+                        const navigation = useNavigation();
+                        return (
+                          <BorderlessButton
+                            onPress={() => navigation.navigate("SearchScreen")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-search"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </BorderlessButton>
+                        )
+                    }
                 }}
             />
             <Tab.Screen
                 name="Community"
-                component={HomeNavigator}
+                component={CommunityNavigator}
                 options={{
                     tabBarIcon: ({color}) => (
                         <Icon
@@ -75,6 +117,20 @@ const Main = () => {
                             size={30}
                         />
                     ),
+                    /*headerRight: (props) => {
+                        const navigation = useNavigation();
+                        return (
+                          <BorderlessButton
+                            onPress={() => navigation.navigate("SearchScreen")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-search"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </BorderlessButton>
+                        )
+                    }*/
                     headerShown: false
                 }}
             />
@@ -90,7 +146,20 @@ const Main = () => {
                             size={30}
                         />
                     ),
-                    headerShown: false
+                    headerRight: (props) => {
+                        const navigation = useNavigation();
+                        return (
+                          <BorderlessButton
+                            onPress={() => navigation.navigate("SearchScreen")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-search"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </BorderlessButton>
+                        )
+                    }
                 }}
             />
             

@@ -46,7 +46,7 @@ export default function App() {
     <Provider store={store}>
       <NativeBaseProvider>
         <NavigationContainer>
-          <ChatRoom/>
+          <Main/>
         </NavigationContainer>
       </NativeBaseProvider>
     </Provider>
