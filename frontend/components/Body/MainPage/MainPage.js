@@ -19,6 +19,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import PopularItemList from './PopularItemList';
 import PopularStudyList from './PopularStudyList';
+
 export default function MainPage(){
     return(
         <NativeBaseProvider>

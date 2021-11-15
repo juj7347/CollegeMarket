@@ -14,19 +14,17 @@ import {
   IconButton,
   HStack,
   Divider,
+  ScrollView,
 } from 'native-base';
 
-export default function ChattingBox() {
-    return (
-      <ScrollView>
+const ChatItem = ({textValue, id}) => {
+    return(
+        <>
+        <Text>
+            {textValue}
+        </Text>
+        </>
+    );
+};
 
-      </ScrollView>
-    );
-  }
-  
-  export default () => {
-    return (
-        <></>
-    );
-  }
-  
+export default ChatItem

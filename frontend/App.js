@@ -39,16 +39,13 @@ const config = {
 export const theme = extendTheme({ config });
 
 //for test
-import ChatRoom from "./Screens/Chats/ChatRoom";
-
+import ChattingRoom from "./components/Body/Chat/ChattingRoom/ChattingRoom";
+import LoginPage from "./components/Body/Login/LoginPage";
+import MainPage from "./components/Body/MainPage/MainPage";
 export default function App() {
   return (
-    <Provider store={store}>
-      <NativeBaseProvider>
-        <NavigationContainer>
-          <ChatRoom/>
-        </NavigationContainer>
-      </NativeBaseProvider>
-    </Provider>
+    <NativeBaseProvider>
+      <ChattingRoom/>
+    </NativeBaseProvider>
   );
 }

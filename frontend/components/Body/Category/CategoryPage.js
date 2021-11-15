@@ -20,7 +20,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 export default function CategoryPage(){
     return(
         <NativeBaseProvider>
-            <Box  backgroundColor = 'blue.200' h = '10%'>
+            <Box safeAreaTop backgroundColor = 'blue.200' h = '10%'>
                 <Text py = {10} alignSelf = 'center' color = 'white' fontSize = '2xl'>Category</Text>
             </Box>
             <Box flexDirection = 'row'>
