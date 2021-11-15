@@ -28,14 +28,14 @@ const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState("");
-/*
+  
     useEffect(() => {
         if (context.stateUser.isAuthenticated === true) {
-            props.navigation.navigate("User_Profile");
+            props.navigation.navigate("UserProfile");
         }
-    }, [context,stateUser.isAuthenticated])
-*/
-    const handleSubmit = (e) => {
+    }, [context.stateUser.isAuthenticated])
+
+    const handleSubmit = () => {
       const user = {
         email,
         password

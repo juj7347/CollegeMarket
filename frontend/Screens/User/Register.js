@@ -87,7 +87,7 @@ const Register = (props) => {
                     name={"phone"}
                     id={"phone"}
                     keyboardType={"numeric"}
-                    onChangeText={() => setPhone(text)}
+                    onChangeText={(text) => setPhone(text)}
                 />
                 <Input
                     placeholder={"Password"}

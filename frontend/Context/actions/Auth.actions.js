@@ -30,11 +30,11 @@ export const loginUser = (user, dispatch) => {
         Toast.show({
             topOffset: 60,
             type: "error",
-            text1: "올바른 계정 정보를 입력해주세요",
-            text2: ""
+            text1: "올바른 계정 정보를 입력해주세요"
         });
         logoutUser(dispatch)
     });
+    
 };
 
 export const getUserProfile = (id) => {
