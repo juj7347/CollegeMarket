@@ -28,13 +28,13 @@ const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState("");
-
+/*
     useEffect(() => {
         if (context.stateUser.isAuthenticated === true) {
             props.navigation.navigate("User_Profile");
         }
-    }, [])
-
+    }, [context,stateUser.isAuthenticated])
+*/
     const handleSubmit = (e) => {
       const user = {
         email,
@@ -45,7 +45,7 @@ const Login = (props) => {
         setError("이메일 또는 비밀번호를 입력해주세요");
       }
       else {
-        console.log("success");
+        loginUser(user, context.dispatch)
       }
     }
 
@@ -59,7 +59,7 @@ const Login = (props) => {
                 name={"email"}
                 id={"email"}
                 value={email}
-                onChnageText={(text)=> setEmail((text.toLowerCase()))}
+                onChangeText={(text)=> setEmail((text.toLowerCase()))}
             />
             <Text>Password</Text>
             <Input
@@ -68,7 +68,7 @@ const Login = (props) => {
                 id={"password"}
                 secureTextEntry={true}
                 value={password}
-                onChnageText={(text) => setPassword(text)}
+                onChangeText={(text) => setPassword(text)}
             />
             <View style={styles.buttonGroup}>
                 {error ? <Error message={error}/> : null}
