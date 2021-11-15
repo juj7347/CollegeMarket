@@ -22,7 +22,6 @@ const SearchBar = (props) => {
             py="1"
             px="2"
             placeholderTextColor="gray.500"
-            onSubmitEditing={() => props.searchFilter(searched)}
             onChangeText={(text) => setSearched(text)}
             _hover={{ bg: 'gray.200', borderWidth: 0 }}
             borderWidth="0"
@@ -35,6 +34,7 @@ const SearchBar = (props) => {
                 size="5"
                 color="gray.500"
                 as={<Ionicons name="ios-search" />}
+                onPress={()=>props.searchFilter(searched)}
               />
             }
           />

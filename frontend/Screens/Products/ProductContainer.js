@@ -103,10 +103,10 @@ const ProductContainer = (props) => {
     //Search
     const searchKeyword = (keyword) => {
         {
-            keyword === ''
+            keyword === ""
                 ? setProductsFiltered(productsCtg)
                 : setProductsFiltered(
-                    productsCtg.filter((i) => i.name.toLowerCase().includes(keyword))
+                    productsCtg.filter((i) => i.name.toLowerCase().includes(keyword.toLowerCase()))
                 );
         }
     }
@@ -131,7 +131,7 @@ const ProductContainer = (props) => {
                     </View>
                     {productsFiltered.length > 0 ? (
                         <View style={styles.listContainer}>
-                            {productsCtg.map((item)=>{
+                            {productsFiltered.map((item)=>{
                                 return(
                                     <ProductList
                                         key={item._id}
