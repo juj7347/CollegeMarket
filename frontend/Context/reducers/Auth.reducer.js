@@ -1,7 +1,7 @@
 import { SET_CURRENT_USER } from "../actions/Auth.actions";
 import isEmpty from "../../assets/common/is-empty";
 
-export default function (state, action) {
+function authReducer (state, action) {
     switch (action.type) {
         case SET_CURRENT_USER:
             return {
@@ -14,3 +14,5 @@ export default function (state, action) {
             return state;
     }
 }
+
+export default authReducer;

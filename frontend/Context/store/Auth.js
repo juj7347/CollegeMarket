@@ -7,7 +7,7 @@ import { setCurrentUser } from '../actions/Auth.actions';
 import AuthGlobal from './AuthGlobal';
 
 const Auth = props => {
-    const [stateUser, dispath] = useReducer(authReducer, {
+    const [stateUser, dispatch] = useReducer(authReducer, {
         isAuthenticated: null,
         user: {}
     });
@@ -18,7 +18,7 @@ const Auth = props => {
         if (AsyncStorage.jwt) {
             const decoded = AsyncStorage.jwt ? AsyncStorage.jwt : "";
             if (setShowChild) {
-                dispath(setCurrentUser(jwtDecode(decoded)))
+                dispatch(setCurrentUser(jwtDecode(decoded)))
             }
         }
         return () => setShowChild(false);
@@ -33,7 +33,7 @@ const Auth = props => {
             <AuthGlobal.Provider
                 value={{
                     stateUser,
-                    dispath
+                    dispatch
                 }}
             >
                 {props.children}
