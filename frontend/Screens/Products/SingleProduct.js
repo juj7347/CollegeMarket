@@ -3,7 +3,10 @@ import { Image, ScrollView, View, StyleSheet, Text, Button } from "react-native"
 import { Container, Heading } from "native-base";
 
 import { connect } from "react-redux";
-import * as actions from '../../Redux/Actions/chatActions'
+import { addToChat } from "../../Redux/Actions/chatActions"
+import { addToWishList } from "../../Redux/Actions/wishListActions";
+
+import Toast from "react-native-toast-message";
 
 const SingleProduct = (props) => {
 
@@ -33,7 +36,24 @@ const SingleProduct = (props) => {
                     title={"톡 하기"}
                     color={'orange'}
                     onPress={()=>{
-                        props.addItemToChat(item)
+                        props.addItemToChat(item),
+                        Toast.show({
+                            topOffset: 60,
+                            type: "success",
+                            text1: `[${item.name}] 추가`
+                        })
+                    }}
+                />
+                <Button
+                    title={"관심품목"}
+                    color={'red'}
+                    onPress={()=>{
+                        props.addItemToWishList(item),
+                        Toast.show({
+                            topOffset: 60,
+                            type: "success",
+                            text1: `[${item.name}] 추가`
+                        })
                     }}
                 />
             </View>
@@ -43,8 +63,13 @@ const SingleProduct = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addItemToChat: (product) =>
-            dispatch(actions.addToChat({product}))
+        addItemToChat: (product) => {
+            dispatch(addToChat({product}))
+        },
+        addItemToWishList: (product) => {
+            dispatch(addToWishList({product}))
+        }
+
     }
 }
 

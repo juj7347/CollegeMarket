@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 //Stack
 import HomeNavigator from "./HomeNavigator";
 import ChatNavigator from "./ChatNavigator";
+import UserNavigator from "./UserNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -80,7 +81,7 @@ const Main = () => {
             />
             <Tab.Screen
                 name="User"
-                component={HomeNavigator}
+                component={UserNavigator}
                 options={{
                     tabBarIcon: ({color}) => (
                         <Icon

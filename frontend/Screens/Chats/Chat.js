@@ -4,6 +4,7 @@ import { Text } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 
+import WishList from "../User/WishList/WishList";
 
 const Chat = (props) => {
     return (
@@ -14,6 +15,7 @@ const Chat = (props) => {
                 )
             })}
             
+            <WishList/>
         </SafeAreaView>
 
     )
