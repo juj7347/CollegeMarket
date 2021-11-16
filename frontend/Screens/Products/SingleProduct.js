@@ -42,7 +42,7 @@ const SingleProduct = (props) => {
     },[addedToWishList])
 
     return (
-        <Container style={styles.container}>
+        <View style={styles.container}>
             <ScrollView style={styles.scrolView}>
                 <View>
                     <Image
@@ -81,7 +81,7 @@ const SingleProduct = (props) => {
                     }}
                 />
             </View>
-        </Container>
+        </View>
     )
 }
 
