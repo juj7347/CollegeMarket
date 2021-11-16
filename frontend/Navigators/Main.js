@@ -7,10 +7,16 @@ import Icon from "react-native-vector-icons/Ionicons";
 import HomeNavigator from "./HomeNavigator";
 import ChatNavigator from "./ChatNavigator";
 import UserNavigator from "./UserNavigator";
+import AdminNavigator from "./AdminNavigator";
+
+import AuthGlobal from "../Context/store/AuthGlobal";
 
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
+
+    const context = useContext(AuthGlobal);
+
     return (
         <Tab.Navigator
             initialRouteName="Home"
@@ -49,9 +55,10 @@ const Main = () => {
                     headerShown: false
                 }}
             />
-            <Tab.Screen
+            {context.stateUser.user.isAdmin === true ? (
+                <Tab.Screen
                 name="Admin"
-                component={HomeNavigator}
+                component={AdminNavigator}
                 options={{
                     tabBarIcon: ({color}) => (
                         <Icon
@@ -63,7 +70,9 @@ const Main = () => {
                     ),
                     headerShown: false
                 }}
-            />
+                />
+            ) : null}
+            
             <Tab.Screen
                 name="Community"
                 component={HomeNavigator}
