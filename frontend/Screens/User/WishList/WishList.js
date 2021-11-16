@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
     View,
     Dimensions,
@@ -19,9 +19,16 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from "react-redux";
 import { clearWishList } from "../../../Redux/Actions/wishListActions";
 
+import baseURL from "../../../assets/common/baseURL";
+import axios from 'axios';
+import AuthGlobal from "../../../Context/store/AuthGlobal";
+
 var {height, width} = Dimensions.get('window');
 
 const WishList = (props) => {
+    
+    const context = useContext(AuthGlobal);
+
     return (
         <>
             <Heading style={{alignSelf: 'center'}}>관심목록</Heading>
