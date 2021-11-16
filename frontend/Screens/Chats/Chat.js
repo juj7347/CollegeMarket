@@ -4,18 +4,16 @@ import { Text } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 
-import WishList from "../User/WishList/WishList";
 
 const Chat = (props) => {
     return (
         <SafeAreaView>
+            <Text>Chat</Text>
             {props.chatItems.map((item)=>{
                 return (
                     <Text>{item.product.name}</Text>
                 )
             })}
-            
-            <WishList/>
         </SafeAreaView>
 
     )

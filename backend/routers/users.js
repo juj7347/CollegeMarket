@@ -129,7 +129,7 @@ router.put(`/wish/:userId`, async (req, res)=>{
         return res.status(500).json({success: false, message: "item cannot be added to wishlist"});
     }
 
-    res.send(addWishList)
+    res.status(200).send(addWishList)
 })
 
 router.delete(`/:id`, (req, res)=>{

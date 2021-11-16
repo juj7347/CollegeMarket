@@ -22,11 +22,22 @@ const SingleProduct = (props) => {
     const [addedToWishList, setAddedToWishList] = useState(false);
 
     useEffect(()=>{
-        console.log(context.stateUser.user.userId)
         axios
             .put(`${baseURL}users/wish/${context.stateUser.user.userId}`, {
                 add: addedToWishList,
                 productId: "2323"
+            })
+            .then((res)=>{
+                if(res.status == 200) {
+                    Toast.show({
+                        topOffset: 60,
+                        type: "success",
+                        text1: `[${item.name} 관심목록에 추가]`
+                    })
+                }
+            })
+            .catch((err)=>{
+                console.log(err)
             })
     },[addedToWishList])
 
@@ -67,11 +78,6 @@ const SingleProduct = (props) => {
                     onPress={()=>{
                         //props.addItemToWishList(item),
                         setAddedToWishList(!addedToWishList)
-                        Toast.show({
-                            topOffset: 60,
-                            type: "success",
-                            text1: `[${item.name}] 추가`
-                        })
                     }}
                 />
             </View>

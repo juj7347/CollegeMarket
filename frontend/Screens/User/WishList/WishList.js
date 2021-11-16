@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext, useEffect } from "react";
 import {
     View,
     Dimensions,
@@ -28,6 +28,7 @@ var {height, width} = Dimensions.get('window');
 const WishList = (props) => {
     
     const context = useContext(AuthGlobal);
+
 
     return (
         <>
@@ -64,6 +65,7 @@ const WishList = (props) => {
                     <Text>관심품목을 추가해주세요</Text>
                 </Container>
             )}
+
         </>
     )
 }
