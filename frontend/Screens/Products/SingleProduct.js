@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Image, ScrollView, View, StyleSheet, Text, Button } from "react-native";
 import { Container, Heading } from "native-base";
 
 import { connect } from "react-redux";
 import { addToChat } from "../../Redux/Actions/chatActions"
 import { addToWishList } from "../../Redux/Actions/wishListActions";
+
+import axios from 'axios';
+import baseURL from "../../assets/common/baseURL";
+
+import AuthGlobal from "../../Context/store/AuthGlobal";
 
 import Toast from "react-native-toast-message";
 
@@ -13,8 +18,31 @@ const SingleProduct = (props) => {
     const [item, setItem] = useState(props.route.params.item);
     const [availability, setAvailability] = useState('');
 
+    const context = useContext(AuthGlobal);
+    const [addedToWishList, setAddedToWishList] = useState(false);
+
+    useEffect(()=>{
+        axios
+            .put(`${baseURL}users/wish/${context.stateUser.user.userId}`, {
+                add: addedToWishList,
+                productId: "2323"
+            })
+            .then((res)=>{
+                if(res.status == 200) {
+                    Toast.show({
+                        topOffset: 60,
+                        type: "success",
+                        text1: `[${item.name} 관심목록에 추가]`
+                    })
+                }
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+    },[addedToWishList])
+
     return (
-        <Container style={styles.container}>
+        <View style={styles.container}>
             <ScrollView style={styles.scrolView}>
                 <View>
                     <Image
@@ -48,16 +76,12 @@ const SingleProduct = (props) => {
                     title={"관심품목"}
                     color={'red'}
                     onPress={()=>{
-                        props.addItemToWishList(item),
-                        Toast.show({
-                            topOffset: 60,
-                            type: "success",
-                            text1: `[${item.name}] 추가`
-                        })
+                        //props.addItemToWishList(item),
+                        setAddedToWishList(!addedToWishList)
                     }}
                 />
             </View>
-        </Container>
+        </View>
     )
 }
 
