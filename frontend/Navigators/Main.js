@@ -8,8 +8,13 @@ import HomeNavigator from "./HomeNavigator";
 import ChatNavigator from "./ChatNavigator";
 import UserNavigator from "./UserNavigator";
 import AdminNavigator from "./AdminNavigator";
+//import CommunityNavigator from "./CommunityNavigator";
 
 import AuthGlobal from "../Context/store/AuthGlobal";
+
+//new
+import { BorderlessButton } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +42,20 @@ const Main = () => {
                             size={30}
                         />
                     ),
-                    headerShown: false
+                    headerRight: (props) => {
+                        const navigation = useNavigation();
+                        return (
+                          <BorderlessButton
+                            onPress={() => navigation.navigate("SearchScreen")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-search"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </BorderlessButton>
+                        )
+                    }
                 }}
             />
             <Tab.Screen
@@ -52,7 +70,20 @@ const Main = () => {
                             size={30}
                         />
                     ),
-                    headerShown: false
+                    headerRight: (props) => {
+                        const navigation = useNavigation();
+                        return (
+                          <BorderlessButton
+                            onPress={() => navigation.navigate("SearchScreen")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-search"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </BorderlessButton>
+                        )
+                    }
                 }}
             />
             {context.stateUser.user.isAdmin === true ? (
@@ -68,7 +99,20 @@ const Main = () => {
                             size={30}
                         />
                     ),
-                    headerShown: false
+                    headerRight: (props) => {
+                        const navigation = useNavigation();
+                        return (
+                          <BorderlessButton
+                            onPress={() => navigation.navigate("SearchScreen")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-search"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </BorderlessButton>
+                        )
+                    }
                 }}
                 />
             ) : null}
@@ -85,7 +129,20 @@ const Main = () => {
                             size={30}
                         />
                     ),
-                    headerShown: false
+                    headerRight: (props) => {
+                        const navigation = useNavigation();
+                        return (
+                          <BorderlessButton
+                            onPress={() => navigation.navigate("SearchScreen")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-search"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </BorderlessButton>
+                        )
+                    }
                 }}
             />
             <Tab.Screen
@@ -100,7 +157,20 @@ const Main = () => {
                             size={30}
                         />
                     ),
-                    headerShown: false
+                    headerRight: (props) => {
+                        const navigation = useNavigation();
+                        return (
+                          <BorderlessButton
+                            onPress={() => navigation.navigate("SearchScreen")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-search"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </BorderlessButton>
+                        )
+                    }
                 }}
             />
             
