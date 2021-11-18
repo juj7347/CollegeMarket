@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { Image, ScrollView, View, StyleSheet, Text, Button } from "react-native";
 import { Container, Heading } from "native-base";
+
+import { useFocusEffect } from "@react-navigation/native";
 
 import { connect } from "react-redux";
 import { addToChat } from "../../Redux/Actions/chatActions"
@@ -8,6 +10,7 @@ import { addToWishList } from "../../Redux/Actions/wishListActions";
 
 import axios from 'axios';
 import baseURL from "../../assets/common/baseURL";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import AuthGlobal from "../../Context/store/AuthGlobal";
 
@@ -19,13 +22,28 @@ const SingleProduct = (props) => {
 
     const [item, setItem] = useState(props.route.params.item);
     const [availability, setAvailability] = useState('');
+    const [token, setToken] = useState();
 
     const context = useContext(AuthGlobal);
     const [addedToWishList, setAddedToWishList] = useState(false);
 
+    useFocusEffect(
+        useCallback(
+            () => {
+                AsyncStorage.getItem("jwt")
+                    .then((res)=>{
+                        setToken(res)
+                    })
+                    .catch((error)=> console.log(error))
+            },
+            []
+        )
+    )
+
     useEffect(()=>{
         axios
             .put(`${baseURL}users/wish/${context.stateUser.user.userId}`, {
+                headers: {Authorization: `Bearer ${token}`},
                 add: addedToWishList,
                 productId: "2323"
             })

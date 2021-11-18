@@ -59,7 +59,7 @@ const ListItem = (props) => {
                             medium
                             danger
                             onPress={()=> {
-                                props.navigation.navigate("ProductForm", {item: props}),
+                                props.delete(props._id),
                                 setModalVisible(false)
                             }}    
                         >
