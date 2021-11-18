@@ -18,32 +18,36 @@ import {
   ScrollView,
 } from 'native-base';
 
-const ChatBox = ({onAddChat}) =>{
-  const [newMessage, setNewMessage] = useState('');
-  const ChatInputHandler = newChat => {
-    setNewMessage(newChat);
-  };
-  const AddChatHandler = () => {
-    onAddChat(newMessage);
-    setNewMessage('');
-  };
-  return(
-        <>
-        <Box flexDirection = 'row' backgroundColor = 'white'>
-            <Input
-                      width="85%"
-                      bg="white"
-                      borderWidth="0"
-                      onChange = {ChatInputHandler}
-                      value = {newMessage}
-                      autoCorrect = {false}
-            />
-            <Button onPress ={AddChatHandler}>
-              Enter
-            </Button>
-        </Box>
-        </>
-    );
+const ChatBox = ({onAddMessage}) =>{
+
+    const [newMessage, setNewMessage] = useState('');
+
+    const ChatInputHandler = (newChat) => {
+      setNewMessage(newChat);
+    };
+
+    const AddChatHandler = () => {
+      onAddMessage(newMessage);
+      setNewMessage('');
+    };
+    
+    return(
+          <>
+          <Box flexDirection = 'row' backgroundColor = 'white'>
+              <Input
+                        width="85%"
+                        bg="white"
+                        borderWidth="0"
+                        onChange = {ChatInputHandler}
+                        value = {newMessage}
+                        autoCorrect = {false}
+              />
+              <Button onPress ={AddChatHandler}>
+                Enter
+              </Button>
+          </Box>
+          </>
+      );
 };
 
 export default ChatBox;

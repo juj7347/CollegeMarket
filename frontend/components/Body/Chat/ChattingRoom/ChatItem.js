@@ -17,11 +17,14 @@ import {
   ScrollView,
 } from 'native-base';
 
-const ChatItem = ({textValue, id}) => {
+const ChatItem = ({id, textValue}) => {
     return(
         <>
+        <Text fontSize = "15px">
+            {textValue.result}
+        </Text>
         <Text>
-            {textValue}
+            시발 뭐야 왜 안됨?
         </Text>
         </>
     );

@@ -23,7 +23,7 @@ const ChatContainer = ({messages}) => {
         <>
         <Box h = "100%" backgroundColor = 'gray.200'>
             <ScrollView ml = {3} mt = {5}>
-                {messages.map(message => (
+                {messages.map( (message) => (
                     <ChatItem key = {message.id} {...message}/>
                 ))}
             </ScrollView>

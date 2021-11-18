@@ -23,7 +23,7 @@ import ChatBox from './ChatBox';
 const ChattingRoom = () => {
     const [messages, setMessages] = useState([]);
     const addMessage = text => {
-        setMessages([...messages, {id: Math.random().toString(), textValue: text}]);
+        setMessages([...messages, {id: Math.random().toString(), textValue: text},]);
     };
 
     return(
@@ -35,7 +35,7 @@ const ChattingRoom = () => {
                 <ChatContainer messages = {messages}/>
             </Box>
             <Box>
-                <ChatBox onAddChat = {addMessage}/>
+                <ChatBox onAddMessage = {addMessage}/>
             </Box>
         </>
     );
