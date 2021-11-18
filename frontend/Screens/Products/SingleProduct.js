@@ -13,6 +13,8 @@ import AuthGlobal from "../../Context/store/AuthGlobal";
 
 import Toast from "react-native-toast-message";
 
+import EasyButton from "../../Shared/StyledComponents/EasyButton";
+
 const SingleProduct = (props) => {
 
     const [item, setItem] = useState(props.route.params.item);
@@ -60,9 +62,9 @@ const SingleProduct = (props) => {
                 <Text style={styles.price}>{item.price}원</Text>
             </View>
             <View>
-                <Button
-                    title={"톡 하기"}
-                    color={'orange'}
+                <EasyButton
+                    primary
+                    medium
                     onPress={()=>{
                         props.addItemToChat(item),
                         Toast.show({
@@ -71,15 +73,19 @@ const SingleProduct = (props) => {
                             text1: `[${item.name}] 추가`
                         })
                     }}
-                />
-                <Button
-                    title={"관심품목"}
-                    color={'red'}
+                >
+                    <Text style={{color: 'white'}}>톡 하기</Text>
+                </EasyButton>
+                <EasyButton
+                    primary
+                    medium
                     onPress={()=>{
                         //props.addItemToWishList(item),
                         setAddedToWishList(!addedToWishList)
                     }}
-                />
+                >
+                    <Text>관심품목</Text>
+                </EasyButton>
             </View>
         </View>
     )
