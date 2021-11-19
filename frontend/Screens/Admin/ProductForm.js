@@ -21,6 +21,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import baseURL from "../../assets/common/baseURL";
 import axios from "axios";
 
+
 const ProductForm = (props) => {
 
     const [pickerValue, setPickerValue] = useState('');
@@ -57,10 +58,15 @@ const ProductForm = (props) => {
         <FormContainer
             title="Add Product"
         >
-            <View>
-                <Image source={{uri: mainImage}}/>
-                <TouchableOpacity>
-                    <Text>Image</Text>
+            <View style={styles.imageContainer}>
+                <Image
+                    source={{uri: mainImage}}
+                    style={styles.image}
+                />
+                <TouchableOpacity
+                    style={styles.imagePicker}
+                >
+                    <Icon style={{color: "white"}} name="camera"/>
                 </TouchableOpacity>
             </View>
 
@@ -122,7 +128,31 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: "white",
-
+    },
+    imageContainer: {
+        width: 200,
+        height: 200,
+        borderStyle: 'solid',
+        borderWidth: 8,
+        padding: 0,
+        justifyContent: 'center',
+        borderRadius: 100,
+        borderColor: "#E0E0E0",
+        elevation: 10
+    },
+    image: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 100
+    },
+    imagePicker: {
+        position: "absolute",
+        right: 5,
+        bottom: 5,
+        backgroundColor: "grey",
+        padding: 8,
+        borderRadius: 100,
+        elevation: 20
     }
 })
 
