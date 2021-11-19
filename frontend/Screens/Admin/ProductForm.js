@@ -196,7 +196,7 @@ const ProductForm = (props) => {
                 <EasyButton
                     large
                     primary
-                    onPress={()=>addProduct()}
+                    onPress={addProduct}
                 >
                     <Text style={styles.buttonText}>작성</Text>
                 </EasyButton>

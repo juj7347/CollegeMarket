@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { Image, ScrollView, View, StyleSheet, Text, Button } from "react-native";
 import { Container, Heading } from "native-base";
 
@@ -25,7 +25,6 @@ const SingleProduct = (props) => {
     const [token, setToken] = useState();
 
     const context = useContext(AuthGlobal);
-    const [addedToWishList, setAddedToWishList] = useState(false);
 
     useFocusEffect(
         useCallback(
@@ -40,15 +39,21 @@ const SingleProduct = (props) => {
         )
     )
 
-    useEffect(()=>{
+    const addWishList = () => {
+        let formData = new FormData();
+
+        formData.append("productId", "123");
+
+        const config = {
+            headers: {
+                "Content-Type": 'multipart/form-data',
+                Authorization: `Bearer ${token}`
+            }
+        }
         axios
-            .put(`${baseURL}users/wish/${context.stateUser.user.userId}`, {
-                headers: {Authorization: `Bearer ${token}`},
-                add: addedToWishList,
-                productId: "2323"
-            })
+            .put(`${baseURL}users/wish/${context.stateUser.user.userId}`, formData, config)
             .then((res)=>{
-                if(res.status == 200) {
+                if(res.status == 200 || res.status == 201) {
                     Toast.show({
                         topOffset: 60,
                         type: "success",
@@ -58,8 +63,8 @@ const SingleProduct = (props) => {
             })
             .catch((err)=>{
                 console.log(err)
-            })
-    },[addedToWishList])
+            });
+    }
 
     return (
         <View style={styles.container}>
@@ -97,10 +102,10 @@ const SingleProduct = (props) => {
                 <EasyButton
                     primary
                     medium
-                    onPress={()=>{
+                    onPress={
                         //props.addItemToWishList(item),
-                        setAddedToWishList(!addedToWishList)
-                    }}
+                        addWishList
+                    }
                 >
                     <Text>관심품목</Text>
                 </EasyButton>

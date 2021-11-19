@@ -108,14 +108,14 @@ router.put(`/wish/:userId`, async (req, res)=>{
     if(!user) {
         return res.status(500).json({success: false, message: "user of given ID not found"});
     }
-
+    console.log(req.body);
     let newWishList = user.wishList;
 
-    if(req.body.add === true) {
-        newWishList.push(req.body.productId);
+    if(newWishList.includes(req.body.productId)) {
+        newWishList = newWishList.filter(itemId => itemId !== req.body.productId);
     }
     else {
-        newWishList = newWishList.filter(itemId => itemId !== req.body.productId);
+        newWishList.push(req.body.productId);
     }
 
     const addWishList = await User.findByIdAndUpdate(
