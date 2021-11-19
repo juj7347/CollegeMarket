@@ -42,16 +42,21 @@ const SingleProduct = (props) => {
     const addWishList = () => {
         let formData = new FormData();
 
-        formData.append("productId", "123");
+        formData.append("productId", item._id);
+
+        const body = {
+            "productId": item._id
+        }
 
         const config = {
             headers: {
-                "Content-Type": 'multipart/form-data',
+                //"Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${token}`
             }
         }
+
         axios
-            .put(`${baseURL}users/wish/${context.stateUser.user.userId}`, formData, config)
+            .put(`${baseURL}users/wish/${context.stateUser.user.userId}`, body, config)
             .then((res)=>{
                 if(res.status == 200 || res.status == 201) {
                     Toast.show({
@@ -59,6 +64,8 @@ const SingleProduct = (props) => {
                         type: "success",
                         text1: `[${item.name} 관심목록에 추가]`
                     })
+                    console.log("data",res.data);
+                    console.log("config", res.config)
                 }
             })
             .catch((err)=>{
