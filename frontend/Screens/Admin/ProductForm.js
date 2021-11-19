@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     Platform
  } from "react-native";
-import { Item, Picker} from "native-base";
+import { Select} from "native-base";
 
 import FormContainer from "../../Shared/Form/FormContainer";
 import Input from "../../Shared/Form/Input";
@@ -23,7 +23,7 @@ import axios from "axios";
 
 const ProductForm = (props) => {
 
-    const [pickerValue, setPickerValue] = useState();
+    const [pickerValue, setPickerValue] = useState('');
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
@@ -37,7 +37,22 @@ const ProductForm = (props) => {
     const [rickDescription, setRichDescription] = useState();
     const [item, setItem] = useState();
 
+    useEffect(() => {
 
+        //Categories
+
+        axios
+            .get(`${baseURL}categories`)
+            .then((res)=>{
+                setCategories(res.data)
+            })
+            .catch((error)=> alert("Error to load Categories"))
+
+            return () => {
+                setCategories([])
+            }
+    },[])
+    
     return (
         <FormContainer
             title="Add Product"
@@ -70,6 +85,26 @@ const ProductForm = (props) => {
                 value={description}
                 onChangeText={(text)=>setDescription(text)}
             />
+            <Select
+                placeholder="카테고리 선택"
+                style={{width: 150}}
+                selectedValue={pickerValue}
+                onValueChange={(itemValue)=> [setPickerValue(itemValue), setCategory(itemValue)]}
+            >
+                {categories.map((cat) => {
+                    return <Select.Item key={cat.id} label={cat.name} value={cat.id}/>
+                })}
+            </Select>
+            {error ? <Error message={error}/> : null}
+            <View style={styles.buttonContainer}>
+                <EasyButton
+                    large
+                    primary
+                    onPress={()=>{}}
+                >
+                    <Text style={styles.buttonText}>작성</Text>
+                </EasyButton>
+            </View>
         </FormContainer>
     )
 }
@@ -78,6 +113,16 @@ const styles = StyleSheet.create({
     label: {
         width: '80%',
         marginTop: 10
+    },
+    buttonContainer: {
+        width: "80%",
+        marginBottom: 80,
+        marginTop: 20,
+        alignItems: 'center'
+    },
+    buttonText: {
+        color: "white",
+
     }
 })
 
