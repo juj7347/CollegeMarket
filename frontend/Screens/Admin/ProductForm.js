@@ -22,6 +22,7 @@ import baseURL from "../../assets/common/baseURL";
 import axios from "axios";
 
 import * as ImagePicker from "expo-image-picker"
+import mime from "mime";
 
 
 const ProductForm = (props) => {
@@ -37,13 +38,18 @@ const ProductForm = (props) => {
     const [token, setToken] = useState();
     const [error, setError] = useState();
     const [isFeatured, setIsFeatured] = useState();
-    const [rickDescription, setRichDescription] = useState();
+    const [richDescription, setRichDescription] = useState();
     const [item, setItem] = useState();
 
     useEffect(() => {
 
-        //Categories
+        AsyncStorage.getItem("jwt")
+            .then((res)=>{
+                setToken(res)
+            })
+            .catch((error)=> console.log(error))
 
+        //Categories
         axios
             .get(`${baseURL}categories`)
             .then((res)=>{
@@ -78,6 +84,63 @@ const ProductForm = (props) => {
             setMainImage(result.uri);
             setImage(result.uri);
         }
+    }
+
+    const addProduct = () => {
+        if (
+            name == "" ||
+            description == "" ||
+            category == ""
+        ) {
+            setError("필수항목들을 입력해 주세요")
+        }
+
+        let formData = new FormData();
+
+        //required step for iOS (not required for Android)
+        const newImageUri = "file:///" + image.split("file:/").join("");
+
+        formData.append("name", name);
+        formData.append("price", price);
+        formData.append("description", description);
+        formData.append("category", category);
+        formData.append("richDescription", richDescription);
+        formData.append("isFeatured", isFeatured);
+        formData.append("image", {
+            uri: newImageUri,
+            type: mime.getType(newImageUri),
+            name: newImageUri.split("/").pop()
+        });
+
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        axios
+            .post(`${baseURL}products`, formData, config)
+            .then((res)=>{
+                if (res.status == 200 || res.status == 201) {
+                    Toast.show({
+                        topOffset: 60,
+                        type: "success",
+                        text1: "물품이 등록되었습니다"
+                    });
+                    setTimeout(() => {
+                        props.navigation.navigate("Products");
+                    }, 500)
+                }
+            })
+            .catch((error)=> {
+                Toast.show({
+                    topOffset: 60,
+                    type: "error",
+                    text1: "물품등록 실패",
+                    text2: "다시 시도해주세요"
+                })
+            })
     }
     
     return (
@@ -125,7 +188,7 @@ const ProductForm = (props) => {
                 onValueChange={(itemValue)=> [setPickerValue(itemValue), setCategory(itemValue)]}
             >
                 {categories.map((cat) => {
-                    return <Select.Item key={cat.id} label={cat.name} value={cat.id}/>
+                    return <Select.Item key={cat._id} label={cat.name} value={cat._id}/>
                 })}
             </Select>
             {error ? <Error message={error}/> : null}
@@ -133,7 +196,7 @@ const ProductForm = (props) => {
                 <EasyButton
                     large
                     primary
-                    onPress={()=>{}}
+                    onPress={()=>addProduct()}
                 >
                     <Text style={styles.buttonText}>작성</Text>
                 </EasyButton>
