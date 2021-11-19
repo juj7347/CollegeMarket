@@ -21,6 +21,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import baseURL from "../../assets/common/baseURL";
 import axios from "axios";
 
+import * as ImagePicker from "expo-image-picker"
+
 
 const ProductForm = (props) => {
 
@@ -47,12 +49,36 @@ const ProductForm = (props) => {
             .then((res)=>{
                 setCategories(res.data)
             })
-            .catch((error)=> alert("Error to load Categories"))
+            .catch((error)=> alert("Error to load Categories"));
+
+        //Image Picker
+        (async () => {
+            if (Platform.OS !== "web") {
+                const {status} = await ImagePicker.requestCameraPermissionsAsync();
+                if(status !== "granted") {
+                    alert("Sorry, we need cameral roll permissions")
+                }
+            }
+        })();
 
             return () => {
                 setCategories([])
             }
     },[])
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1
+        });
+
+        if(!result.cancelled) {
+            setMainImage(result.uri);
+            setImage(result.uri);
+        }
+    }
     
     return (
         <FormContainer
@@ -65,6 +91,7 @@ const ProductForm = (props) => {
                 />
                 <TouchableOpacity
                     style={styles.imagePicker}
+                    onPress={pickImage}
                 >
                     <Icon style={{color: "white"}} name="camera"/>
                 </TouchableOpacity>
