@@ -21,10 +21,11 @@ import ChatItem from './ChatItem';
 const ChatContainer = ({messages}) => {
     return(
         <>
-        <Box h = "100%" backgroundColor = 'gray.200'>
-            <ScrollView ml = {3} mt = {5}>
+        <Box h = "100%" backgroundColor = 'white'>
+            <ScrollView ml = {3} mt = {5} >
                 {messages.map( (message) => (
-                    <ChatItem key = {message.id} {...message}/>
+
+                        <ChatItem key = {message.id} {...message} />
                 ))}
             </ScrollView>
         </Box>

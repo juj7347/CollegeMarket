@@ -30,13 +30,13 @@ export default function ChattingList(){
     }
     return(
         <>
-            <Box safeArea Top borderBottomWidth={2} borderColor = "gray.200">
+            <Box safeArea Top borderBottomWidth={2} borderColor = "blue.300">
                 <HStack bg='white' px="1" py="3" justifyContent='space-between' alignItems='center' w = "100%" px = {5}>
                     <HStack space="4" alignItems='center'>
-                        <Text color="black" fontSize="20" fontWeight='bold'>채팅</Text>
+                        <Text color="black" fontSize="20" fontWeight='bold' color = 'black'>채팅</Text>
                     </HStack>
                     <HStack space="1" alignItems='center'>
-                        <IconButton size = "sm" variant = 'ghost' _icon={{as: <Ionicons name="ios-search"/> ,color: 'black'}}></IconButton>
+                        <IconButton size = "sm" variant = 'ghost' _icon={{as: <Ionicons name="ios-search"/> ,color: 'white'}}></IconButton>
                     </HStack>
                 </HStack>
                 <HStack space = "2"></HStack>

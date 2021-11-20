@@ -20,12 +20,15 @@ import {
 const ChatRoomName = () => {
     return(
         <>
-            <HStack mx = {5} space = {2}>
+            <HStack mx = {3} space = {3} mb = {3}>
             <HStack space = "1">
                 <Text fontSize = "20px"> Image </Text>
             </HStack>
             <HStack space = "2">
                 <Text fontSize = "20px"> Name </Text>
+            </HStack>
+            <HStack space = "3">
+                <Button fontSize = "20px" backgroundColor = 'blue.300'> Back </Button>
             </HStack>
             </HStack>
         </>

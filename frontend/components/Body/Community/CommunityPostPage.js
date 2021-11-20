@@ -17,14 +17,15 @@ import {
   ScrollView,
 } from 'native-base';
 import TopBar from './TopBar';
-import CommunityBox from './CommunityBox';
-
-const CommunityMainPage = () => {
+import PostTitle from './PostTitle';
+import PostContent from './PostContent';
+const CommunityPostPage = () => {
     return(
         <>
             <TopBar/>
-            <CommunityBox/>
+            <PostTitle/>
+            <PostContent/>
         </>
     );
 };
-export default CommunityMainPage;
+export default CommunityPostPage;

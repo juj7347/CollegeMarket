@@ -40,12 +40,15 @@ export const theme = extendTheme({ config });
 
 //for test
 import ChattingRoom from "./components/Body/Chat/ChattingRoom/ChattingRoom";
+import ChattingList from "./components/Body/Chat/ChattingList";
 import LoginPage from "./components/Body/Login/LoginPage";
 import MainPage from "./components/Body/MainPage/MainPage";
+import CommunityMainPage from "./components/Body/Community/CommunityMainPage";
+import CommunityPostPage from "./components/Body/Community/CommunityPostPage";
 export default function App() {
   return (
     <NativeBaseProvider>
-      <ChattingRoom/>
+      <CommunityPostPage/>
     </NativeBaseProvider>
   );
 }

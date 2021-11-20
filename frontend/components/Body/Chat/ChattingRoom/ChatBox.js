@@ -25,25 +25,27 @@ const ChatBox = ({onAddMessage}) =>{
     const ChatInputHandler = (newChat) => {
       setNewMessage(newChat);
     };
-
+    
     const AddChatHandler = () => {
       onAddMessage(newMessage);
       setNewMessage('');
     };
-    
     return(
           <>
-          <Box flexDirection = 'row' backgroundColor = 'white'>
+          <Box flexDirection = 'row' backgroundColor = 'blue.300' h = "30%" justifyContent = 'flex-end'>
               <Input
-                        width="85%"
+                        mt = {4}
+                        ml = {2}
+                        width="80%"
+                        height = "60%"
                         bg="white"
                         borderWidth="0"
-                        onChange = {ChatInputHandler}
+                        onChangeText = {ChatInputHandler}
                         value = {newMessage}
                         autoCorrect = {false}
               />
-              <Button onPress ={AddChatHandler}>
-                Enter
+              <Button onPress ={AddChatHandler} backgroundColor = 'blue.300' height = "60%"  mt = {4}>
+                SEND
               </Button>
           </Box>
           </>

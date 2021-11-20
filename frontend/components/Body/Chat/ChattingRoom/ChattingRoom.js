@@ -22,16 +22,16 @@ import ChatRoomName from './ChatRoomName';
 import ChatBox from './ChatBox';
 const ChattingRoom = () => {
     const [messages, setMessages] = useState([]);
-    const addMessage = text => {
-        setMessages([...messages, {id: Math.random().toString(), textValue: text},]);
+    const addMessage = (text) => {
+        setMessages([...messages, {id: Math.random().toString(), textValue: text, IsFromMe: false},]);
     };
 
     return(
         <>
-            <Box safeArea Top>
+            <Box h = '10%' backgroundColor = "blue.300" mt = {10} justifyContent = 'center' pt = {2}> 
                 <ChatRoomName/>
             </Box>
-            <Box h = "82%">
+            <Box h = "76%">
                 <ChatContainer messages = {messages}/>
             </Box>
             <Box>
