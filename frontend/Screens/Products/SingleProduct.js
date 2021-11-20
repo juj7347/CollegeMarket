@@ -40,9 +40,6 @@ const SingleProduct = (props) => {
     )
 
     const addWishList = () => {
-        let formData = new FormData();
-
-        formData.append("productId", item._id);
 
         const body = {
             "productId": item._id

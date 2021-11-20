@@ -4,6 +4,11 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const multer = require('multer');
+//delete image
+const fs = require('fs');
+const util = require('util');
+
+const unlinkAsync = util.promisify(fs.unlink);
 
 const FILE_TYPE_MAP = {
     'image/png': 'png',
@@ -29,15 +34,6 @@ const storage = multer.diskStorage({
 })
 
 const uploadOptions = multer({ storage: storage })
-
-router.get(`/`, async (req, res)=>{
-    const productList = await Product.find();
-
-    if(!productList) {
-        res.status(500).json({success: false});
-    }
-    res.send(productList);
-})
 
 router.get(`/:id`, async (req, res)=>{
     const product = await Product.findById(req.params.id).populate('category');
@@ -177,8 +173,19 @@ router.put(`/gallery-image/:id`, uploadOptions.array('images', 20), async (req, 
 
 router.delete(`/:id`, (req, res)=>{
     Product.findByIdAndRemove(req.params.id).then(product =>{
-        if(product)
+        if(product) {
+            const basePath = "public/uploads/";
+            const pathLength = `${req.protocol}://${req.get('host')}/public/uploads/`.length;
+            const filename = product.image.slice(pathLength);
+            unlinkAsync(`${basePath}${filename}`)
+                .then((res)=>{
+                    console.log("image deleted")
+                })
+                .catch((err)=> {
+                    console.log(err)
+                })
             return res.status(200).json({success: true, message: 'product deleted'});
+        }
         else
             return res.status(404).json({success: false, message: "propduct not found"});
     }).catch(err=>{
