@@ -28,7 +28,10 @@ const userSchema = new mongoose.Schema({
     school: {
         type: String,
         required: true
-    }
+    },
+    wishList: [{
+        type: String
+    }]
 })
 
 userSchema.virtual('id').get(function () {

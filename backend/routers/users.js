@@ -99,6 +99,39 @@ router.post(`/login`, async (req, res)=>{
 
 })
 
+router.put(`/wish/:userId`, async (req, res)=>{
+    if(!mongoose.isValidObjectId(req.params.userId)) {
+        return res.status(400).send('Invalid User ID');
+    }
+
+    const user = await User.findById(req.params.userId);
+    if(!user) {
+        return res.status(500).json({success: false, message: "user of given ID not found"});
+    }
+
+    let newWishList = user.wishList;
+
+    if(req.body.add === true) {
+        newWishList.push(req.body.productId);
+    }
+    else {
+        newWishList = newWishList.filter(itemId => itemId !== req.body.productId);
+    }
+
+    const addWishList = await User.findByIdAndUpdate(
+        req.params.userId,
+        {
+            wishList: newWishList
+        },
+        {new: true}
+    );
+    if(!addWishList) {
+        return res.status(500).json({success: false, message: "item cannot be added to wishlist"});
+    }
+
+    res.status(200).send(addWishList)
+})
+
 router.delete(`/:id`, (req, res)=>{
     User.findByIdAndRemove(req.params.id).then(user =>{
         if(user)

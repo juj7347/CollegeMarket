@@ -10,6 +10,8 @@ import baseURL from "../../assets/common/baseURL";
 import AuthGlobal from "../../Context/store/AuthGlobal";
 import { logoutUser } from "../../Context/actions/Auth.actions";
 
+import WishList from './WishList/WishList'
+
 const UserProfile = (props) => {
 
     const context = useContext(AuthGlobal);
@@ -74,6 +76,8 @@ const UserProfile = (props) => {
                         }}
                     />
                 </View>
+
+                <WishList/>
             </ScrollView>
         </Container>
     )
