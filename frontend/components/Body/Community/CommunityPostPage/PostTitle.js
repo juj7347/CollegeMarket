@@ -20,7 +20,7 @@ import {
 const PostTitle = () => {
     return(
         <>
-            <Box backgroundColor = 'blue.100'>
+            <Box backgroundColor = 'white'>
                 <Box mt = {5} mx = {3}>
                     <Text fontSize = '24px'>
                         Title(eg.본인 2달뒤 군대감)

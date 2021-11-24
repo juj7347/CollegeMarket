@@ -20,7 +20,7 @@ import SearchBar from './SearchBar';
 
 const TopBar = () => {
     return(
-        <Box  h = '10%' backgroundColor = 'blue.300' mt = {10}>
+        <Box  h = '10%' backgroundColor = 'blue.300'>
             <VStack space = {2}>
                 <VStack space = '1'>
                     <HStack space = {3} justifyContent = 'space-around'>
