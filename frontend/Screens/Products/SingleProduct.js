@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { Image, ScrollView, View, StyleSheet, Text, Button } from "react-native";
 import { Container, Heading } from "native-base";
+
+import { useFocusEffect } from "@react-navigation/native";
 
 import { connect } from "react-redux";
 import { addToChat } from "../../Redux/Actions/chatActions"
@@ -8,38 +10,65 @@ import { addToWishList } from "../../Redux/Actions/wishListActions";
 
 import axios from 'axios';
 import baseURL from "../../assets/common/baseURL";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import AuthGlobal from "../../Context/store/AuthGlobal";
 
 import Toast from "react-native-toast-message";
 
+import EasyButton from "../../Shared/StyledComponents/EasyButton";
+
 const SingleProduct = (props) => {
 
     const [item, setItem] = useState(props.route.params.item);
     const [availability, setAvailability] = useState('');
+    const [token, setToken] = useState();
 
     const context = useContext(AuthGlobal);
-    const [addedToWishList, setAddedToWishList] = useState(false);
 
-    useEffect(()=>{
+    useFocusEffect(
+        useCallback(
+            () => {
+                AsyncStorage.getItem("jwt")
+                    .then((res)=>{
+                        setToken(res)
+                    })
+                    .catch((error)=> console.log(error))
+            },
+            []
+        )
+    )
+
+    const addWishList = () => {
+
+        const body = {
+            "productId": item._id
+        }
+
+        const config = {
+            headers: {
+                //"Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
         axios
-            .put(`${baseURL}users/wish/${context.stateUser.user.userId}`, {
-                add: addedToWishList,
-                productId: "2323"
-            })
+            .put(`${baseURL}users/wish/${context.stateUser.user.userId}`, body, config)
             .then((res)=>{
-                if(res.status == 200) {
+                if(res.status == 200 || res.status == 201) {
                     Toast.show({
                         topOffset: 60,
                         type: "success",
                         text1: `[${item.name} 관심목록에 추가]`
                     })
+                    console.log("data",res.data);
+                    console.log("config", res.config)
                 }
             })
             .catch((err)=>{
                 console.log(err)
-            })
-    },[addedToWishList])
+            });
+    }
 
     return (
         <View style={styles.container}>
@@ -60,9 +89,9 @@ const SingleProduct = (props) => {
                 <Text style={styles.price}>{item.price}원</Text>
             </View>
             <View>
-                <Button
-                    title={"톡 하기"}
-                    color={'orange'}
+                <EasyButton
+                    primary
+                    medium
                     onPress={()=>{
                         props.addItemToChat(item),
                         Toast.show({
@@ -71,15 +100,19 @@ const SingleProduct = (props) => {
                             text1: `[${item.name}] 추가`
                         })
                     }}
-                />
-                <Button
-                    title={"관심품목"}
-                    color={'red'}
-                    onPress={()=>{
+                >
+                    <Text style={{color: 'white'}}>톡 하기</Text>
+                </EasyButton>
+                <EasyButton
+                    primary
+                    medium
+                    onPress={
                         //props.addItemToWishList(item),
-                        setAddedToWishList(!addedToWishList)
-                    }}
-                />
+                        addWishList
+                    }
+                >
+                    <Text>관심품목</Text>
+                </EasyButton>
             </View>
         </View>
     )

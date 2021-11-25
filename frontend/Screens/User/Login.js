@@ -23,6 +23,8 @@ import {
     Divider,
   } from 'native-base';
 
+  import EasyButton from "../../Shared/StyledComponents/EasyButton";
+
 const Login = (props) => {
     const context = useContext(AuthGlobal); 
     const [email, setEmail] = useState('');
@@ -72,19 +74,25 @@ const Login = (props) => {
             />
             <View style={styles.buttonGroup}>
                 {error ? <Error message={error}/> : null}
-                <Button
-                  title="Sign In"
+                <EasyButton
+                  large
+                  primary
                   onPress={() => handleSubmit()}  
-                />
+                >
+                  <Text style={{color: 'white'}}>Sign In</Text>
+                </EasyButton>
             </View>
             <View style={[{marginTop: 40}, styles.buttonGroup]}>
                 <Text style={styles.middleText}>아직 계정이 없으신가요?</Text>
-                <Button
-                    title="Sign Up"
+                <EasyButton
+                    secondary
+                    large
                     onPress={()=>{
                         props.navigation.navigate("Register")
                     }}
-                />
+                >
+                  <Text style={{color: 'white'}}>Sign Up</Text>
+                </EasyButton>
             </View>
         </FormContainer>
     )
