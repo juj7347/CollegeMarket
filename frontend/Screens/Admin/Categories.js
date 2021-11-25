@@ -23,7 +23,7 @@ const Item = (props) => {
             <EasyButton
                 danger
                 medium
-                //onPress
+                onPress={() => props.delete(props.item._id)}
             >
                 <Text style={styles.deleteButton}>Delete</Text>
             </EasyButton>
@@ -81,13 +81,30 @@ const Categories = (props) => {
         setCategoryName("")
     }
 
+    const deleteCategory = (id) => {
+        
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+
+        axios
+            .delete(`${baseURL}categories/${id}`, config)
+            .then((res)=> {
+                const newCategories = categories.filter((item) => item.id !== id);
+                setCategories(newCategories);
+            })
+            .catch((error)=> alert("Error to delete category"));
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.list}>
                 <FlatList
                     data={categories}
                     renderItem={({item, index})=>(
-                        <Item item={item} index={index}/>
+                        <Item item={item} index={index} delete={deleteCategory}/>
                     )}
                     keyExtractor={(item)=> item.id}
                 />
