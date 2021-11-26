@@ -96,6 +96,8 @@ const Main = () => {
                           size={30}
                       />
                   ),
+                  headerShown: false
+                  /*
                   headerRight: (props) => {
                       const navigation = useNavigation();
                       return (
@@ -110,7 +112,8 @@ const Main = () => {
                         </BorderlessButton>
                       )
                   }
-                    
+                  */
+                 
                 })}
             />
             {context.stateUser.user.isAdmin === true ? (

@@ -119,7 +119,9 @@ const ProductContainer = (props) => {
             <SearchBar
                 searchFilter={searchKeyword}
             />
-            <ScrollView>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+            >
                 <View>
                     <View>
                         <CategoryFilter

@@ -9,6 +9,7 @@ const CategoryFilter = (props) => {
             bounces={true}
             horizontal={true}
             style={{backgroundColor: "#f2f2f2"}}
+            showsHorizontalScrollIndicator={false}
         >
             <List.Item style={{margin: 0, padding: 0, borderRadius: 0}}>
                 <TouchableOpacity
