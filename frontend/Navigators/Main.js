@@ -23,7 +23,7 @@ const Main = () => {
     const context = useContext(AuthGlobal);
 
     const getTabBarVisibility = (navigation) => {
-      
+      /*
       const routeName = navigation.getState().routes[navigation.getState().index].state
       ? navigation.getState().routes[navigation.getState().index].state.routes[navigation.getState().routes[navigation.getState().index].state.index].name
       : ""
@@ -35,6 +35,13 @@ const Main = () => {
       }
 
       return 'flex';
+      */
+      const index = navigation.getState().routes[navigation.getState().index].state
+        ? navigation.getState().routes[navigation.getState().index].state.index
+        : 0
+      if ( index !== 0)
+        return 'none';
+      return null
     };
 
     return (
@@ -110,7 +117,8 @@ const Main = () => {
                 <Tab.Screen
                 name="Admin"
                 component={AdminNavigator}
-                options={{
+                options={({navigation})=>({
+                    tabBarStyle: {display: getTabBarVisibility(navigation)},
                     tabBarIcon: ({color}) => (
                         <Icon
                             name="cog"
@@ -133,7 +141,7 @@ const Main = () => {
                           </BorderlessButton>
                         )
                     }
-                }}
+                })}
                 />
             ) : null}
             

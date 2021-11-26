@@ -21,7 +21,7 @@ function HomeStack() {
                 name="Product_Detail"
                 component={SingleProduct}
                 options={{
-                    headerShown: false
+                    //headerShown: false
                 }}
             />
             
