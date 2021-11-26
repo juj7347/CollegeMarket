@@ -8,6 +8,10 @@ const errorHandler = require('./helpers/error-handler');
 
 require('dotenv/config');
 
+var server = require('http').createServer(app);
+const io = require('socket.io')(server).sockets;
+const port = 3000;
+
 const api = process.env.API_URL;
 
 //router
@@ -38,6 +42,9 @@ mongoose.connect(process.env.CONNECTION_STRING)
     console.log("Connection failed");
 })
 
-app.listen(3000, ()=>{
-    console.log("server started");
+//socket.io
+require("./socket/sockets")(io);
+
+server.listen(port, ()=>{
+    console.log(`server started on port ${port}`);
 })

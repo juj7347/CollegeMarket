@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect, useContext} from "react";
+import React, {useState, useCallback, useEffect, useContext, useRef} from "react";
 import { View } from "react-native";
 import { GiftedChat, Bubble, Send } from "react-native-gifted-chat";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -10,17 +10,33 @@ import baseURL from "../../../assets/common/baseURL";
 import axios from "axios";
 
 import {io} from 'socket.io-client';
+import {NetworkInfo} from "react-native-network-info"; //npm remove
 
 const ChattingRoom = (props) => {
 
     const context = useContext(AuthGlobal);
 
     const [messages, setMessages] = useState([]);
-    const [socket, setSocket] = useState(null);
+    const [localIPAddress, setLocalIPAddress] = useState();
 
+    const socket = useRef(io("http://192.168.35.9:3000", { //ip address needs to be hided
+        forceNew: true
+    }));
+
+    //socketio
     useEffect(()=>{
-        setSocket(io("ws://localhost:8900"))
-    },[])
+        console.log(context.stateUser.user)
+        socket.current.emit("addUser", context.stateUser.user.userId)
+        socket.current.on("getUsers", users=>console.log(users))
+        /*
+        setSocket(io("http://192.168.35.9:3000", { //ip address needs to be hided
+            forceNew: true
+        }));
+        */
+    },[context.stateUser.user])
+    
+
+
 
     useEffect(() => {
         setMessages([
