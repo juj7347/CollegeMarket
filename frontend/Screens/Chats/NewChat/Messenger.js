@@ -11,6 +11,7 @@ import ChatMenu from "./ChatMenu";
 import ChatOnline from "./ChatOnline";
 import Conversations from "./Conversations";
 import Message from "./Message";
+import MessageInput from "./MessageInput";
 
 var {height} = Dimensions.get('window');
 
@@ -30,6 +31,7 @@ const Messenger = () => {
             */}
             <Message owner={true}/>
             <Message/>
+            <MessageInput/>
         </View>
     )
 }

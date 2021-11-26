@@ -98,6 +98,7 @@ const ProductContainer = (props) => {
                     ),
                 ];
         }
+        console.log("category",ctg , productsCtg);
     };
 
     //Search
@@ -129,9 +130,9 @@ const ProductContainer = (props) => {
                             setActive={setActive}
                         />
                     </View>
-                    {productsFiltered.length > 0 ? (
+                    {productsCtg.length > 0 ? (
                         <View style={styles.listContainer}>
-                            {productsFiltered.map((item)=>{
+                            {productsCtg.map((item)=>{
                                 return(
                                     <ProductList
                                         key={item._id}

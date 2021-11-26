@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     Platform
  } from "react-native";
-import { Select} from "native-base";
+import { Select } from "native-base";
 
 import FormContainer from "../../Shared/Form/FormContainer";
 import Input from "../../Shared/Form/Input";
