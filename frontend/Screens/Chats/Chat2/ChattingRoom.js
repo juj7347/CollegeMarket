@@ -12,20 +12,32 @@ import axios from "axios";
 import {io} from 'socket.io-client';
 import {NetworkInfo} from "react-native-network-info"; //npm remove
 
+import { connect } from "react-redux";
+import chatItems from "../../../Redux/Reducers/chatItems";
+
 const ChattingRoom = (props) => {
 
     const context = useContext(AuthGlobal);
 
     const [messages, setMessages] = useState([]);
-    const [localIPAddress, setLocalIPAddress] = useState();
 
-    const socket = useRef(io("http://192.168.35.9:3000", { //ip address needs to be hided
-        forceNew: true
-    }));
+    const socket = useRef();
 
     //socketio
     useEffect(()=>{
-        console.log(context.stateUser.user)
+        socket.current = io("http://192.168.35.9:3000") //ip address needs to be hided
+        /*
+        socket.current.on("getMessage", (data)=>{
+            setMessagesRecv({
+                sender: data.senderId,
+                text: data.text
+            })
+        });
+        */
+       
+    },[]);
+
+    useEffect(()=>{
         socket.current.emit("addUser", context.stateUser.user.userId)
         socket.current.on("getUsers", users=>console.log(users))
         /*
@@ -34,37 +46,19 @@ const ChattingRoom = (props) => {
         }));
         */
     },[context.stateUser.user])
-    
 
 
 
-    useEffect(() => {
-        setMessages([
-            {
-                _id: 1,
-                text: "hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello world",
-                createdAt: new Date(),
-                user: {
-                    _id: 2,
-                    name: "Jenny",
-                    avatar: "https://placeimg.com/140/140/any"
-                }
-            },
-            {
-                _id: 2,
-                text: "hello worldhello world",
-                createdAt: new Date(),
-                user: {
-                    _id: 1,
-                    name: "Eugene",
-                    avatar: "https://placeimg.com/140/140/any"
-                }
-            }
-        ])
-    }, [])
-
-    const onSend = useCallback((messages = []) => {
-        setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+    const onSend = useCallback((messagesSent = []) => {
+        setMessages(previousMessages => GiftedChat.append(previousMessages, messagesSent))
+        //채팅대상에 대한 id구해야함
+        const receiverId = props.chatItems.userId;
+        
+        socket.current.emit("sendMessage", {
+            senderId: context.stateUser.user.userId,
+            receiverId: receiverId,
+            text: messagesSent[0].text
+        });
     }, [])
 
     const renderBubble = (options) => {
@@ -136,4 +130,11 @@ const ChattingRoom = (props) => {
     )
 }
 
-export default ChattingRoom;
+const mapStateToProps = (state) => {
+    const { chatItems } = state;
+    return {
+        chatItems: chatItems
+    }
+}
+
+export default connect(mapStateToProps, null)(ChattingRoom);

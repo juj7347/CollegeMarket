@@ -47,7 +47,7 @@ const UserProfile = (props) => {
                 <Text
                     style={{ fontSize: 30}}
                 >
-                    {userProfile ? userProfile.name : ""}
+                    Name: {userProfile ? userProfile.name : ""}
                 </Text>
 
                 <View

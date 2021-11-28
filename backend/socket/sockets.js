@@ -1,3 +1,5 @@
+const messageHandler = require("./handlers/message.handler");
+/*
 let users = [];
 
 const addUser =  (userId, socketId) => {
@@ -5,12 +7,47 @@ const addUser =  (userId, socketId) => {
     users.push({userId, socketId});
 }
 
+const removeUser = (socketId) => {
+    users = users.filter(user => user.socketId !== socketId)
+}
+
+const getUser = (userId) => {
+    return users.find(user=>user.userId === userId);
+}
+*/
+let currentUserId = 2;
+const users = {};
+
 module.exports = (io) => {
     io.on("connection", (socket) => {
+        /*
+        //connect
         console.log("a user is connected");
         socket.on("addUser", (userId) => {
             addUser(userId, socket.id);
             io.emit("getUsers", users);
+        });
+
+        //send and get message
+        socket.on("sendMessage", ({senderId, receiverId, text})=>{
+            const user = getUser(receiverId);
+            io.to(user.socketId).emit("getMessage", {
+                senderId,
+                text
+            })
         })
+        //disconnect
+        socket.on("disconnect", ()=>{
+            console.log("a user disconnected");
+            removeUser(socket.id);
+            io.emit("getUsers", users);
+        })
+        */
+        //giftedChat oriented
+        users[socket.id] = { userId: currentUserId++};
+        socket.on("join", (username) => {
+            users[socket.id].username = username;
+        });
+        messageHandler.handleMessage(users, socket)
     });
 };

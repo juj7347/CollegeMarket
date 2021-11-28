@@ -38,6 +38,10 @@ const productSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
+    },
+    userProfile: {
+        type: Object,
+        //required: true
     }
 })
 //_id -> id for frontend friendlyness

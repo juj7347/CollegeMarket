@@ -7,6 +7,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { addToChat } from "../../Redux/Actions/chatActions"
 import { addToWishList } from "../../Redux/Actions/wishListActions";
+import { setChatOpponent } from "../../Redux/Actions/chatActions";
 
 import axios from 'axios';
 import baseURL from "../../assets/common/baseURL";
@@ -93,11 +94,13 @@ const SingleProduct = (props) => {
                     primary
                     medium
                     onPress={()=>{
-                        props.addItemToChat(item),
+                        props.talkTo(item.userId),
+                        props.navigation.navigate('Chat', {userName: item.userId})
                         Toast.show({
                             topOffset: 60,
                             type: "success",
-                            text1: `[${item.name}] 추가`
+                            text1: `[${item.name}] 추가`,
+                            text2: `${item.userId}`
                         })
                     }}
                 >
@@ -125,6 +128,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         addItemToWishList: (product) => {
             dispatch(addToWishList({product}))
+        },
+        talkTo: (userId) => {
+            dispatch(setChatOpponent({userId}))
         }
 
     }

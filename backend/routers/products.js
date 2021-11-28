@@ -82,7 +82,8 @@ router.post(`/`, uploadOptions.single('image'), async (req, res)=>{
         price: req.body.price,
         category: req.body.category,
         dataCreated: req.body.dataCreated,
-        userId: req.body.userId
+        userId: req.body.userId,
+        userProfile: req.body.userProfile
     })
 
     product = await product.save();

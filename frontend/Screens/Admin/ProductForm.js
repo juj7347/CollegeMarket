@@ -44,6 +44,7 @@ const ProductForm = (props) => {
     //const [isFeatured, setIsFeatured] = useState();
     const [richDescription, setRichDescription] = useState();
     const [item, setItem] = useState();
+    const [userProfile, setUserProfile] = useState();
 
     useEffect(() => {
 
@@ -63,6 +64,13 @@ const ProductForm = (props) => {
         AsyncStorage.getItem("jwt")
             .then((res)=>{
                 setToken(res)
+
+                axios
+                    .get(`${baseURL}users/${context.stateUser.user.userId}`, {
+                        headers: {Authorization: `Bearer ${res}`}
+                    })
+                    .then((user) => setUserProfile(user.data))
+                    .catch((error) => console.log(error))
             })
             .catch((error)=> console.log(error))
 
@@ -84,9 +92,9 @@ const ProductForm = (props) => {
             }
         })();
 
-            return () => {
-                setCategories([])
-            }
+        return () => {
+            setCategories([])
+        }
     },[])
 
     const pickImage = async () => {
@@ -113,7 +121,6 @@ const ProductForm = (props) => {
         }
 
         let formData = new FormData();
-
         //required step for iOS (not required for Android)
         const newImageUri = "file:///" + image.split("file:/").join("");
 
@@ -129,6 +136,7 @@ const ProductForm = (props) => {
             name: newImageUri.split("/").pop()
         });
         formData.append('userId', context.stateUser.user.userId);
+        //formData.append("userProfile", userProfile);
 
         const config = {
             headers: {
@@ -138,7 +146,6 @@ const ProductForm = (props) => {
         }
 
         if(item !== null) {
-            console.log(userId)
             axios
                 .put(`${baseURL}products/${item.id}`, formData, config)
                 .then((res)=>{
@@ -179,6 +186,7 @@ const ProductForm = (props) => {
                     }
                 })
                 .catch((error)=> {
+                    console.log(error)
                     Toast.show({
                         topOffset: 60,
                         type: "error",

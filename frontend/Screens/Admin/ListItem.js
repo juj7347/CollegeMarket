@@ -88,7 +88,6 @@ const ListItem = (props) => {
                 />
                 <Text styles={styles.item} numberOfLines={1} ellipsizeMode="tail">{props.name}</Text>
                 <Text styles={styles.item}>{props.price}원</Text>
-                <Text>userID:{props.userId}</Text>
             </TouchableOpacity>
         </View>
     )
