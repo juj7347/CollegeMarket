@@ -20,6 +20,8 @@ import {
     TextSection,
   } from "./styles/messageStyles";
 
+  import Conversation from "./Conversation";
+
   import axios from "axios";
   import baseURL from "../../../assets/common/baseURL";
 
@@ -115,7 +117,7 @@ const ChattingList = (props) => {
 
   const [token, setToken] = useState();
   const [conversations, setConversations] = useState();
-
+/*
   useFocusEffect((
     useCallback(() => {
       AsyncStorage
@@ -137,17 +139,38 @@ const ChattingList = (props) => {
     },[] 
     )
   ))
+*/
+
+  useEffect(()=>{
+    AsyncStorage
+    .getItem("jwt")
+    .then((res)=>{
+      setToken(res)
+
+      axios
+        .get(`${baseURL}conversations/${context.stateUser.user.userId}`)
+        .then((res)=>{
+          setConversations(res.data);
+        })
+        .catch((error)=>console.log(error));
+    })
+    .catch((error)=>console.log(error));
+    return () => {
+      setConversations();
+    }
+  },[])
 
   return (
       <Container>
           <FlatList
               showsVerticalScrollIndicator={false}
-              data={Messages}
+              data={conversations}
               keyExtractor={(item)=>item.id}
               renderItem={({item}) => (
                   <Card
                       onPress={()=> props.navigation.navigate('Chat',{userName: item.userName})}
                   >
+                    {/*
                       <UserInfo>
                           <UserImgWrapper>
                               <UserImg source={item.userImg}/>
@@ -166,6 +189,12 @@ const ChattingList = (props) => {
                               </MessageText>
                           </TextSection>
                       </UserInfo>
+                    */}
+                    <Conversation
+                      conversation={item}
+                      senderId={context.stateUser.user.userId}
+                      token={token}
+                    />
                   </Card>
               )}
           />
