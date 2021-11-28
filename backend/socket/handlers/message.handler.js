@@ -1,9 +1,9 @@
 let currentMessageId = 1;
 
-const createMessge = (user, messegeText) => {
+const createMessge = (user, message) => {
     return {
-        _id: currentMessageId++,
-        text: messegeText,
+        _id: message.receiverId,
+        text: message.text,
         createAt: new Date(),
         user: {
             _id: user.userId,

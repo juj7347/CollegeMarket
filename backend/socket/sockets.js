@@ -20,9 +20,10 @@ const users = {};
 
 module.exports = (io) => {
     io.on("connection", (socket) => {
+        console.log("a user is connected");
         /*
         //connect
-        console.log("a user is connected");
+        
         socket.on("addUser", (userId) => {
             addUser(userId, socket.id);
             io.emit("getUsers", users);
@@ -44,9 +45,11 @@ module.exports = (io) => {
         })
         */
         //giftedChat oriented
-        users[socket.id] = { userId: currentUserId++};
-        socket.on("join", (username) => {
-            users[socket.id].username = username;
+        users[socket.id] = {};
+        socket.on("join", (user) => {
+            console.log("joined")
+            users[socket.id].username = user.username;
+            users[socket.id].userId = user.userId;
         });
         messageHandler.handleMessage(users, socket)
     });

@@ -25,7 +25,7 @@ const ChattingRoom = (props) => {
 
     //socketio
     useEffect(()=>{
-        socket.current = io("http://192.168.35.9:3000") //ip address needs to be hided
+        socket.current = io("http://192.168.35.9:3000"); //ip address needs to be hided
         /*
         socket.current.on("getMessage", (data)=>{
             setMessagesRecv({
@@ -34,13 +34,26 @@ const ChattingRoom = (props) => {
             })
         });
         */
-       
+        socket.current.emit("join", {userId: context.stateUser.user.userId, username: "John Doe"});
+
+        socket.current.on("messageToClient", (message = []) => {
+            console.log(message)
+            setMessages(prevMessages => GiftedChat.append(prevMessages, message))
+        });
+        
+       /*
+        return () => {
+            socket.current = null;
+            setMessages();
+        }
+        */
     },[]);
 
     useEffect(()=>{
+        /*
         socket.current.emit("addUser", context.stateUser.user.userId)
         socket.current.on("getUsers", users=>console.log(users))
-        /*
+        
         setSocket(io("http://192.168.35.9:3000", { //ip address needs to be hided
             forceNew: true
         }));
@@ -49,16 +62,19 @@ const ChattingRoom = (props) => {
 
 
 
-    const onSend = useCallback((messagesSent = []) => {
-        setMessages(previousMessages => GiftedChat.append(previousMessages, messagesSent))
-        //채팅대상에 대한 id구해야함
+    const onSend = useCallback((messages = []) => {
         const receiverId = props.chatItems.userId;
+        socket.current.emit("messageToServer", {text: messages[0].text, receiverId: receiverId});
+        setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+        //채팅대상에 대한 id구해야함
         
+        /*
         socket.current.emit("sendMessage", {
             senderId: context.stateUser.user.userId,
             receiverId: receiverId,
             text: messagesSent[0].text
         });
+        */
     }, [])
 
     const renderBubble = (options) => {
@@ -118,7 +134,7 @@ const ChattingRoom = (props) => {
             messages={messages}
             onSend={messages => onSend(messages)}
             user={{
-                _id: 1
+                _id: context.stateUser.user.userId
             }}
             renderBubble={renderBubble}
             renderSend={renderSend}
@@ -126,6 +142,7 @@ const ChattingRoom = (props) => {
             scrollToBottom={true}
             scrollToBottomComponent={scrollToBottomComponent}
             messagesContainerStyle={{backgroundColor: "#fff"}}
+
         />
     )
 }
