@@ -9,6 +9,7 @@ import ChatNavigator from "./ChatNavigator";
 import UserNavigator from "./UserNavigator";
 import AdminNavigator from "./AdminNavigator";
 //import CommunityNavigator from "./CommunityNavigator";
+import SearchScreen from "../Screens/Search/Search"
 
 import AuthGlobal from "../Context/store/AuthGlobal";
 
@@ -171,6 +172,14 @@ const Main = () => {
                           </BorderlessButton>
                         )
                     }
+                }}
+            />
+            <Tab.Screen
+                name="SearchScreen"
+                component={SearchScreen}
+                options={{
+                  tabBarButton: () => null,
+                  tabBarVisible: false
                 }}
             />
             

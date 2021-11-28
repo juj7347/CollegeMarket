@@ -10,7 +10,6 @@ import { Ionicons } from '@expo/vector-icons';
 const SearchBar = (props) => {
 
     const [searched, setSearched] = useState("");
-
     return (
         <VStack width="100%" space={5} alignItems="center">
           <Input
@@ -22,7 +21,7 @@ const SearchBar = (props) => {
             py="1"
             px="2"
             placeholderTextColor="gray.500"
-            onChangeText={(text) => setSearched(text)}
+            onChangeText={(text) => setSearched(text), (text) => props.onSearch(text)}
             _hover={{ bg: 'gray.200', borderWidth: 0 }}
             borderWidth="0"
             _web={{
