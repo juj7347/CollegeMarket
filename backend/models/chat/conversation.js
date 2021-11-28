@@ -3,9 +3,8 @@ const mongoose = require('mongoose');
 const conversationSchema = mongoose.Schema(
     {
         members: {
-            type: Array
-        },
-
+            type: Array,
+        }
     },
     { timestamps: true }
 )

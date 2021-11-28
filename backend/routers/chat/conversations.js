@@ -14,6 +14,17 @@ router.get(`/:userId`, async (req, res)=>{
     res.status(200).send(conversation);
 })
 
+router.get(`/find/:firstId/:secondId`, async (req, res)=>{
+    const conversation = await Conversation.find({
+        members: {$all: [req.params.firstId, req.params.secondId]}
+    })
+
+    if(!conversation) {
+        return res.status(500).send("cannot find conversation");
+    }
+    res.status(200).send(conversation);
+})
+
 router.post(`/`, async (req, res)=>{
     let conversation = new Conversation({
         members: [req.body.senderId, req.body.receiverId]

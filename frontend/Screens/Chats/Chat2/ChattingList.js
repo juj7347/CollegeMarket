@@ -1,13 +1,12 @@
-import { NavigationContainer } from "@react-navigation/native";
-import React from "react";
+import React, {useEffect, useState, useContext, useCallback} from "react";
 import {
     View,
     FlatList,
     Text,
     Button,
-    StyleSheet
+    StyleSheet,
 } from "react-native";
-
+import { useFocusEffect } from "@react-navigation/core";
 import {
     Container,
     Card,
@@ -20,6 +19,12 @@ import {
     MessageText,
     TextSection,
   } from "./styles/messageStyles";
+
+  import axios from "axios";
+  import baseURL from "../../../assets/common/baseURL";
+
+  import AuthGlobal from "../../../Context/store/AuthGlobal";
+  import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Messages = [
     {
@@ -105,39 +110,67 @@ const Messages = [
   ];
 
 const ChattingList = (props) => {
-    return (
-        <Container>
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                data={Messages}
-                keyExtractor={(item)=>item.id}
-                renderItem={({item}) => (
-                    <Card
-                        onPress={()=> props.navigation.navigate('Chat',{userName: item.userName})}
-                    >
-                        <UserInfo>
-                            <UserImgWrapper>
-                                <UserImg source={item.userImg}/>
-                            </UserImgWrapper>
-                            <TextSection>
-                                <UserInfoText>
-                                    <UserName>
-                                        {item.userName}
-                                    </UserName>
-                                    <PostTime>
-                                        {item.messageTime}
-                                    </PostTime>
-                                </UserInfoText>
-                                <MessageText>
-                                        {item.messageText}
-                                </MessageText>
-                            </TextSection>
-                        </UserInfo>
-                    </Card>
-                )}
-            />
-        </Container>
+
+  const context = useContext(AuthGlobal);
+
+  const [token, setToken] = useState();
+  const [conversations, setConversations] = useState();
+
+  useFocusEffect((
+    useCallback(() => {
+      AsyncStorage
+      .getItem("jwt")
+      .then((res)=>{
+        setToken(res)
+
+        axios
+          .get(`${baseURL}conversations/${context.stateUser.user.userId}`)
+          .then((res)=>{
+            setConversations(res.data);
+          })
+          .catch((error)=>console.log(error));
+      })
+      .catch((error)=>console.log(error));
+      return () => {
+        setConversations();
+      }
+    },[] 
     )
+  ))
+
+  return (
+      <Container>
+          <FlatList
+              showsVerticalScrollIndicator={false}
+              data={Messages}
+              keyExtractor={(item)=>item.id}
+              renderItem={({item}) => (
+                  <Card
+                      onPress={()=> props.navigation.navigate('Chat',{userName: item.userName})}
+                  >
+                      <UserInfo>
+                          <UserImgWrapper>
+                              <UserImg source={item.userImg}/>
+                          </UserImgWrapper>
+                          <TextSection>
+                              <UserInfoText>
+                                  <UserName>
+                                      {item.userName}
+                                  </UserName>
+                                  <PostTime>
+                                      {item.messageTime}
+                                  </PostTime>
+                              </UserInfoText>
+                              <MessageText>
+                                      {item.messageText}
+                              </MessageText>
+                          </TextSection>
+                      </UserInfo>
+                  </Card>
+              )}
+          />
+      </Container>
+  )
 }
 
 export default ChattingList;

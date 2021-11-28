@@ -1,5 +1,3 @@
-let currentMessageId = 1;
-
 const createMessge = (user, message) => {
     return {
         _id: message.receiverId,
@@ -13,12 +11,13 @@ const createMessge = (user, message) => {
     }
 }
 
-const handleMessage = (users, socket) => {
+const handleMessage = (users, socket, io) => {
     socket.on("messageToServer", messageText => {
         const user = users[socket.id];
         const message = createMessge(user, messageText);
         console.log(message);
-        socket.broadcast.emit("messageToClient", message);
+        //socket.broadcast.emit("messageToClient", message);
+        io.to(socket.id).emit("messageToClient", message);
     })
 }
 

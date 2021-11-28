@@ -34,11 +34,9 @@ const ChattingRoom = (props) => {
             })
         });
         */
-        socket.current.emit("join", {userId: context.stateUser.user.userId, username: "John Doe"});
-
-        socket.current.on("messageToClient", (message = []) => {
+        socket.current.on("messageToClient", (message) => {
             console.log(message)
-            setMessages(prevMessages => GiftedChat.append(prevMessages, message))
+            setMessages(prevMessages => GiftedChat.append(prevMessages, [message]))
         });
         
        /*
@@ -58,12 +56,15 @@ const ChattingRoom = (props) => {
             forceNew: true
         }));
         */
+        socket.current.emit("join", {userId: context.stateUser.user.userId, username: "John Doe"});
+
     },[context.stateUser.user])
 
 
 
     const onSend = useCallback((messages = []) => {
         const receiverId = props.chatItems.userId;
+        //console.log(messages)
         socket.current.emit("messageToServer", {text: messages[0].text, receiverId: receiverId});
         setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
         //채팅대상에 대한 id구해야함

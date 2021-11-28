@@ -9,7 +9,7 @@ const errorHandler = require('./helpers/error-handler');
 require('dotenv/config');
 
 var server = require('http').createServer(app);
-const io = require('socket.io')(server).sockets;
+const io = require('socket.io')(server);
 const port = 3000;
 
 const api = process.env.API_URL;
@@ -18,7 +18,7 @@ const api = process.env.API_URL;
 const productRouter = require('./routers/products');
 const categoryRouter = require('./routers/categories');
 const userRouter = require('./routers/users');
-const conversationRouter = require('./routers/chat/conversations')
+const conversationRouter = require('./routers/chat/conversations');
 //middleware
 app.use(express.json());
 app.use(morgan('tiny'));

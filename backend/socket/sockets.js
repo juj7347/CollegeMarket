@@ -15,8 +15,9 @@ const getUser = (userId) => {
     return users.find(user=>user.userId === userId);
 }
 */
-let currentUserId = 2;
+
 const users = {};
+
 
 module.exports = (io) => {
     io.on("connection", (socket) => {
@@ -51,6 +52,7 @@ module.exports = (io) => {
             users[socket.id].username = user.username;
             users[socket.id].userId = user.userId;
         });
-        messageHandler.handleMessage(users, socket)
+        messageHandler.handleMessage(users, socket, io)
+
     });
 };
