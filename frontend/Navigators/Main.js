@@ -8,7 +8,8 @@ import HomeNavigator from "./HomeNavigator";
 import ChatNavigator from "./ChatNavigator";
 import UserNavigator from "./UserNavigator";
 import AdminNavigator from "./AdminNavigator";
-//import CommunityNavigator from "./CommunityNavigator";
+import CommunityNavigator from "./CommunityNavigator";
+import SearchScreen from "../Screens/Search/Search"
 
 import AuthGlobal from "../Context/store/AuthGlobal";
 
@@ -119,8 +120,9 @@ const Main = () => {
             
             <Tab.Screen
                 name="Community"
-                component={HomeNavigator}
+                component={CommunityNavigator}
                 options={{
+                    headerShown: false, 
                     tabBarIcon: ({color}) => (
                         <Icon
                             name="school"
@@ -171,6 +173,14 @@ const Main = () => {
                           </BorderlessButton>
                         )
                     }
+                }}
+            />
+            <Tab.Screen
+                name="SearchScreen"
+                component={SearchScreen}
+                options={{
+                  tabBarButton: () => null,
+                  tabBarVisible: false
                 }}
             />
             
