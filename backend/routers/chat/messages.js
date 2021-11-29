@@ -23,7 +23,7 @@ const createMessage = (messages) => {
 router.get(`/:conversationId`, async (req, res)=>{
     const messages = await Message.find({
         conversationId: req.params.conversationId
-    });//.sort({createdAt: -1})
+    }).sort({createdAt: -1});
 
     if(!messages) {
         return res.status(500).send("message get failed");
