@@ -19,6 +19,7 @@ const productRouter = require('./routers/products');
 const categoryRouter = require('./routers/categories');
 const userRouter = require('./routers/users');
 const conversationRouter = require('./routers/chat/conversations');
+const messageRouter = require('./routers/chat/messages');
 //middleware
 app.use(express.json());
 app.use(morgan('tiny'));
@@ -33,6 +34,7 @@ app.use(`${api}/products`, productRouter);
 app.use(`${api}/categories`, categoryRouter);
 app.use(`${api}/users`, userRouter);
 app.use(`${api}/conversations`, conversationRouter);
+app.use(`${api}/messages`, messageRouter);
 
 mongoose.connect(process.env.CONNECTION_STRING)
 .then(() => {

@@ -2,7 +2,8 @@ import {
     ADD_TO_CHAT,
     REMOVE_FROM_CHAT,
     CLEAR_CHAT,
-    SET_CHAT_OPPONENT
+    SET_CHAT_OPPONENT,
+    SET_CONVERSATION
 } from '../constants';
 
 export const addToChat = (payload) => {
@@ -28,6 +29,13 @@ export const clearChat = () => {
 export const setChatOpponent = (payload) => {
     return {
         type: SET_CHAT_OPPONENT,
+        payload
+    }
+}
+
+export const setConversation = (payload) => {
+    return {
+        type: SET_CONVERSATION,
         payload
     }
 }

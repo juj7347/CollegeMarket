@@ -52,6 +52,10 @@ module.exports = (io) => {
             users[socket.id].username = user.username;
             users[socket.id].userId = user.userId;
         });
+        socket.on("disconnect", () => {
+            delete users[socket.id];
+            console.log("a user disconnected")
+        })
         messageHandler.handleMessage(users, socket, io)
 
     });

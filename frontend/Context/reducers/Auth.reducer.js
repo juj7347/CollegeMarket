@@ -8,7 +8,7 @@ function authReducer (state, action) {
                 ...state,
                 isAuthenticated: !isEmpty(action.payload),
                 user: action.payload,
-                userProfile: action.userproFile
+                userProfile: action.userProfile
             };
         default:
             return state;

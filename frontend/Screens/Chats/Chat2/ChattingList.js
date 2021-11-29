@@ -142,6 +142,7 @@ const ChattingList = (props) => {
 */
 
   useEffect(()=>{
+    console.log(context.stateUser)
     AsyncStorage
     .getItem("jwt")
     .then((res)=>{
@@ -167,35 +168,12 @@ const ChattingList = (props) => {
               data={conversations}
               keyExtractor={(item)=>item.id}
               renderItem={({item}) => (
-                  <Card
-                      onPress={()=> props.navigation.navigate('Chat',{userName: item.userName})}
-                  >
-                    {/*
-                      <UserInfo>
-                          <UserImgWrapper>
-                              <UserImg source={item.userImg}/>
-                          </UserImgWrapper>
-                          <TextSection>
-                              <UserInfoText>
-                                  <UserName>
-                                      {item.userName}
-                                  </UserName>
-                                  <PostTime>
-                                      {item.messageTime}
-                                  </PostTime>
-                              </UserInfoText>
-                              <MessageText>
-                                      {item.messageText}
-                              </MessageText>
-                          </TextSection>
-                      </UserInfo>
-                    */}
-                    <Conversation
-                      conversation={item}
-                      senderId={context.stateUser.user.userId}
-                      token={token}
-                    />
-                  </Card>
+                <Conversation
+                  conversation={item}
+                  senderId={context.stateUser.user.userId}
+                  token={token}
+                  navigation={props.navigation}
+                />
               )}
           />
       </Container>

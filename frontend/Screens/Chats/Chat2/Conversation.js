@@ -17,15 +17,16 @@ import baseURL from "../../../assets/common/baseURL";
 
 import AuthGlobal from "../../../Context/store/AuthGlobal";
 
+import { connect } from "react-redux";
+import { setConversation } from "../../../Redux/Actions/chatActions";
+
 const Conversation = (props) => {
     
     const context = useContext(AuthGlobal);
     const [user, setUser] = useState();
 
     useEffect(()=>{
-        console.log("conversation", props.conversation)
-        /*
-        const receiverId = props.conversation.find(id => id !== props.senderId);
+        const receiverId = props.conversation.members.find(id => id !== props.senderId);
 
         axios
             .get(`${baseURL}users/${receiverId}`, {
@@ -35,29 +36,44 @@ const Conversation = (props) => {
                 setUser(res.data);
             })
             .catch((error)=>console.log(error));
-            */
-    },[user, props.senderId])
+        
+    },[])
 
     return (
-        <UserInfo>
-            <UserImgWrapper>
-                <UserImg/>
-            </UserImgWrapper>
-            <TextSection>
-                <UserInfoText>
-                    <UserName>
-                        {"John"}
-                    </UserName>
-                    <PostTime>
-                        {"just now"}
-                    </PostTime>
-                </UserInfoText>
-                <MessageText>
-                        {"text"}
-                </MessageText>
-            </TextSection>
-        </UserInfo>
+        <Card
+            onPress={()=> {
+                props.talkTo(props.conversation);
+                props.navigation.navigate('Chat',{userName: user.name});
+            }}
+        >
+            <UserInfo>
+                <UserImgWrapper>
+                    <UserImg/>
+                </UserImgWrapper>
+                <TextSection>
+                    <UserInfoText>
+                        <UserName>
+                            {"John"}
+                        </UserName>
+                        <PostTime>
+                            {"just now"}
+                        </PostTime>
+                    </UserInfoText>
+                    <MessageText>
+                            {"text"}
+                    </MessageText>
+                </TextSection>
+            </UserInfo>
+        </Card>
     )
 }
 
-export default Conversation;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        talkTo: (conversation) => {
+            dispatch(setConversation({conversation}));
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Conversation);

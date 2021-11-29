@@ -2,7 +2,8 @@ import {
     ADD_TO_CHAT,
     REMOVE_FROM_CHAT,
     CLEAR_CHAT,
-    SET_CHAT_OPPONENT
+    SET_CHAT_OPPONENT,
+    SET_CONVERSATION
 } from '../constants';
 
 const chatItems = (state = [], action) => {
@@ -14,6 +15,8 @@ const chatItems = (state = [], action) => {
         case CLEAR_CHAT:
             return state = [];
         case SET_CHAT_OPPONENT:
+            return state = action.payload;
+        case SET_CONVERSATION:
             return state = action.payload;
     }
 

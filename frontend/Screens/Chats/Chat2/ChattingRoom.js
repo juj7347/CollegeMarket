@@ -4,7 +4,10 @@ import { GiftedChat, Bubble, Send } from "react-native-gifted-chat";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
+import {useFocusEffect} from "@react-navigation/native";
+
 import AuthGlobal from "../../../Context/store/AuthGlobal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import baseURL from "../../../assets/common/baseURL";
 import axios from "axios";
@@ -20,63 +23,76 @@ const ChattingRoom = (props) => {
     const context = useContext(AuthGlobal);
 
     const [messages, setMessages] = useState([]);
+    const [token, setToken] = useState("");
+    const [loading, setLoading] = useState(true);
 
-    const socket = useRef();
 
     //socketio
     useEffect(()=>{
-        socket.current = io("http://192.168.35.9:3000"); //ip address needs to be hided
-        /*
-        socket.current.on("getMessage", (data)=>{
-            setMessagesRecv({
-                sender: data.senderId,
-                text: data.text
+        AsyncStorage
+            .getItem("jwt")
+            .then((res)=>{
+                setToken(res);
+                axios
+                    .get(`${baseURL}messages/${props.chatItems.conversation._id}`, {
+                        headers: { Authorization: `Bearer ${res}` }
+                    })
+                    .then((res)=>{
+                        setMessages(res.data);
+                    })
+                    .catch((error)=>console.log(error));
+                setLoading(false);
             })
-        });
-        */
-        socket.current.on("messageToClient", (message) => {
-            console.log(message)
-            setMessages(prevMessages => GiftedChat.append(prevMessages, [message]))
-        });
+            .catch((error)=>console.log(error));
         
-       /*
-        return () => {
-            socket.current = null;
-            setMessages();
-        }
-        */
-    },[]);
 
-    useEffect(()=>{
-        /*
-        socket.current.emit("addUser", context.stateUser.user.userId)
-        socket.current.on("getUsers", users=>console.log(users))
+        context.socket.on("messageToClient", (message) => {
+            setMessages(previousMessages => GiftedChat.append(previousMessages ,[message]));
+        });
         
-        setSocket(io("http://192.168.35.9:3000", { //ip address needs to be hided
-            forceNew: true
-        }));
-        */
+       return () => {
+            setMessages();
+       }
+    },[]);
+    /*
+    useEffect(()=>{
         socket.current.emit("join", {userId: context.stateUser.user.userId, username: "John Doe"});
 
     },[context.stateUser.user])
+    */
 
 
-
-    const onSend = useCallback((messages = []) => {
-        const receiverId = props.chatItems.userId;
-        //console.log(messages)
-        socket.current.emit("messageToServer", {text: messages[0].text, receiverId: receiverId});
-        setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-        //채팅대상에 대한 id구해야함
-        
-        /*
-        socket.current.emit("sendMessage", {
-            senderId: context.stateUser.user.userId,
-            receiverId: receiverId,
-            text: messagesSent[0].text
+    const onSend = (messages = []) => {
+        context.socket.emit("messageToServer", {
+            text: messages[0].text,
+            receiverId: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
+            senderId: context.stateUser.user.userId
         });
-        */
-    }, [])
+        setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+
+       const config = {
+           headers: {
+               Authorization: `Bearer ${token}`,
+               "Content-Type": "application/json"
+           }
+       }
+       
+       const message = {
+        conversationId: props.chatItems.conversation._id,
+        sender: context.stateUser.user.userId,
+        receiver: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
+        text: messages[0].text,
+        createdAt: Date.now(),
+        senderName: "test"
+        }
+
+        axios
+            .post(`${baseURL}messages/`, message, config)
+            .then(res=>{
+                console.log("sent")
+            })
+            .catch((error)=>console.log(error))
+    }
 
     const renderBubble = (options) => {
         return (
@@ -130,7 +146,7 @@ const ChattingRoom = (props) => {
         )
     }
 
-    return (
+    return !loading ? (
         <GiftedChat
             messages={messages}
             onSend={messages => onSend(messages)}
@@ -145,7 +161,7 @@ const ChattingRoom = (props) => {
             messagesContainerStyle={{backgroundColor: "#fff"}}
 
         />
-    )
+    ) : null
 }
 
 const mapStateToProps = (state) => {

@@ -126,7 +126,7 @@ router.post(`/login`, async (req, res)=>{
             secret,
             {expiresIn : '1d'}
         )
-        res.status(200).send({user: user.email, token: token});
+        res.status(200).send({user: user.email, token: token, id: user._id});
     }
     else {
         res.status(400).send('wrong password');
