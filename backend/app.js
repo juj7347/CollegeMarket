@@ -8,13 +8,18 @@ const errorHandler = require('./helpers/error-handler');
 
 require('dotenv/config');
 
+var server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const port = 3000;
+
 const api = process.env.API_URL;
 
 //router
 const productRouter = require('./routers/products');
 const categoryRouter = require('./routers/categories');
 const userRouter = require('./routers/users');
-const conversationRouter = require('./routers/chat/conversations')
+const conversationRouter = require('./routers/chat/conversations');
+const messageRouter = require('./routers/chat/messages');
 //middleware
 app.use(express.json());
 app.use(morgan('tiny'));
@@ -29,6 +34,7 @@ app.use(`${api}/products`, productRouter);
 app.use(`${api}/categories`, categoryRouter);
 app.use(`${api}/users`, userRouter);
 app.use(`${api}/conversations`, conversationRouter);
+app.use(`${api}/messages`, messageRouter);
 
 mongoose.connect(process.env.CONNECTION_STRING)
 .then(() => {
@@ -38,6 +44,9 @@ mongoose.connect(process.env.CONNECTION_STRING)
     console.log("Connection failed");
 })
 
-app.listen(3000, ()=>{
-    console.log("server started");
+//socket.io
+require("./socket/sockets")(io);
+
+server.listen(port, ()=>{
+    console.log(`server started on port ${port}`);
 })

@@ -1,10 +1,11 @@
 const {User} = require('../models/user');
+const {Conversation} = require('../models/chat/conversation');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+/*
 router.get(`/`, async (req, res)=>{
     const userList = await User.find().select('name email phone');
 
@@ -13,7 +14,7 @@ router.get(`/`, async (req, res)=>{
     }
     res.send(userList);
 })
-
+*/
 router.get(`/:id`, async(req, res)=>{
     const user = await User.findById(req.params.id).select('-passwordHash');
 
@@ -24,7 +25,7 @@ router.get(`/:id`, async(req, res)=>{
     res.status(200).send(user);
 
 })
-
+/*
 router.get(`/get/count`, async(req, res)=>{
     const userCount = await User.countDocuments((count) => count)
 
@@ -35,7 +36,41 @@ router.get(`/get/count`, async(req, res)=>{
         userCount: userCount
     });
 })
+*/
+/*
+router.get(`/conversations/:userId`, async (req, res) => {
+    const user = await User.findById(req.params.userId).select('-passwordHash');
+    if(!user) {
+        return res.status(400).send('user not found');
+    }
 
+    const conversations = user.conversations;
+
+    if(!conversations) {
+        return res.status(400).send('conversations not found')
+    }
+    return res.status(200).send(conversations);
+})
+
+router.get(`/conversations/:userId&:receiverId`, async (req, res) => {
+    const user = await User.findById(req.params.userId).select('-passwordHash');
+    if(!user) {
+        return res.status(400).send('user not found');
+    }
+
+
+    const conversations = user.conversations;
+
+    const foundConversation = conversations.find(chat => chat.receiverId === req.params.receiverId);
+
+    if(foundConversation) {
+        return res.status(200).send(foundConversation);
+    }
+    else {
+        return res.status(400).send('conversation not found');
+    }
+})
+*/
 router.post(`/`, async (req, res)=>{ //admin
     let user = new User({
         name: req.body.name,
@@ -91,24 +126,56 @@ router.post(`/login`, async (req, res)=>{
             secret,
             {expiresIn : '1d'}
         )
-        res.status(200).send({user: user.email, token: token});
+        res.status(200).send({user: user.email, token: token, id: user._id});
     }
     else {
         res.status(400).send('wrong password');
     }
 
 })
+/*
+router.put(`/conversations/:userId`, async (req, res) => {
+    if(!mongoose.isValidObjectId(req.params.userId)) {
+        return res.status(400).send('Invalid User ID');
+    }
 
+    const user = await User.findById(req.params.userId).select('-passwordHash');
+    if(!user) {
+        return res.status(500).json({success: false, message: "user of given ID not found"});
+    }
+    let conversations = user.conversations;
+
+    const newConversation = new Conversation({
+        receiverId: req.body.receiverId,
+        receiverName: req.body.receiverName,
+        receiverAvatar: req.body.receiverAvatar
+    })
+
+    conversations.push(newConversation);
+
+    const addConversation = await User.findByIdAndUpdate(
+        req.params.userId,
+        {
+            conversations: conversations
+        },
+        {new: true}
+    );
+    if(!addConversation) {
+        return res.status(500).json({success: false, message: "conversation cannot be added"});
+    }
+
+    return res.status(200).send(addConversation)
+})
+*/
 router.put(`/wish/:userId`, async (req, res)=>{
     if(!mongoose.isValidObjectId(req.params.userId)) {
         return res.status(400).send('Invalid User ID');
     }
 
-    const user = await User.findById(req.params.userId);
+    const user = await User.findById(req.params.userId).select('-passwordHash');
     if(!user) {
         return res.status(500).json({success: false, message: "user of given ID not found"});
     }
-    console.log(req.body);
     let newWishList = user.wishList;
 
     if(newWishList.includes(req.body.productId)) {

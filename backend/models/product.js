@@ -33,6 +33,15 @@ const productSchema = mongoose.Schema({
     dateCreated: {
         type: Date,
         default: Date.now
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    userProfile: {
+        type: Object,
+        //required: true
     }
 })
 //_id -> id for frontend friendlyness

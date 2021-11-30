@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import {
     View,
     Text,
@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     Platform
  } from "react-native";
-import { Select} from "native-base";
+import { Select } from "native-base";
 
 import FormContainer from "../../Shared/Form/FormContainer";
 import Input from "../../Shared/Form/Input";
@@ -21,11 +21,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import baseURL from "../../assets/common/baseURL";
 import axios from "axios";
 
+import AuthGlobal from "../../Context/store/AuthGlobal";
+
 import * as ImagePicker from "expo-image-picker"
 import mime from "mime";
 
 
 const ProductForm = (props) => {
+    
+    const context = useContext(AuthGlobal);
 
     const [pickerValue, setPickerValue] = useState('');
     const [name, setName] = useState('');
@@ -37,9 +41,10 @@ const ProductForm = (props) => {
     const [categories, setCategories] = useState([]);
     const [token, setToken] = useState();
     const [error, setError] = useState();
-    const [isFeatured, setIsFeatured] = useState();
+    //const [isFeatured, setIsFeatured] = useState();
     const [richDescription, setRichDescription] = useState();
     const [item, setItem] = useState();
+    const [userProfile, setUserProfile] = useState();
 
     useEffect(() => {
 
@@ -53,12 +58,19 @@ const ProductForm = (props) => {
             setDescription(props.route.params.item.description);
             setMainImage(props.route.params.item.image)
             setImage(props.route.params.item.image);
-            setCategory(props.route.params.item.category._id)
+            setCategory(props.route.params.item.category._id);
         }
 
         AsyncStorage.getItem("jwt")
             .then((res)=>{
                 setToken(res)
+
+                axios
+                    .get(`${baseURL}users/${context.stateUser.user.userId}`, {
+                        headers: {Authorization: `Bearer ${res}`}
+                    })
+                    .then((user) => setUserProfile(user.data))
+                    .catch((error) => console.log(error))
             })
             .catch((error)=> console.log(error))
 
@@ -80,9 +92,9 @@ const ProductForm = (props) => {
             }
         })();
 
-            return () => {
-                setCategories([])
-            }
+        return () => {
+            setCategories([])
+        }
     },[])
 
     const pickImage = async () => {
@@ -109,7 +121,6 @@ const ProductForm = (props) => {
         }
 
         let formData = new FormData();
-
         //required step for iOS (not required for Android)
         const newImageUri = "file:///" + image.split("file:/").join("");
 
@@ -118,12 +129,14 @@ const ProductForm = (props) => {
         formData.append("description", description);
         formData.append("category", category);
         formData.append("richDescription", richDescription);
-        formData.append("isFeatured", isFeatured);
+        //formData.append("isFeatured", isFeatured);
         formData.append("image", {
             uri: newImageUri,
             type: mime.getType(newImageUri),
             name: newImageUri.split("/").pop()
         });
+        formData.append('userId', context.stateUser.user.userId);
+        //formData.append("userProfile", userProfile);
 
         const config = {
             headers: {
@@ -173,6 +186,7 @@ const ProductForm = (props) => {
                     }
                 })
                 .catch((error)=> {
+                    console.log(error)
                     Toast.show({
                         topOffset: 60,
                         type: "error",

@@ -48,6 +48,7 @@ const Login = (props) => {
       }
       else {
         loginUser(user, context.dispatch)
+        context.socket.emit("join", {userId: context.stateUser.user.userId, username: "John Doe"});
       }
     }
 
