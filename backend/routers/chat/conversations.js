@@ -14,7 +14,8 @@ router.get(`/:userId`, async (req, res)=>{
     res.status(200).send(conversation);
 })
 
-router.get(`/find/:firstId/:secondId`, async (req, res)=>{
+router.get(`/find/:firstUserId/:secondUserId`, async (req, res)=>{
+    /*
     const conversation = await Conversation.find({
         members: {$all: [req.params.firstId, req.params.secondId]}
     })
@@ -22,7 +23,21 @@ router.get(`/find/:firstId/:secondId`, async (req, res)=>{
     if(!conversation) {
         return res.status(500).send("cannot find conversation");
     }
-    res.status(200).send(conversation);
+    console.log("found", conversation._id)
+    return res.status(200).send(conversation);
+    */
+    try {
+        const conversation = await Conversation.findOne({
+          members: { $all: [req.params.firstUserId, req.params.secondUserId] },
+        });
+        console.log(conversation)
+        if(req.params.firstUserId !== req.params.secondUserId)
+            return res.status(200).json(conversation);
+        else 
+            return res.statusMessage(200).json({sameUser: true});
+      } catch (err) {
+        res.status(500).json(err);
+      }
 })
 
 router.post(`/`, async (req, res)=>{

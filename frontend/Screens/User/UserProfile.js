@@ -24,7 +24,7 @@ const UserProfile = (props) => {
         ) {
             props.navigation.navigate("Login") 
         }
-
+        /*
         AsyncStorage.getItem("jwt")
             .then((res) => {
                 axios
@@ -34,7 +34,8 @@ const UserProfile = (props) => {
                     .then((user)=> setUserProfile(user.data))
             })
             .catch((error) => console.log(error))
-        
+        */
+        setUserProfile(context.stateUser.userProfile);
         return () => {
             setUserProfile();
         }

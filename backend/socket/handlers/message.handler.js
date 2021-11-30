@@ -2,7 +2,7 @@ const createMessge = (receiverId, senderId, text) => {
     return {
         _id: Math.random(),
         text: text,
-        createAt: new Date(),
+        //createAt:
         user: {
             _id: senderId,
             name: "John Doe",

@@ -24,6 +24,7 @@ const SingleProduct = (props) => {
     const [item, setItem] = useState(props.route.params.item);
     const [availability, setAvailability] = useState('');
     const [token, setToken] = useState();
+    const [isChat, setIsChat] = useState(false);
 
     const context = useContext(AuthGlobal);
 
@@ -33,8 +34,28 @@ const SingleProduct = (props) => {
                 AsyncStorage.getItem("jwt")
                     .then((res)=>{
                         setToken(res)
+                        axios
+                            .get(`${baseURL}conversations/find/${context.stateUser.user.userId}/${item.userId}`, {
+                                headers: { Authorization: `Bearer ${res}`}
+                            })
+                            .then((res) => {
+                                if((res.status == 200 || res.status == 201) && !res.data.sameUser) {
+                                    setIsChat(true);
+                                    console.log(res.data)
+                                    props.talkTo(res.data);
+                                }
+                                else {
+                                    setIsChat(false);
+                                }
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                setIsChat(false);
+                            })
+
                     })
                     .catch((error)=> console.log(error))
+
             },
             []
         )
@@ -90,22 +111,43 @@ const SingleProduct = (props) => {
                 <Text style={styles.price}>{item.price}원</Text>
             </View>
             <View>
-                <EasyButton
-                    primary
-                    medium
-                    onPress={()=>{
-                        props.talkTo(item.userId),
-                        props.navigation.navigate('Chat', {userName: item.userId})
-                        Toast.show({
-                            topOffset: 60,
-                            type: "success",
-                            text1: `[${item.name}] 추가`,
-                            text2: `${item.userId}`
-                        })
-                    }}
-                >
-                    <Text style={{color: 'white'}}>톡 하기</Text>
-                </EasyButton>
+                {isChat
+                ? (
+                    <EasyButton
+                        primary
+                        medium
+                        onPress={()=>{
+                            props.navigation.navigate('Chat', {userName: item.userId})
+                            Toast.show({
+                                topOffset: 60,
+                                type: "success",
+                                text1: `[${item.name}] 추가`,
+                                text2: `${item.userId}`
+                            })
+                        }}
+                    >
+                        <Text style={{color: 'white'}}>채팅방으로 가기</Text>
+                    </EasyButton>
+                )
+                : (
+                    <EasyButton
+                        primary
+                        medium
+                        onPress={()=>{
+                            props.talkTo(item.userId),
+                            props.navigation.navigate('Chat', {userName: item.userId})
+                            Toast.show({
+                                topOffset: 60,
+                                type: "success",
+                                text1: `[${item.name}] 추가`,
+                                text2: `${item.userId}`
+                            })
+                        }}
+                    >
+                        <Text style={{color: 'white'}}>톡 하기</Text>
+                    </EasyButton>
+                )}
+                
                 <EasyButton
                     primary
                     medium
@@ -129,8 +171,8 @@ const mapDispatchToProps = (dispatch) => {
         addItemToWishList: (product) => {
             dispatch(addToWishList({product}))
         },
-        talkTo: (userId) => {
-            dispatch(setChatOpponent({userId}))
+        talkTo: (conversation) => {
+            dispatch(setChatOpponent({conversation}))
         }
 
     }

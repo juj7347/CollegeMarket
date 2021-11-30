@@ -117,7 +117,7 @@ const ChattingList = (props) => {
 
   const [token, setToken] = useState();
   const [conversations, setConversations] = useState();
-/*
+
   useFocusEffect((
     useCallback(() => {
       AsyncStorage
@@ -139,8 +139,8 @@ const ChattingList = (props) => {
     },[] 
     )
   ))
-*/
 
+/*
   useEffect(()=>{
     console.log(context.stateUser)
     AsyncStorage
@@ -160,7 +160,7 @@ const ChattingList = (props) => {
       setConversations();
     }
   },[])
-
+*/
   return (
       <Container>
           <FlatList
