@@ -10,13 +10,12 @@ import UserNavigator from "./UserNavigator";
 import AdminNavigator from "./AdminNavigator";
 import CommunityNavigator from "./CommunityNavigator";
 import SearchScreen from "../Screens/Search/Search"
-
 import AuthGlobal from "../Context/store/AuthGlobal";
 
 //new
 import { BorderlessButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-
+import CommunityMainPage from "../components/Body/Community/CommunityMainPage";
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
@@ -178,6 +177,14 @@ const Main = () => {
             <Tab.Screen
                 name="SearchScreen"
                 component={SearchScreen}
+                options={{
+                  tabBarButton: () => null,
+                  tabBarVisible: false
+                }}
+            />
+            <Tab.Screen
+                name="CommunityMainPage"
+                component={CommunityMainPage}
                 options={{
                   tabBarButton: () => null,
                   tabBarVisible: false
