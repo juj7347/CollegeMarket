@@ -5,7 +5,7 @@ const router = express.Router();
 const createMessage = (messages) => {
     const giftedMessage = messages.map(message => {
         return {
-            _id: message.receiver,
+            _id: Math.random(),
             text: message.text,
             createAt: message.createdAt,
             user: {
@@ -28,7 +28,6 @@ router.get(`/:conversationId`, async (req, res)=>{
     if(!messages) {
         return res.status(500).send("message get failed");
     }
-
     res.status(200).send(createMessage(messages));
 })
 

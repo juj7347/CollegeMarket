@@ -166,7 +166,7 @@ const ChattingList = (props) => {
           <FlatList
               showsVerticalScrollIndicator={false}
               data={conversations}
-              keyExtractor={(item)=>item.id}
+              keyExtractor={(item)=>item._id}
               renderItem={({item}) => (
                 <Conversation
                   conversation={item}

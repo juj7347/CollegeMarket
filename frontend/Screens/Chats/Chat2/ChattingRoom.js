@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect, useContext, useRef} from "react";
-import { View } from "react-native";
+import { View, Text, Button, FlatList } from "react-native";
 import { GiftedChat, Bubble, Send } from "react-native-gifted-chat";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -18,6 +18,9 @@ import {NetworkInfo} from "react-native-network-info"; //npm remove
 import { connect } from "react-redux";
 import chatItems from "../../../Redux/Reducers/chatItems";
 
+import Message from "./Message";
+let i = 0;
+
 const ChattingRoom = (props) => {
 
     const context = useContext(AuthGlobal);
@@ -27,9 +30,9 @@ const ChattingRoom = (props) => {
     const [loading, setLoading] = useState(true);
 
 
-    //socketio
-    useEffect(()=>{
-        AsyncStorage
+    useFocusEffect((
+        useCallback(()=>{
+            AsyncStorage
             .getItem("jwt")
             .then((res)=>{
                 setToken(res);
@@ -44,6 +47,17 @@ const ChattingRoom = (props) => {
                 setLoading(false);
             })
             .catch((error)=>console.log(error));
+
+            return () => {
+                setMessages();
+                setLoading(true);
+            }
+        },[])
+    ))
+
+    //socketio
+    
+    useEffect(()=>{
         
 
         context.socket.on("messageToClient", (message) => {
@@ -54,21 +68,33 @@ const ChattingRoom = (props) => {
             setMessages();
        }
     },[]);
+    
+
     /*
     useEffect(()=>{
         socket.current.emit("join", {userId: context.stateUser.user.userId, username: "John Doe"});
 
     },[context.stateUser.user])
     */
-
-
-    const onSend = (messages = []) => {
+    const onPress = () => {
         context.socket.emit("messageToServer", {
-            text: messages[0].text,
+            text: "sent",
             receiverId: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
             senderId: context.stateUser.user.userId
         });
-        setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+        
+        const messageToSend = [{
+            _id: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
+            text: "sent",
+            createdAt: Date.now(),
+            user:{
+                _id: context.stateUser.user.userId,
+                name: "John Doe"
+            }
+
+        }];
+        setMessages(previousMessages => [...messages,messageToSend]);
+        
 
        const config = {
            headers: {
@@ -81,19 +107,51 @@ const ChattingRoom = (props) => {
         conversationId: props.chatItems.conversation._id,
         sender: context.stateUser.user.userId,
         receiver: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
-        text: messages[0].text,
+        text: "sent",
         createdAt: Date.now(),
         senderName: "test"
         }
 
         axios
             .post(`${baseURL}messages/`, message, config)
-            .then(res=>{
-                console.log("sent")
-            })
+            .then(res=>{})
             .catch((error)=>console.log(error))
+
     }
 
+    const onSend = (messageSent) => {
+        
+        context.socket.emit("messageToServer", {
+            text: messages[0].text,
+            receiverId: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
+            senderId: context.stateUser.user.userId
+        });
+        
+
+        setMessages(previousMessages => GiftedChat.append(previousMessages, messageSent))
+
+       const config = {
+           headers: {
+               Authorization: `Bearer ${token}`,
+               "Content-Type": "application/json"
+           }
+       }
+       
+       const message = {
+        conversationId: props.chatItems.conversation._id,
+        sender: context.stateUser.user.userId,
+        receiver: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
+        text: messageSent[0].text,
+        createdAt: Date.now(),
+        senderName: "test"
+        }
+
+        axios
+            .post(`${baseURL}messages/`, message, config)
+            .then(res=>{})
+            .catch((error)=>console.log(error))
+
+    }
     const renderBubble = (options) => {
         return (
             <Bubble
@@ -149,7 +207,7 @@ const ChattingRoom = (props) => {
     return !loading ? (
         <GiftedChat
             messages={messages}
-            onSend={messages => onSend(messages)}
+            onSend={messageSent => onSend(messageSent)}
             user={{
                 _id: context.stateUser.user.userId
             }}
@@ -161,6 +219,8 @@ const ChattingRoom = (props) => {
             messagesContainerStyle={{backgroundColor: "#fff"}}
 
         />
+
+    
     ) : null
 }
 

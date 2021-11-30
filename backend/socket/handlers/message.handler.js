@@ -1,6 +1,6 @@
 const createMessge = (receiverId, senderId, text) => {
     return {
-        _id: receiverId,
+        _id: Math.random(),
         text: text,
         createAt: new Date(),
         user: {
@@ -20,7 +20,7 @@ const handleMessage = (users, socket, io) => {
             if(userValues.userId === receiverId) {
                 const socketId = socketIds[i];
                 const message = createMessge(receiverId, senderId, text);
-                io.sockets.sockets[socketId].emit("messageToClient", message);
+                socket.to(socketId).emit("messageToClient", message);
                 break;
             }
         }
