@@ -10,15 +10,15 @@ import {
     PostTime,
     MessageText,
     TextSection,
-  } from "./styles/messageStyles";
+} from "../styles/messageStyles";
 
 import axios from "axios";
-import baseURL from "../../../assets/common/baseURL";
+import baseURL from "../../assets/common/baseURL";
 
-import AuthGlobal from "../../../Context/store/AuthGlobal";
+import AuthGlobal from "../../Context/store/AuthGlobal";
 
 import { connect } from "react-redux";
-import { setConversation } from "../../../Redux/Actions/chatActions";
+import { setConversation } from "../../Redux/Actions/chatActions";
 
 const Conversation = (props) => {
     

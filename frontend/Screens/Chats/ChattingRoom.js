@@ -6,19 +6,18 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import {useFocusEffect} from "@react-navigation/native";
 
-import AuthGlobal from "../../../Context/store/AuthGlobal";
+import AuthGlobal from "../../Context/store/AuthGlobal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import baseURL from "../../../assets/common/baseURL";
+import baseURL from "../../assets/common/baseURL";
 import axios from "axios";
 
 import {io} from 'socket.io-client';
 import {NetworkInfo} from "react-native-network-info"; //npm remove
 
 import { connect } from "react-redux";
-import chatItems from "../../../Redux/Reducers/chatItems";
+import chatItems from "../../Redux/Reducers/chatItems";
 
-import Message from "./Message";
 let i = 0;
 
 const ChattingRoom = (props) => {

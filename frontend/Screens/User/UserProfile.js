@@ -1,6 +1,5 @@
 import React, {useCallback, useContext, useState, useEffect} from "react";
 import { View, Text, ScrollView, Button, StyleSheet } from "react-native";
-import { Container } from 'native-base';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -11,6 +10,16 @@ import AuthGlobal from "../../Context/store/AuthGlobal";
 import { logoutUser } from "../../Context/actions/Auth.actions";
 
 import WishList from './WishList/WishList'
+
+import {
+    Container,
+    ProfileInfo,
+    ProfileImageContainer,
+    ProfileImage,
+    ProfileText,
+    ActivityContainer,
+    Activity
+} from "./UserPageStyles"
 
 const UserProfile = (props) => {
 
@@ -43,7 +52,29 @@ const UserProfile = (props) => {
     }, [context.stateUser.isAuthenticated])
 
     return (
-        <Container style={styles.container}>
+        <View >
+            <Container>
+                <ProfileInfo>
+                    <ProfileImageContainer>
+                        <ProfileImage/>
+                    </ProfileImageContainer>
+                    <ProfileText>
+                        <Text>{userProfile ? userProfile.name : ""}</Text>
+                        <Text>고려대학교</Text>
+                    </ProfileText>
+                    <ActivityContainer>
+                        <Activity>
+                            <Text>판매</Text>
+                        </Activity>
+                        <Activity>
+                            <Text>관심</Text>
+                        </Activity>
+                        <Activity>
+                            <Text>구매</Text>
+                        </Activity>
+                    </ActivityContainer>
+                </ProfileInfo>
+            </Container>
             <ScrollView contentContainerStyle={styles.subContainer}>
                 <Text
                     style={{ fontSize: 30}}
@@ -80,7 +111,7 @@ const UserProfile = (props) => {
 
                 <WishList/>
             </ScrollView>
-        </Container>
+        </View>
     )
 }
 

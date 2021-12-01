@@ -5,8 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 //newchat
 import Messenger from "../Screens/Chats/NewChat/Messenger";
 //chat2
-import ChattingList from "../Screens/Chats/Chat2/ChattingList"
-import ChattingRoom from "../Screens/Chats/Chat2/ChattingRoom";
+import ChattingList from "../Screens/Chats/ChattingList"
+import ChattingRoom from "../Screens/Chats/ChattingRoom";
 
 
 
