@@ -20,6 +20,7 @@ const categoryRouter = require('./routers/categories');
 const userRouter = require('./routers/users');
 const conversationRouter = require('./routers/chat/conversations');
 const messageRouter = require('./routers/chat/messages');
+const mailRouter = require('./routers/EmailAuth/mail');
 //middleware
 app.use(express.json());
 app.use(morgan('tiny'));
@@ -35,6 +36,7 @@ app.use(`${api}/categories`, categoryRouter);
 app.use(`${api}/users`, userRouter);
 app.use(`${api}/conversations`, conversationRouter);
 app.use(`${api}/messages`, messageRouter);
+app.use(`${api}/mail`, mailRouter);
 
 mongoose.connect(process.env.CONNECTION_STRING)
 .then(() => {
