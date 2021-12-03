@@ -43,7 +43,9 @@ const ChattingList = (props) => {
         setToken(res)
 
         axios
-          .get(`${baseURL}conversations/${context.stateUser.user.userId}`)
+          .get(`${baseURL}conversations/${context.stateUser.user.userId}`, {
+            headers: {Authorization: `Bearer ${res}`}
+          })
           .then((res)=>{
             setConversations(res.data);
           })
