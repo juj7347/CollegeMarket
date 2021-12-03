@@ -22,6 +22,8 @@ function HomeStack() {
                 component={SingleProduct}
                 options={{
                     //headerShown: false
+                    headerTransparent: true,
+                    title: ""
                 }}
             />
             

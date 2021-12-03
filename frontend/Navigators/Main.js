@@ -66,6 +66,7 @@ const Main = () => {
                 name="Home"
                 component={HomeNavigator}
                 options={({navigation})=>({
+                  headerShown: getTabBarVisibility(navigation) !== 'none',
                   tabBarStyle: {display: getTabBarVisibility(navigation)},
                   tabBarIcon: ({ color }) => (
                       <Icon

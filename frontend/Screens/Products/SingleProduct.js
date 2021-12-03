@@ -1,6 +1,29 @@
 import React, { useState, useContext, useCallback } from "react";
-import { Image, ScrollView, View, StyleSheet, Text, Button } from "react-native";
-import { Container, Heading } from "native-base";
+import { Image, ScrollView, View, StyleSheet, Text, Button, TouchableOpacity } from "react-native";
+import {
+    Header,
+    Post,
+    Row,
+    Time,
+    User,
+    Photo,
+    PostContent,
+    Title,
+    Footer,
+    Like,
+    Chat,
+    Seperator,
+    BottomDivider,
+    Price,
+    ChatText,
+    BottomInfo,
+    Category,
+    Container,
+    GoBack
+} from "./styles";
+import Avatar from "../../Shared/Avatar";
+
+import {Entypo, AntDesign} from "react-native-vector-icons";
 
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -18,13 +41,14 @@ import AuthGlobal from "../../Context/store/AuthGlobal";
 import Toast from "react-native-toast-message";
 
 import EasyButton from "../../Shared/StyledComponents/EasyButton";
+import { fontStyle } from "styled-system";
 
 const SingleProduct = (props) => {
 
     const [item, setItem] = useState(props.route.params.item);
     const [availability, setAvailability] = useState('');
     const [token, setToken] = useState();
-    const [isChat, setIsChat] = useState(false);
+    const [userProfile, setUserprofile] = useState();
 
     const context = useContext(AuthGlobal);
 
@@ -40,21 +64,18 @@ const SingleProduct = (props) => {
                             })
                             .then((res) => {
                                 if((res.status == 200 || res.status == 201) && !res.data.sameUser) {
-                                    setIsChat(true);
                                     console.log(res.data)
                                     props.talkTo(res.data);
-                                }
-                                else {
-                                    setIsChat(false);
                                 }
                             })
                             .catch((error) => {
                                 console.log(error);
-                                setIsChat(false);
                             })
 
                     })
                     .catch((error)=> console.log(error))
+
+                setUserprofile(context.stateUser.userProfile);
 
             },
             []
@@ -83,8 +104,6 @@ const SingleProduct = (props) => {
                         type: "success",
                         text1: `[${item.name} 관심목록에 추가]`
                     })
-                    console.log("data",res.data);
-                    console.log("config", res.config)
                 }
             })
             .catch((err)=>{
@@ -93,73 +112,82 @@ const SingleProduct = (props) => {
     }
 
     return (
-        <View style={styles.container}>
+        <Container>
             <ScrollView style={styles.scrolView}>
-                <View>
-                    <Image
-                        source={{uri: item.image ? item.image : "https://m.media-amazon.com/images/I/51USYvNTMhL._SL1024_.jpg"}}
-                        resizeMode="contain"
-                        style={styles.image}
-                    />
-                </View>
-                <View style={styles.contentContainer}>
-                    <Heading size='xl' style={styles.contentHeader}>{item.name}</Heading>
-                </View>
-                {/*Todo description*/}
+                <Photo
+                    source={{uri: item.image ? item.image : require("../../assets/users/post1.jpg")}}
+                />
+                <Header>
+                    <Row>
+                        <Avatar
+                            source={require("../../assets/users/user3.jpg")}
+                        />
+                        <View style={{paddingLeft: 10}}>
+                            <User>
+                                {userProfile ? userProfile.name : ""}
+                            </User>
+                            <Row>
+                                <Time>
+                                    {/*item.createdAt*/}
+                                    18일전
+                                </Time>
+                                <Entypo
+                                    name="dot-single"
+                                    size={12}
+                                    color="#747476"
+                                />
+                                <Entypo
+                                    name="globe"
+                                    size={10}
+                                    color="#747476"
+                                />
+                            </Row>
+                        </View>
+                    </Row>
+                    <TouchableOpacity>
+                        <Entypo
+                            name="dots-three-horizontal"
+                            size={15}
+                            color="#222121"
+                        />
+                    </TouchableOpacity>
+                </Header>
+                <BottomDivider/>
+                <Post>
+                    <Title>
+                        {item.name}
+                    </Title>
+                    <PostContent>
+                        {item.description}
+                    </PostContent>
+                </Post>
             </ScrollView>
-            <View style={styles.bottomContainer}>
-                <Text style={styles.price}>{item.price}원</Text>
-            </View>
-            <View>
-                {isChat
-                ? (
-                    <EasyButton
-                        primary
-                        medium
-                        onPress={()=>{
-                            props.navigation.navigate('Chat', {userName: item.userId})
-                            Toast.show({
-                                topOffset: 60,
-                                type: "success",
-                                text1: `[${item.name}] 추가`,
-                                text2: `${item.userId}`
-                            })
-                        }}
-                    >
-                        <Text style={{color: 'white'}}>채팅방으로 가기</Text>
-                    </EasyButton>
-                )
-                : (
-                    <EasyButton
-                        primary
-                        medium
-                        onPress={()=>{
-                            props.talkTo(item.userId),
-                            props.navigation.navigate('Chat', {userName: item.userId})
-                            Toast.show({
-                                topOffset: 60,
-                                type: "success",
-                                text1: `[${item.name}] 추가`,
-                                text2: `${item.userId}`
-                            })
-                        }}
-                    >
-                        <Text style={{color: 'white'}}>톡 하기</Text>
-                    </EasyButton>
-                )}
-                
-                <EasyButton
-                    primary
-                    medium
-                    onPress={
-                        //props.addItemToWishList(item),
-                        addWishList
-                    }
+            <BottomDivider/>
+            <Footer>
+                <Like>
+                    <AntDesign
+                        name="hearto" //heart if liked
+                        size={30}
+                        color="#222121" // blue if liked
+                    />
+                </Like>
+                <BottomInfo>
+                    <Price>
+                        {item.price}원
+                    </Price>
+                    <Category>
+                        의류
+                    </Category>
+                </BottomInfo>
+                <Chat
+                    onPress={()=>{
+                        props.navigation.navigate('Chat', {userName: item.userId})
+                    }}
                 >
-                    <Text>관심품목</Text>
-                </EasyButton>
-            </View>
-        </View>
+                    <ChatText>대화하기</ChatText>
+                </Chat>
+            </Footer>
+        </Container>
     )
 }
 
@@ -179,43 +207,9 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        position: 'relative',
-        height:' 100%'
-    },
     scrollView: {
         marginBottom: 80,
         padding: 5
-    },
-    imageContainer: {
-        backgroundColor: 'white',
-        padding : 0,
-        margin: 0
-    },
-    image: {
-        width: '100%',
-        height: 250
-    },
-    contentContainer: {
-        marginTop: 20,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    contentHeader: {
-        fontWeight: 'bold',
-        marginBottom: 20
-    },
-    bottomContainer: {
-        flexDirection: 'row',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        backgroundColor: 'white'
-    },
-    price: {
-        fontSize: 24,
-        margin: 20,
-        color: 'red'
     }
 })
 
