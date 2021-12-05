@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -10,6 +10,7 @@ import UserNavigator from "./UserNavigator";
 import AdminNavigator from "./AdminNavigator";
 import CommunityNavigator from "./CommunityNavigator";
 import SearchScreen from "../Screens/Search/Search"
+import LoginNavigator from "./LoginNavigator"
 
 import AuthGlobal from "../Context/store/AuthGlobal";
 
@@ -22,6 +23,7 @@ const Tab = createBottomTabNavigator();
 const Main = () => {
 
     const context = useContext(AuthGlobal);
+    const [loggedIn, setLoggedin] = useState(false);
 
     const getTabBarVisibility = (navigation) => {
       /*
@@ -45,7 +47,14 @@ const Main = () => {
       return null
     };
 
-    return (
+    useEffect(()=>{
+      setLoggedin(context.stateUser.isAuthenticated);
+
+      return () => setLoggedin();
+    },[context.stateUser.isAuthenticated])
+
+    return loggedIn ?
+    (
         <Tab.Navigator
             initialRouteName="Home"
             screenOptions={{
@@ -57,6 +66,7 @@ const Main = () => {
                 name="Home"
                 component={HomeNavigator}
                 options={({navigation})=>({
+                  headerShown: getTabBarVisibility(navigation) !== 'none',
                   tabBarStyle: {display: getTabBarVisibility(navigation)},
                   tabBarIcon: ({ color }) => (
                       <Icon
@@ -216,6 +226,8 @@ const Main = () => {
             />
             
         </Tab.Navigator>
+    ) : (
+      <LoginNavigator/>
     )
 }
 

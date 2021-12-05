@@ -13,6 +13,8 @@ import Toast from 'react-native-toast-message';
 
 import EasyButton from "../../Shared/StyledComponents/EasyButton";
 
+import { useNavigation } from "@react-navigation/core";
+
 const Register = (props) => {
 
     const [email, setEmail] = useState("");
@@ -20,6 +22,7 @@ const Register = (props) => {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigation = useNavigation();
 
     const register = () => {
         if (
@@ -49,7 +52,7 @@ const Register = (props) => {
                         text2: "로그인을 해주세요!"
                     })
                     setTimeout(() => {
-                       props.navigation.navigate("Login"); 
+                        navigation.navigate("Login"); 
                     }, 500); //성공시 500ms후 login창으로
                 }
             })
@@ -115,7 +118,7 @@ const Register = (props) => {
                         secondary
                         large
                         onPress={()=>{
-                            props.navigation.navigate("Login")
+                            navigation.navigate("Login")
                         }}
                     >
                         <Text style={{color: 'white'}}>Back to Login</Text>

@@ -13,10 +13,9 @@ function authJwt() {
             {url: /\/public\/uploads(.*)/ , methods: ['GET', 'OPTIONS']},
             {url: /\/api\/v1\/products(.*)/ , methods: ['GET', 'OPTIONS']},
             {url: /\/api\/v1\/categories(.*)/ , methods: ['GET', 'OPTIONS']},
-
-            {url: /\/api\/v1\/conversations(.*)/ , methods: ['GET', 'OPTIONS']}, //needs to be deleted, chat requires authorization
-            {url: /\/api\/v1\/conversations(.*)/ , methods: ['POST', 'OPTIONS']},
-
+            
+            {url: /\/api\/v1\/address(.*)/ , methods: ['GET', 'OPTIONS']},
+            {url: /\/api\/v1\/address(.*)/ , methods: ['POST', 'OPTIONS']},
             `${api}/users/login`,
             `${api}/users/register`
         ]

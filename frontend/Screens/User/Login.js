@@ -9,6 +9,8 @@ import Error from "../../Shared/Form/Error";
 import AuthGlobal from "../../Context/store/AuthGlobal";
 import { loginUser } from "../../Context/actions/Auth.actions";
 
+import { useNavigation } from "@react-navigation/core";
+
 //
 import {
     NativeBaseProvider,
@@ -26,16 +28,11 @@ import {
   import EasyButton from "../../Shared/StyledComponents/EasyButton";
 
 const Login = (props) => {
-    const context = useContext(AuthGlobal); 
+    const context = useContext(AuthGlobal);
+    const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState("");
-  
-    useEffect(() => {
-        if (context.stateUser.isAuthenticated === true) {
-            props.navigation.navigate("UserProfile");
-        }
-    }, [context.stateUser.isAuthenticated])
 
     const handleSubmit = () => {
       const user = {
@@ -89,7 +86,7 @@ const Login = (props) => {
                     secondary
                     large
                     onPress={()=>{
-                        props.navigation.navigate("Register")
+                        navigation.navigate("Register")
                     }}
                 >
                   <Text style={{color: 'white'}}>Sign Up</Text>
