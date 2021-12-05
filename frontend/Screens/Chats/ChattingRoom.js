@@ -69,55 +69,6 @@ const ChattingRoom = (props) => {
     },[]);
     
 
-    /*
-    useEffect(()=>{
-        socket.current.emit("join", {userId: context.stateUser.user.userId, username: "John Doe"});
-
-    },[context.stateUser.user])
-    */
-    const onPress = () => {
-        context.socket.emit("messageToServer", {
-            text: "sent",
-            receiverId: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
-            senderId: context.stateUser.user.userId
-        });
-        
-        const messageToSend = [{
-            _id: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
-            text: "sent",
-            createdAt: Date.now(),
-            user:{
-                _id: context.stateUser.user.userId,
-                name: "John Doe"
-            }
-
-        }];
-        setMessages(previousMessages => [...messages,messageToSend]);
-        
-
-       const config = {
-           headers: {
-               Authorization: `Bearer ${token}`,
-               "Content-Type": "application/json"
-           }
-       }
-       
-       const message = {
-        conversationId: props.chatItems.conversation._id,
-        sender: context.stateUser.user.userId,
-        receiver: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
-        text: "sent",
-        createdAt: Date.now(),
-        senderName: "test"
-        }
-
-        axios
-            .post(`${baseURL}messages/`, message, config)
-            .then(res=>{})
-            .catch((error)=>console.log(error))
-
-    }
-
     const onSend = (messageSent) => {
         
         context.socket.emit("messageToServer", {
@@ -145,10 +96,20 @@ const ChattingRoom = (props) => {
         senderName: "test"
         }
 
+        const lastMessage = messageSent[0].text ? messageSent[0].text : "";
+
         axios
             .post(`${baseURL}messages/`, message, config)
             .then(res=>{})
             .catch((error)=>console.log(error))
+
+        axios
+            .put(`${baseURL}conversations/${props.chatItems.conversation._id}`, {
+                lastMessage: lastMessage,
+                lastSent: Date.now()
+            }, config)
+            .then((res)=>{console.log(res.data)})
+            .catch((err) => console.log(err));
 
     }
     const renderBubble = (options) => {
