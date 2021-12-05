@@ -30,6 +30,9 @@ const productSchema = mongoose.Schema({
         ref: 'Category',
         required: true
     },
+    categoryName: {
+        type: String
+    },
     dateCreated: {
         type: Date,
         default: Date.now

@@ -27,6 +27,7 @@ const Conversation = (props) => {
 
     useEffect(()=>{
         const receiverId = props.conversation.members.find(id => id !== props.senderId);
+        console.log(props.conversation)
 
         axios
             .get(`${baseURL}users/${receiverId}`, {
@@ -48,19 +49,21 @@ const Conversation = (props) => {
         >
             <UserInfo>
                 <UserImgWrapper>
-                    <UserImg/>
+                    <UserImg
+                        source={require('../../assets/users/graduation-cap.png')}
+                    />
                 </UserImgWrapper>
                 <TextSection>
                     <UserInfoText>
                         <UserName>
-                            {"John"}
+                            {user ? user.name : ""}
                         </UserName>
                         <PostTime>
-                            {"just now"}
+                            {props.conversation.lastSent}
                         </PostTime>
                     </UserInfoText>
                     <MessageText>
-                            {"text"}
+                            {props.conversation.lastMessage}
                     </MessageText>
                 </TextSection>
             </UserInfo>

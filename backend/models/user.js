@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true
+        //required: true
     },
     isAdmin: {
         type: Boolean,
@@ -23,11 +23,11 @@ const userSchema = new mongoose.Schema({
     },
     place: {
         type: String,
-        required: true
+        //required: true
     },
     school: {
         type: String,
-        required: true
+        //required: true
     },
     wishList: [{
         type: String

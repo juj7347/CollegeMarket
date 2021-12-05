@@ -120,7 +120,7 @@ const SingleProduct = (props) => {
                 <Header>
                     <Row>
                         <Avatar
-                            source={require("../../assets/users/user3.jpg")}
+                            source={require("../../assets/users/graduation-cap.png")}
                         />
                         <View style={{paddingLeft: 10}}>
                             <User>

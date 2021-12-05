@@ -1,6 +1,7 @@
 const {Conversation} = require('../../models/chat/conversation');
 const express = require('express');
 const router = express.Router();
+const mongoose = require("mongoose");
 
 router.get(`/:userId`, async (req, res)=>{
     const conversation = await Conversation.find({
@@ -52,6 +53,27 @@ router.post(`/`, async (req, res)=>{
     }
 
     res.status(200).send(conversation);
+})
+
+router.put(`/:conversationId`, async (req, res)=>{
+    if(!mongoose.isValidObjectId(req.params.conversationId)) {
+        return res.status(400).send('Invalid Conversation ID');
+    }
+    
+    const updatedMessage = await Conversation.findByIdAndUpdate(
+        req.params.conversationId,
+        {
+            lastMessage: req.body.lastMessage,
+            lastSent: req.body.lastSent
+        }
+    );
+    
+    if(!updatedMessage) {
+        return res.status(500).send('conversation cannot be updated');
+    }
+    
+    res.send(updatedMessage);
+    
 })
 
 router.delete(`/:conversationId`, async (req, res)=>{

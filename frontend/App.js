@@ -54,7 +54,7 @@ export default function App() {
           <NavigationContainer>
             <NativeBaseProvider>
               <Main/>
-              {/*<Toast ref={(ref)=> Toast.setRef(ref)}/> fix later*/}
+              <Toast ref={(ref)=> Toast.setRef(ref)}/>
             </NativeBaseProvider>
           </NavigationContainer>
       </Provider>
