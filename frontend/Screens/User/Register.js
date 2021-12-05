@@ -22,7 +22,6 @@ const Register = (props) => {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [userId, setUserId] = useState();
     const navigation = useNavigation();
 
     const register = () => {
@@ -46,7 +45,17 @@ const Register = (props) => {
             .post(`${baseURL}users/register`, user)
             .then((res)=>{
                 if (res.status == 200) {
-                    setUserId(res.data._id);
+                    axios
+                    .post(`${baseURL}wishlist`, {userId: res.data._id})
+                    .then((res)=>{
+                        if(res.status == 200) {
+                            console.log("wishlist added");
+                        }
+                    })
+                    .catch((error)=>{
+                        console.log(error);
+                    });
+                    
                     Toast.show({
                         topOffset: 60,
                         type: "success",
@@ -65,23 +74,9 @@ const Register = (props) => {
                     text1: "회원가입 실패",
                     text2: "회원가입을 다시 해주세요"
                 })
-            })
-        
-        axios
-            .post(`${baseURL}wishlist`, {userId: userId}, {
-                headers: {
-                    "Content-Type" : "application/json"
-                }
-            })
-            .then((res)=>{
-                if(res.status == 200) {
-                    console.log("wishlist added");
-                }
-            })
-            .catch((error)=>{
-                console.log(error);
             });
-            
+
+        
     }
 
     return (
