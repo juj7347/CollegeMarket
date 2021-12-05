@@ -2,6 +2,7 @@ const {Wishlist} = require('../models/wishlist');
 const {User} = require('../models/user');
 const express = require('express');
 const router = express.Router();
+const mongoose = require("mongoose");
 
 router.get(`/:userId`, async (req, res)=>{
     const wishlist = await Wishlist.findOne({
@@ -36,7 +37,7 @@ router.put('/:userId', async (req, res)=>{
         return res.status(400).send('Invalid User ID');
     }
 
-    const wishlist = await Wishlist.find({userId: req.params.userId});
+    const wishlist = await Wishlist.findOne({userId: req.params.userId});
 
     if(!wishlist) {
         return res.status(500).send("wishlist of given user ID not found");
@@ -47,7 +48,7 @@ router.put('/:userId', async (req, res)=>{
     if(req.body.type === "product") {
         newList = wishlist.productList;
         if(newList.includes(req.body.itemId)) {
-            newList.filter(id => id !== req.body.itemId);
+            newList = newList.filter(id => id != req.body.itemId);
         }
         else {
             newList.push(req.body.itemId);

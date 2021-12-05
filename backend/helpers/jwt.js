@@ -18,6 +18,16 @@ function authJwt() {
             {url: /\/api\/v1\/address(.*)/ , methods: ['POST', 'OPTIONS']},
 
             {url: /\/api\/v1\/users(.*)/ , methods: ['GET', 'OPTIONS']},
+
+            {url: /\/api\/v1\/wishlist(.*)/ , methods: ['PUT', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/wishlist(.*)/ , methods: ['GET', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/conversations(.*)/ , methods: ['GET', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/conversations(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/conversations(.*)/ , methods: ['PUT', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/conversations(.*)/ , methods: ['DELETE', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/messages(.*)/ , methods: ['GET', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/messages(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
+
             `${api}/users/login`,
             `${api}/users/register`,
             `${api}/wishlist`
