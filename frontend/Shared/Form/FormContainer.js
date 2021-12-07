@@ -1,13 +1,17 @@
 import React from "react";
 import { ScrollView, Dimensions, StyleSheet, Text } from "react-native";
+import { Container } from "../../Screens/Styles/wrapper";
+import { Title } from "../../Screens/Styles/text";
 
 var {width} = Dimensions.get('window');
 
 const FormContainer = (props) => {
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>{props.title}</Text>
+            <Container>
+            <Title>{props.title}</Title>
             {props.children}
+            </Container>
         </ScrollView>
     )
 }

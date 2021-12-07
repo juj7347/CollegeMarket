@@ -1,9 +1,10 @@
 import React, {useCallback, useContext, useState, useEffect} from "react";
-import { View, Text, ScrollView, Button, StyleSheet } from "react-native";
-import { Container } from 'native-base';
+import { View, Text, Button, StyleSheet } from "react-native";
+import { ScrollView, Avatar } from "native-base";
+import { Container } from "../Styles/wrapper";
 import { useFocusEffect } from '@react-navigation/native';
+import { RoundedButton } from "../Styles/buttons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import axios from 'axios';
 import baseURL from "../../assets/common/baseURL";
 
@@ -42,14 +43,25 @@ const UserProfile = (props) => {
     }, [context.stateUser.isAuthenticated])
 
     return (
-        <Container style={styles.container}>
+        <Container>
             <ScrollView contentContainerStyle={styles.subContainer}>
+            <View style={{flexDirection: 'row'}}>
+            <Avatar
+                bg="green.500"
+                mr="1"
+                size="lg"
+                source={{
+                uri: "https://bit.ly/broken-link",
+                }}
+            >
+                123
+            </Avatar>
                 <Text
-                    style={{ fontSize: 30}}
+                    style={{ fontSize: 45}}
                 >
                     {userProfile ? userProfile.name : ""}
                 </Text>
-
+                </View>
                 <View
                     style={{marginTop: 20}}
                 >
@@ -68,8 +80,15 @@ const UserProfile = (props) => {
                 <View
                     style={{marginTop : 80}}
                 >
-                    <Button
-                        title={"Sign Out"}
+                    <RoundedButton
+                        title={"로그아웃"}
+                        onPress={() => {
+                            AsyncStorage.removeItem("jwt"),
+                            logoutUser(context.dispatch)
+                        }}
+                    />
+                    <RoundedButton
+                        title={"관심목록"}
                         onPress={() => {
                             AsyncStorage.removeItem("jwt"),
                             logoutUser(context.dispatch)

@@ -8,7 +8,6 @@ import {
     Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { 
     Container, 
     Text
@@ -16,18 +15,16 @@ import {
 
 import { useFocusEffect } from '@react-navigation/native';
 
-//con
+//connect
 import baseURL from '../../assets/common/baseURL';
 import axios from 'axios';
 
-import ProductList from './ProductList';
-import CategoryFilter from './CategoryFilter';
-import SearchBar from './SearchBar';
+import ProductList from '../Products/ProductList';
 import { backgroundColor } from 'styled-system';
 
 var {width, height} = Dimensions.get('window');
 
-const ProductContainer = (props) => {
+const SearchResult = (props) => {
 
     const [products, setProducts] = useState([]);
     
@@ -100,35 +97,13 @@ const ProductContainer = (props) => {
         }
     };
 
-    //Search
-    const searchKeyword = (keyword) => {
-        {
-            keyword === ""
-                ? setProductsFiltered(productsCtg)
-                : setProductsFiltered(
-                    productsCtg.filter((i) => i.name.toLowerCase().includes(keyword.toLowerCase()))
-                );
-        }
-    }
 
     return (
         <>
         {!loading ? (
         <SafeAreaView>
-            <SearchBar
-                searchFilter={searchKeyword}
-            />
-            <ScrollView>
+            <ScrollView contentContainerStyle={styles.listcontainer}>
                 <View>
-                    <View>
-                        <CategoryFilter
-                            categories={categories}
-                            categoryFilter={changeCtg}
-                            productsCtg={productsCtg}
-                            active={active}
-                            setActive={setActive}
-                        />
-                    </View>
                     {productsFiltered.length > 0 ? (
                         <View style={styles.listContainer}>
                             {productsFiltered.map((item)=>{
@@ -179,4 +154,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ProductContainer;
+export default SearchResult;

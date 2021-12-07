@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect} from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
+import { ContentText } from "../Styles/text";
 
 import FormContainer from "../../Shared/Form/FormContainer";
 import Input from "../../Shared/Form/Input";
@@ -8,6 +9,7 @@ import Error from "../../Shared/Form/Error";
 //context
 import AuthGlobal from "../../Context/store/AuthGlobal";
 import { loginUser } from "../../Context/actions/Auth.actions";
+import { RoundedInput } from "../Styles/input";
 
 //
 import {
@@ -55,8 +57,8 @@ const Login = (props) => {
         <FormContainer
             title={"Login"}
         >
-            <Text>Email</Text>
-            <Input
+            <ContentText>Email</ContentText>
+            <RoundedInput
                 placeholder={"이메일 주소를 입력하세요"}
                 name={"email"}
                 id={"email"}
@@ -64,7 +66,7 @@ const Login = (props) => {
                 onChangeText={(text)=> setEmail((text.toLowerCase()))}
             />
             <Text>Password</Text>
-            <Input
+            <RoundedInput
                 placeholder={"비밀번호를 입력하세요"}
                 name={"password"}
                 id={"password"}

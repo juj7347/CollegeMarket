@@ -16,6 +16,8 @@ import AuthGlobal from "../Context/store/AuthGlobal";
 import { BorderlessButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import CommunityMainPage from "../components/Body/Community/CommunityMainPage";
+import CategorySelect from "../Screens/Category/CategorySelect";
+import { LogoImage } from "./Logo";
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
@@ -34,6 +36,8 @@ const Main = () => {
                 name="Home"
                 component={HomeNavigator}
                 options={{
+                    title: "대학시장",
+                    headerLeft: (props) => <LogoImage {...props} />,
                     tabBarIcon: ({ color }) => (
                         <Icon
                             name="home"
@@ -45,6 +49,16 @@ const Main = () => {
                     headerRight: (props) => {
                         const navigation = useNavigation();
                         return (
+                          <View style={{flexDirection: 'row'}}>
+                            <BorderlessButton
+                            onPress={() => navigation.navigate("CategorySelect")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-menu"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </BorderlessButton>
                           <BorderlessButton
                             onPress={() => navigation.navigate("SearchScreen")}
                             style={{ marginRight: 15 }}
@@ -54,6 +68,7 @@ const Main = () => {
                               size={Platform.OS === "ios" ? 22 : 25}
                             />
                           </BorderlessButton>
+                          </View>
                         )
                     }
                 }}
@@ -185,6 +200,14 @@ const Main = () => {
             <Tab.Screen
                 name="CommunityMainPage"
                 component={CommunityMainPage}
+                options={{
+                  tabBarButton: () => null,
+                  tabBarVisible: false
+                }}
+            />
+            <Tab.Screen
+                name="CategorySelect"
+                component={CategorySelect}
                 options={{
                   tabBarButton: () => null,
                   tabBarVisible: false
