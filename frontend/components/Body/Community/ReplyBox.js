@@ -16,14 +16,16 @@ import {
   Divider,
   ScrollView,
 } from 'native-base';
+import ReplyContents from './ReplyContents';
 
 const Reply = () => {
     return(
-        <>
-            <Text fontSize = '15px'>
+        <Box>
+            <Text fontSize = '15px' mb = {10}>
                 댓글 내용
             </Text>
-        </>
+            <ReplyContents/>
+        </Box>
     );
 };
 export default Reply;

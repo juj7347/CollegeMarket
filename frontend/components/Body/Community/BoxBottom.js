@@ -18,7 +18,7 @@ import {
   ScrollView,
 } from 'native-base';
 
-import Reply from './Reply';
+import ReplyBox from './ReplyBox';
 
 const BoxBottom = () => {
     const [visible, setVisible] = React.useState(false)
@@ -39,7 +39,7 @@ const BoxBottom = () => {
                     </HStack>
                 </HStack>
             </Box>
-            {visible && <Reply/>}
+            {visible && <ReplyBox/>}
         </>
     );
 };

@@ -5,13 +5,19 @@ import {
   CheckIcon,
   Center,
   NativeBaseProvider,
+  usePropsResolution,
 } from "native-base"
 
 
-const Selection = () => {
+const Selection = ({getChoice}) => {
   let [service, setService] = React.useState("")
+  const setCategory = (item) => {
+    setService(item);
+    getChoice(item);
+  }
+
   return (
-    <VStack space={4} backgroundColor = 'white' w = "70%">
+    <VStack space={4} backgroundColor = 'white' w = "80%">
       <Select
         selectedValue={service}
         accessibilityLabel="Choose Service"
@@ -21,7 +27,9 @@ const Selection = () => {
           endIcon: <CheckIcon size="5" />,
         }}
         mt={1}
-        onValueChange={(itemValue) => setService(itemValue)}
+        onValueChange={(itemValue) => 
+          setCategory(itemValue)
+        }
       >
         <Select.Item label="커뮤니티" value="ux" />
         <Select.Item label="과외" value="web" />

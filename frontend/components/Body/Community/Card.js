@@ -14,7 +14,7 @@ import BoxBottom from "./BoxBottom"
 /*
     content = {title: string, subtitle: string, text: string, image: string, id: String, time: number}로 할 예정
 */
-export const Card = ({title, subtitle, text, image, id, time}) => {
+const Card = ({title, subtitle, text, image, id, time}) => {
     console.log(title);
   return (
     <Box my = {2}
@@ -37,15 +37,14 @@ export const Card = ({title, subtitle, text, image, id, time}) => {
     >
       <Box>
         <HStack>
-        <Text
-              color="coolGray.600"
-              _dark={{
-                color: "warmGray.200",
-              }}
-              fontWeight="400"
-            >
-              작성자:
-        </Text>
+        <AspectRatio w="5%" ratio={1 / 1} mx = {1}>
+          <Image
+            source={{
+              uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
+            }}
+            alt="image"
+          />
+        </AspectRatio>
         <Text>
             {id}
         </Text>
@@ -105,14 +104,6 @@ export const Card = ({title, subtitle, text, image, id, time}) => {
       <BoxBottom/>
     </Box>
   )
-}
+};
 
-export default () => {
-  return (
-    <NativeBaseProvider>
-      <Center flex={1} px="3">
-        <Card />
-      </Center>
-    </NativeBaseProvider>
-  )
-}
+export default Card;

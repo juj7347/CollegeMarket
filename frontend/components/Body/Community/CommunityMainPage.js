@@ -22,7 +22,7 @@ import Dummy from './Dummy.json'
 import { alignContent } from 'styled-system';
 /* setContents =[...contents, {title: string, subtitle: string, text: string, image: string, id(작성자): String, time(작성시간): number}]*/
 const CommunityMainPage = () => {
-    const contents = [{title: "제목1", subtitle: "부제목1", text: "내용1", image: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg", id: "정윤재", time: "1"}];
+    const contents = Dummy.contents;
     return(
         
           /*<ScrollView>
