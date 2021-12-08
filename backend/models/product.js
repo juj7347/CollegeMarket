@@ -19,7 +19,6 @@ const productSchema = mongoose.Schema({
     },
     images: [{
         type: String,
-        default: ''
     }],
     price: {
         type: Number,
@@ -42,9 +41,13 @@ const productSchema = mongoose.Schema({
         ref: "User",
         required: true
     },
-    userProfile: {
-        type: Object,
-        //required: true
+    userName: {
+        type: String,
+        default: ""
+    },
+    userImg: {
+        type: String,
+        default: ""
     }
 })
 //_id -> id for frontend friendlyness

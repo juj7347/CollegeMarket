@@ -80,13 +80,13 @@ const SingleProduct = (props) => {
                             })
 
                         axios
-                        .get(`${baseURL}wishlist/${context.stateUser.user.userId}`, {headers: { Authorization: `Bearer ${res}`}})
-                        .then((res)=>{
-                            if(res.data.productList.includes(item._id)) {
-                                setLiked(true);
-                            }
-                        })
-                        .catch((error)=>console.log(error));
+                            .get(`${baseURL}wishlist/${context.stateUser.user.userId}`, {headers: { Authorization: `Bearer ${res}`}})
+                            .then((res)=>{
+                                if(res.data.productList.includes(item._id)) {
+                                    setLiked(true);
+                                }
+                            })
+                            .catch((error)=>console.log(error));
         
 
                     })
@@ -121,7 +121,6 @@ const SingleProduct = (props) => {
             })
             .catch((err)=>{
                 console.log(err);
-                console.log(config)
             });
         
     }
@@ -139,12 +138,11 @@ const SingleProduct = (props) => {
                         />
                         <View style={{paddingLeft: 10}}>
                             <User>
-                                {userProfile ? userProfile.name : ""}
+                                {item.userName}
                             </User>
                             <Row>
                                 <Time>
-                                    {/*item.createdAt*/}
-                                    18일전
+                                    {item.dateCreated}
                                 </Time>
                                 <Entypo
                                     name="dot-single"
@@ -196,12 +194,12 @@ const SingleProduct = (props) => {
                         {item.price}원
                     </Price>
                     <Category>
-                        의류
+                        {item.categoryName}
                     </Category>
                 </BottomInfo>
                 <Chat
                     onPress={()=>{
-                        props.navigation.navigate('Chat', {userName: item.userId, receiverId: item.userId})
+                        props.navigation.navigate('Chat_from_Product', {userName: item.userName, receiverId: item.userId})
                     }}
                 >
                     <ChatText>대화하기</ChatText>

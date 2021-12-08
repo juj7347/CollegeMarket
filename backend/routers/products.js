@@ -73,12 +73,12 @@ router.post(`/`, uploadOptions.single('image'), async (req, res)=>{
     if(!category) {
         return res.status(400).send('Invalid Category');
     }
-
+    
     const file = req.file;
     if(!file) {
         return res.status(400).send('No image in request');
     }
-
+    
     const fileName =  file.filename;
     const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
 
@@ -92,7 +92,8 @@ router.post(`/`, uploadOptions.single('image'), async (req, res)=>{
         categoryName: req.body.categoryName,
         dataCreated: req.body.dataCreated,
         userId: req.body.userId,
-        userProfile: req.body.userProfile
+        userName: req.body.userName,
+        userImg: req.body.userImg
     })
 
     product = await product.save();

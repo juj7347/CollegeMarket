@@ -121,7 +121,6 @@ const ChattingRoom = (props) => {
     
     useEffect(()=>{
         
-
         context.socket.on("messageToClient", (message) => {
             setMessages(previousMessages => GiftedChat.append(previousMessages ,[message]));
         });
@@ -159,7 +158,6 @@ const ChattingRoom = (props) => {
             createdAt: Date.now(),
             senderName: "test"
         }
-        console.log("message",message);
 
         const lastMessage = messageSent[0].text ? messageSent[0].text : "";
 

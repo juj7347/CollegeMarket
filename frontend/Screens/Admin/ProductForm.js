@@ -44,7 +44,6 @@ const ProductForm = (props) => {
     //const [isFeatured, setIsFeatured] = useState();
     const [richDescription, setRichDescription] = useState();
     const [item, setItem] = useState();
-    const [userProfile, setUserProfile] = useState();
 
     useEffect(() => {
 
@@ -59,20 +58,23 @@ const ProductForm = (props) => {
             setMainImage(props.route.params.item.image)
             setImage(props.route.params.item.image);
             setCategory(props.route.params.item.category._id);
+            
         }
-
+        console.log(context.stateUser.userProfile)
         AsyncStorage.getItem("jwt")
             .then((res)=>{
                 setToken(res)
-
+                /*
                 axios
                     .get(`${baseURL}users/${context.stateUser.user.userId}`, {
                         headers: {Authorization: `Bearer ${res}`}
                     })
                     .then((user) => setUserProfile(user.data))
                     .catch((error) => console.log(error))
+                */
             })
-            .catch((error)=> console.log(error))
+            .catch((error)=> console.log(error));
+
 
         //Categories
         axios
@@ -120,23 +122,24 @@ const ProductForm = (props) => {
             setError("필수항목들을 입력해 주세요")
         }
 
-        let formData = new FormData();
         //required step for iOS (not required for Android)
         const newImageUri = "file:///" + image.split("file:/").join("");
 
-        formData.append("name", name);
-        formData.append("price", price);
-        formData.append("description", description);
-        formData.append("category", category);
-        formData.append("richDescription", richDescription);
-        //formData.append("isFeatured", isFeatured);
+        let formData = new FormData();
+
         formData.append("image", {
             uri: newImageUri,
             type: mime.getType(newImageUri),
             name: newImageUri.split("/").pop()
         });
-        formData.append('userId', context.stateUser.user.userId);
-        //formData.append("userProfile", userProfile);
+        formData.append("name", name);
+        formData.append("price", price);
+        formData.append("description", description);
+        formData.append("category", category.id);
+        formData.append("categoryName", category.name);
+        formData.append("userId", context.stateUser.user.userId);
+        formData.append("userName", context.stateUser.userProfile.name);
+        formData.append("userImg", "img");
 
         const config = {
             headers: {
@@ -244,7 +247,7 @@ const ProductForm = (props) => {
                 onValueChange={(itemValue)=> [setPickerValue(itemValue), setCategory(itemValue)]}
             >
                 {categories.map((cat) => {
-                    return <Select.Item key={cat._id} label={cat.name} value={cat._id}/>
+                    return <Select.Item key={cat._id} label={cat.name} value={{id: cat._id, name: cat.name}}/>
                 })}
             </Select>
             {error ? <Error message={error}/> : null}

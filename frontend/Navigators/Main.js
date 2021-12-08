@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import { createStackNavigator } from "@react-navigation/stack";
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -16,14 +17,51 @@ import AuthGlobal from "../Context/store/AuthGlobal";
 
 //new
 import { BorderlessButton } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const Main = () => {
 
+  const context = useContext(AuthGlobal);
+  const [loggedIn, setLoggedin] = useState(false);
+
+  useEffect(()=>{
+    setLoggedin(context.stateUser.isAuthenticated);
+
+    return () => setLoggedin();
+  },[context.stateUser.isAuthenticated])
+
+  return (
+    <Stack.Navigator>
+      {loggedIn ? (
+          <Stack.Screen
+            name="Main"
+            component={Market}
+            options={{
+              headerShown: false
+            }}
+          />
+        ) : (
+          <Stack.Screen
+            name="Auth"
+            component={LoginNavigator}
+            options={{
+              headerShown: false
+            }}
+          />
+        )
+      }
+    </Stack.Navigator>
+  )
+}
+
+const Market = () => {
+
     const context = useContext(AuthGlobal);
     const [loggedIn, setLoggedin] = useState(false);
+
 
     const getTabBarVisibility = (navigation) => {
       /*
@@ -31,30 +69,40 @@ const Main = () => {
       ? navigation.getState().routes[navigation.getState().index].state.routes[navigation.getState().routes[navigation.getState().index].state.index].name
       : ""
       if(
-        routeName == "Chat" ||
-        routeName == "Product_Detail"
+        routeName == "Chatroom" ||
+        routeName == "Home" ||
+        routeName == "Products" ||
+        routeName == "Community" ||
+        routeName == "UserProfile"
       ) {
-        return 'none';
+        console.log("yp",routeName)
+        return null;
       }
-
-      return 'flex';
+      console.log(routeName)
+      return null;
       */
+
+     /*
+      const index = navigation.getState().index;
+      if(navigation.getState().routes[index].state) {
+        const routeIndex = navigation.getState().routes[index].state.index;
+        const routeName = navigation.getState().routes[index].state.routes[routeIndex].name;
+        console.log(routeName)
+      }
+      */
+
+      
       const index = navigation.getState().routes[navigation.getState().index].state
         ? navigation.getState().routes[navigation.getState().index].state.index
         : 0
-      if ( index !== 0)
-        return 'none';
-      return null
+      if (index === 0) {
+        return null
+      }
+      return 'none';
+      
+     
     };
-
-    useEffect(()=>{
-      setLoggedin(context.stateUser.isAuthenticated);
-
-      return () => setLoggedin();
-    },[context.stateUser.isAuthenticated])
-
-    return loggedIn ?
-    (
+    return (
         <Tab.Navigator
             initialRouteName="Home"
             screenOptions={{
@@ -97,7 +145,7 @@ const Main = () => {
             <Tab.Screen
                 name="Chatroom"
                 component={ChatNavigator}
-                options={({navigation})=>({
+                options={({route,navigation})=>({
                   tabBarStyle: {display: getTabBarVisibility(navigation)},
                   tabBarIcon: ({color}) => (
                       <Icon
@@ -107,7 +155,7 @@ const Main = () => {
                           size={30}
                       />
                   ),
-                  headerShown: false
+                  headerShown: false,
                   /*
                   headerRight: (props) => {
                       const navigation = useNavigation();
@@ -226,8 +274,6 @@ const Main = () => {
             />
             
         </Tab.Navigator>
-    ) : (
-      <LoginNavigator/>
     )
 }
 
