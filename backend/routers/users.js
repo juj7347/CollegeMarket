@@ -25,52 +25,15 @@ router.get(`/:id`, async(req, res)=>{
     res.status(200).send(user);
 
 })
-/*
-router.get(`/get/count`, async(req, res)=>{
-    const userCount = await User.countDocuments((count) => count)
 
-    if(!userCount) {
-        res.status(500).json({success: false})
+router.post(`/check`, async (req, res)=>{
+    const user = await User.findOne({email: req.body.email});
+
+    if(user) {
+        return res.status(200).send({exists: true});
     }
-    res.send({
-        userCount: userCount
-    });
+    res.status(200).send({exists: false});
 })
-*/
-/*
-router.get(`/conversations/:userId`, async (req, res) => {
-    const user = await User.findById(req.params.userId).select('-passwordHash');
-    if(!user) {
-        return res.status(400).send('user not found');
-    }
-
-    const conversations = user.conversations;
-
-    if(!conversations) {
-        return res.status(400).send('conversations not found')
-    }
-    return res.status(200).send(conversations);
-})
-
-router.get(`/conversations/:userId&:receiverId`, async (req, res) => {
-    const user = await User.findById(req.params.userId).select('-passwordHash');
-    if(!user) {
-        return res.status(400).send('user not found');
-    }
-
-
-    const conversations = user.conversations;
-
-    const foundConversation = conversations.find(chat => chat.receiverId === req.params.receiverId);
-
-    if(foundConversation) {
-        return res.status(200).send(foundConversation);
-    }
-    else {
-        return res.status(400).send('conversation not found');
-    }
-})
-*/
 router.post(`/`, async (req, res)=>{ //admin
     let user = new User({
         name: req.body.name,
@@ -167,6 +130,7 @@ router.put(`/conversations/:userId`, async (req, res) => {
     return res.status(200).send(addConversation)
 })
 */
+/*
 router.put(`/wish/:userId`, async (req, res)=>{
     if(!mongoose.isValidObjectId(req.params.userId)) {
         return res.status(400).send('Invalid User ID');
@@ -198,6 +162,7 @@ router.put(`/wish/:userId`, async (req, res)=>{
 
     res.status(200).send(addWishList)
 })
+*/
 
 router.delete(`/:id`, (req, res)=>{
     User.findByIdAndRemove(req.params.id).then(user =>{

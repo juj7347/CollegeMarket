@@ -98,7 +98,6 @@ const ProductContainer = (props) => {
                     ),
                 ];
         }
-        console.log("category",ctg , productsCtg);
     };
 
     //Search

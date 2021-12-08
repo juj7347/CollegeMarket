@@ -21,17 +21,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    place: {
-        type: String,
-        //required: true
-    },
     school: {
         type: String,
-        //required: true
-    },
-    wishList: [{
-        type: String
-    }]
+        required: true
+    }
 })
 
 userSchema.virtual('id').get(function () {

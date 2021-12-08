@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+//Singlepage
 export const Container = styled.View`
     flex: 1;
 `

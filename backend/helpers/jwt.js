@@ -27,8 +27,11 @@ function authJwt() {
             {url: /\/api\/v1\/conversations(.*)/ , methods: ['DELETE', 'OPTIONS']}, // temp
             {url: /\/api\/v1\/messages(.*)/ , methods: ['GET', 'OPTIONS']}, // temp
             {url: /\/api\/v1\/messages(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/mail(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
 
+            `${api}/address`,
             `${api}/users/login`,
+            `${api}/users/check`,
             `${api}/users/register`,
             `${api}/wishlist`
         ]
