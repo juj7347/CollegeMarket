@@ -1,6 +1,6 @@
 import React, { useState, useContext, useCallback } from "react";
-import { Image, ScrollView, View, StyleSheet, Text, Button } from "react-native";
-import { Container, Heading } from "native-base";
+import { Image, ScrollView, View, StyleSheet } from "react-native";
+import { Container, Heading, Box, HStack, Button , Text} from "native-base";
 
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -23,6 +23,11 @@ const SingleProduct = (props) => {
     const [item, setItem] = useState(props.route.params.item);
     const [availability, setAvailability] = useState('');
     const [token, setToken] = useState();
+
+    const [visible, setVisible] = React.useState(false)
+    const toggleVisible = () => {
+        setVisible(!visible);
+    };
 
     const context = useContext(AuthGlobal);
 
@@ -75,19 +80,33 @@ const SingleProduct = (props) => {
             <ScrollView style={styles.scrolView}>
                 <View>
                     <Image
-                        source={{uri: item.image ? item.image : "https://m.media-amazon.com/images/I/51USYvNTMhL._SL1024_.jpg"}}
+                        source={{uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg"}}
                         resizeMode="contain"
                         style={styles.image}
                     />
                 </View>
-                <View style={styles.contentContainer}>
-                    <Heading size='xl' style={styles.contentHeader}>{item.name}</Heading>
-                </View>
+                <Box mx = {3} my = {3}>
+                    <Heading size='xl'fontWeight = 'bold'>{item.price}원</Heading>
+                    <Text fontSize = "20px">{item.name}</Text>
+                    <Text color = 'gray.400'>update time</Text>
+                </Box>
+                <Box borderTopWidth = {1} borderTopColor = "gray.300">
+                    <Box mx = {3} my = {10}>
+                        <Text>상세 설명(판매자 기입)</Text>
+                    </Box>
+                </Box>
+                <Box>
+                    <HStack my = {2}>
+                        <Box w = "65%">
+                            <Button w = "100%" variant = 'outline' borderColor = 'gray.300' _text = {{color: 'black'}} onPress = {toggleVisible}>리뷰</Button>
+                        </Box>
+                        <Box w = "35%">
+                            <Button w = "100%" variant = 'outline' borderColor = 'gray.300' _text = {{color: 'black'}}>신고하기</Button>
+                        </Box>
+                    </HStack>
+                </Box>
                 {/*Todo description*/}
             </ScrollView>
-            <View style={styles.bottomContainer}>
-                <Text style={styles.price}>{item.price}원</Text>
-            </View>
             <View>
                 <EasyButton
                     primary

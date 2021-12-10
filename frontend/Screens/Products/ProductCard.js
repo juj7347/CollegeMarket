@@ -3,10 +3,29 @@ import {
     StyleSheet,
     View,
     Dimensions,
-    Image,
-    Text, 
-    Button
+
 } from 'react-native';
+
+import { MaterialCommunityIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
+import {
+  NativeBaseProvider,
+  Box,
+  Text,
+  Heading,
+  VStack,
+  FormControl,
+  Input,
+  Link,
+  Button,
+  Icon,
+  IconButton,
+  HStack,
+  Divider,
+  ScrollView,
+  Image,
+} from 'native-base';
+import { borderRadius } from 'styled-system';
+
 
 var {width} = Dimensions.get("window");
 
@@ -15,39 +34,43 @@ const ProductCard = (props) => {
     const { name, price, image, countInStock} = props;
 
     return (
-        <View style={styles.container}>
-            <Image 
-                style={styles.image}
-                resizeMode="contain"
-                source={{uri: image ? image : "https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png"}}    
-            />
-            <View style={styles.card}/>
-            <Text style={styles.title}>
-                {name.length > 15 ? name.substring(0, 15 - 3)
-                    + '...' : name
-                }
-            </Text>
-            <Text style={styles.price}>${price}</Text>
-
-        </View>
+        <>
+            <Box backgroundColor = 'white' h = {width/2 + 24} w = "100%">
+                    <Image 
+                        w = {width/2 - 40}
+                        h = {width/2 - 40}
+                        borderRadius = {15}
+                        backgroundColor= 'transparent'
+                        source={{uri:"https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg"}}
+                        alignSelf = 'center'
+                    />
+                    <VStack mx = {5}>
+                        <Text>
+                            {name}
+                        </Text>
+                        <Text fontWeight = 'bold'>
+                            {price}원
+                        </Text>
+                        <Text color = 'gray.400'>
+                            올린 시간
+                        </Text>
+                    </VStack>
+            </Box>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: width - 30,
+        width: width/2,
         height: width / 1.7,
-        padding: 10,
-        marginTop: 35,
-        marginBottom: 5,
         marginLeft: 15,
-        alignItems: 'center',
         backgroundColor: 'white',
         borderTopColor: 'white',
         borderBottomColor: 'gainsboro',
         borderLeftColor: 'white',
         borderRightColor: 'white',
-        borderWidth: 1
+        borderWidth: 1,
     },
     image: {
         width: width - 20 - 10,
@@ -57,7 +80,7 @@ const styles = StyleSheet.create({
         top: -45
     },
     card: {
-        marginBottom: 10,
+
         height: width / 2 - 20 - 90,
         backgroundColor: 'transparent',
         width: width - 20 - 10

@@ -15,7 +15,6 @@ import BoxBottom from "./BoxBottom"
     content = {title: string, subtitle: string, text: string, image: string, id: String, time: number}로 할 예정
 */
 const Card = ({title, subtitle, text, image, id, time}) => {
-    console.log(title);
   return (
     <Box my = {2}
       w = '100%'

@@ -11,7 +11,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { 
     Container, 
-    Text
+    HStack, 
+    Text,
+    VStack
 } from 'native-base';
 
 import { useFocusEffect } from '@react-navigation/native';
@@ -118,7 +120,7 @@ const ProductContainer = (props) => {
             <SearchBar
                 searchFilter={searchKeyword}
             />
-            <ScrollView>
+            <ScrollView backgroundColor = 'white'>
                 <View>
                     <View>
                         <CategoryFilter
@@ -129,17 +131,29 @@ const ProductContainer = (props) => {
                             setActive={setActive}
                         />
                     </View>
+                    <Text mx = {5} my = {3} fontWeight = 'bold' fontSize = "20px">최근 등록된 상품</Text>
                     {productsFiltered.length > 0 ? (
                         <View style={styles.listContainer}>
-                            {productsFiltered.map((item)=>{
-                                return(
-                                    <ProductList
-                                        key={item._id}
-                                        item={item}
-                                        navigation={props.navigation}
-                                    />
-                                )
-                            })}
+                            <HStack space = {2}>    
+                                <VStack w = "50%">
+                                    {productsFiltered.map((item) => {
+                                        return(
+                                            productsFiltered.indexOf(item) % 2 === 0 ?
+                                            <ProductList key = {item._id} item = {item} navigation = {props.navigation}/>:
+                                            <></>
+                                        )
+                                    })}
+                                </VStack>
+                                <VStack w = "50%">
+                                    {productsFiltered.map((item) => {
+                                        return(
+                                            (productsFiltered.indexOf(item)) % 2 === 1 ?
+                                            <ProductList key = {item._id} item = {item} navigation = {props.navigation}/>:
+                                            <></>
+                                        )
+                                    })}
+                                </VStack>
+                            </HStack>
                         </View>
                     ) : (
                         <View style={[styles.center, {height: height / 2}]}>
@@ -151,7 +165,7 @@ const ProductContainer = (props) => {
         </SafeAreaView>
         ) 
         : (
-            <Container style={[styles.center, {backgroundColor: "#f2f2f2"}]}>
+            <Container style={[styles.center, {backgroundColor: "white"}]}>
                 <ActivityIndicator size='large' color='red'/>
             </Container>
         )}

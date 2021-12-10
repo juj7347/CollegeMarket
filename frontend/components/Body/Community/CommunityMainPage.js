@@ -29,7 +29,7 @@ const CommunityMainPage = () => {
              {Dummy.map(content => (<Card key = {content.id} {...content}/>))}
         </ScrollView>*/
         <ScrollView>
-            {contents.map( content => (<Card title = {content.title} subtitle = {content.subtitle} text = {content.text} image = {content.image} id = {content.id} time = {content.title} />))}
+            {contents.map( content => (<Card key = {content.time} title = {content.title} subtitle = {content.subtitle} text = {content.text} image = {content.image} id = {content.id} time = {content.title} />))}
         </ScrollView>
     );
 };

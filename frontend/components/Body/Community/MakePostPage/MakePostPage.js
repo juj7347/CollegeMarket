@@ -27,8 +27,6 @@ const MakePostPage = () =>{
       setText(newText);
     };
     const complete = () => {
-      console.log(text);
-      console.log(choice);
       setText('');
       setChoice('');
     };
@@ -47,7 +45,9 @@ const MakePostPage = () =>{
         <Input 
         variant = 'unstyled' 
         placeholder = '내용 입력'
+        multiline = {true}
         onChangeText = {textHandler}
+        value = {text}
         />
         </Box>
         <Button onPress = {complete}>완료</Button> 

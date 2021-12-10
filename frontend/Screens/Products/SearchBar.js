@@ -16,7 +16,7 @@ const SearchBar = (props) => {
             placeholder="Search"
             variant="filled"
             width="100%"
-            bg="gray.100"
+            bg="white"
             borderRadius="10"
             py="1"
             px="2"
