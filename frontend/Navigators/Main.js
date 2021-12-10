@@ -243,39 +243,17 @@ const Market = () => {
                 name="User"
                 component={UserNavigator}
                 options={{
-                    tabBarIcon: ({color}) => (
-                        <Icon
-                            name="md-person"
-                            style={{position: "relative"}}
-                            color={color}
-                            size={30}
-                        />
-                    ),
-                    headerRight: (props) => {
-                        const navigation = useNavigation();
-                        return (
-                          <BorderlessButton
-                            onPress={() => navigation.navigate("SearchScreen")}
-                            style={{ marginRight: 15 }}
-                          >
-                            <Icon
-                              name="md-search"
-                              size={Platform.OS === "ios" ? 22 : 25}
-                            />
-                          </BorderlessButton>
-                        )
-                    }
+                  tabBarIcon: ({color}) => (
+                    <Icon
+                        name="md-person"
+                        style={{position: "relative"}}
+                        color={color}
+                        size={30}
+                    />
+                ),
+                    headerShown: false
                 }}
             />
-            <Tab.Screen
-                name="SearchScreen"
-                component={SearchScreen}
-                options={{
-                  tabBarButton: () => null,
-                  tabBarVisible: false
-                }}
-            />
-            
         </Tab.Navigator>
     )
 }

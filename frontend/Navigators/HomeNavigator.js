@@ -6,6 +6,8 @@ import SingleProduct from "../Screens/Products/SingleProduct";
 import ChattingRoom from "../Screens/Chats/ChattingRoom";
 import ProductForm from "../Screens/Products/Upload/ProductForm";
 import CategorySelect from "../Screens/Products/Upload/CategorySelect";
+import SearchScreen from "../Screens/Search/Search";
+import { TransitionPresets } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
@@ -45,6 +47,14 @@ function HomeStack() {
                     //headerShown: false
                     title: route.params.userName,
                 })}
+            />
+            <Stack.Screen
+                name="SearchScreen"
+                component={SearchScreen}
+                options={{
+                    //headerShown: false,
+                    ...TransitionPresets.SlideFromRightIOS
+                }}
             />
             
         </Stack.Navigator>
