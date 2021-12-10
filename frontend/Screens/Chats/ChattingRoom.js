@@ -18,47 +18,109 @@ import {NetworkInfo} from "react-native-network-info"; //npm remove
 import { connect } from "react-redux";
 import chatItems from "../../Redux/Reducers/chatItems";
 
-let i = 0;
 
 const ChattingRoom = (props) => {
 
     const context = useContext(AuthGlobal);
-
+    const [conversation, setConversation] = useState();
+    const [receiverId, setReceiverId] = useState();
     const [messages, setMessages] = useState([]);
     const [token, setToken] = useState("");
     const [loading, setLoading] = useState(true);
 
-
+/*
     useFocusEffect((
         useCallback(()=>{
+            
             AsyncStorage
             .getItem("jwt")
             .then((res)=>{
                 setToken(res);
+                if(props.chatItems.conversation.found !== false) {
+                    axios
+                        .get(`${baseURL}messages/${conversation._id}`, {
+                            headers: { Authorization: `Bearer ${res}` }
+                        })
+                        .then((res)=>{
+                            setMessages(res.data);
+                        })
+                        .catch((error)=>console.log(error));
+                }
+                else {
+                    axios
+                        .post(`${baseURL}conversations`, {senderId: context.stateUser.user.userId, receiverId: props.route.params.receiverId})
+                        .then((res)=>{
+                            setConversation(res.data);
+                            setReceiverId(props.route.params.receiverId);
+                        })
+                        .catch((error)=>console.log(error));
+                    
+                }
+                setLoading(false);
+            })
+            .catch((error)=>console.log(error));
+            
+           
+            if(props.chatItems.conversation.found !== false) {
                 axios
-                    .get(`${baseURL}messages/${props.chatItems.conversation._id}`, {
+                    .get(`${baseURL}messages/${conversation._id}`, {
                         headers: { Authorization: `Bearer ${res}` }
                     })
                     .then((res)=>{
                         setMessages(res.data);
                     })
                     .catch((error)=>console.log(error));
-                setLoading(false);
-            })
-            .catch((error)=>console.log(error));
-
+            }
+            else {
+                axios
+                    .post(`${baseURL}conversations`, {senderId: context.stateUser.user.userId, receiverId: props.route.params.receiverId})
+                    .then((res)=>{
+                        setConversation(res.data);
+                        setReceiverId(props.route.params.receiverId);
+                    })
+                    .catch((error)=>console.log(error));
+                
+            }
+            setLoading(false);
             return () => {
                 setMessages();
-                setLoading(true);
+                setLoading();
             }
         },[])
     ))
+*/
+    useEffect(()=>{
+        if(props.chatItems.conversation.found !== false) {
+            axios
+                .get(`${baseURL}messages/${props.chatItems.conversation._id}`)
+                .then((res)=>{
+                    setMessages(res.data);
+                    setConversation(props.chatItems.conversation);
+                    setReceiverId(props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId));
+                })
+                .catch((error)=>console.log(error));
+        }
+        else {
+            axios
+                .post(`${baseURL}conversations`, {senderId: context.stateUser.user.userId, receiverId: props.route.params.receiverId})
+                .then((res)=>{
+                    setConversation(res.data);
+                    setReceiverId(props.route.params.receiverId);
+                })
+                .catch((error)=>console.log(error));
+            
+        }
+        setLoading(false);
+        return () => {
+            setMessages();
+            setLoading();
+        }
+    },[])
 
     //socketio
     
     useEffect(()=>{
         
-
         context.socket.on("messageToClient", (message) => {
             setMessages(previousMessages => GiftedChat.append(previousMessages ,[message]));
         });
@@ -69,31 +131,32 @@ const ChattingRoom = (props) => {
     },[]);
     
 
-    const onSend = (messageSent) => {
+    const onSend = (messageSent = []) => {
         
+
         context.socket.emit("messageToServer", {
-            text: messages[0].text,
-            receiverId: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
+            text: messageSent[0].text,
+            receiverId: receiverId,
             senderId: context.stateUser.user.userId
         });
         
 
         setMessages(previousMessages => GiftedChat.append(previousMessages, messageSent))
 
-       const config = {
-           headers: {
-               Authorization: `Bearer ${token}`,
-               "Content-Type": "application/json"
-           }
-       }
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        }
        
-       const message = {
-        conversationId: props.chatItems.conversation._id,
-        sender: context.stateUser.user.userId,
-        receiver: props.chatItems.conversation.members.find(id => id !== context.stateUser.user.userId),
-        text: messageSent[0].text,
-        createdAt: Date.now(),
-        senderName: "test"
+        const message = {
+            conversationId: conversation._id,
+            sender: context.stateUser.user.userId,
+            receiver: receiverId,
+            text: messageSent[0].text,
+            createdAt: Date.now(),
+            senderName: "test"
         }
 
         const lastMessage = messageSent[0].text ? messageSent[0].text : "";
@@ -104,7 +167,7 @@ const ChattingRoom = (props) => {
             .catch((error)=>console.log(error))
 
         axios
-            .put(`${baseURL}conversations/${props.chatItems.conversation._id}`, {
+            .put(`${baseURL}conversations/${conversation._id}`, {
                 lastMessage: lastMessage,
                 lastSent: Date.now()
             }, config)
@@ -181,7 +244,7 @@ const ChattingRoom = (props) => {
         />
 
     
-    ) : null
+    ) : <View><Text>loading</Text></View>
 }
 
 const mapStateToProps = (state) => {

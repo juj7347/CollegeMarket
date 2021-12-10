@@ -4,6 +4,6 @@ export const CLEAR_CHAT = "CLEAR_CHAT";
 export const SET_CHAT_OPPONENT = "SET_CHAT_OPPONENT";
 export const SET_CONVERSATION = "SET_CONVERSATION";
 
-export const ADD_TO_WISHLIST = "ADD_TO_WISHLIST";
-export const REMOVE_FROM_WIHSLIST = "REMOVE_FROM_WISHLIST";
-export const CLEAR_WISHLIST = "CLEAR_WISHLIST";
+export const SET_COLLEGE = "SET_COLLEGE";
+
+export const SET_TAG = "SET_TAG";

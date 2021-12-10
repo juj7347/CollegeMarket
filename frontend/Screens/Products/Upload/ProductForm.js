@@ -1,27 +1,49 @@
 import React, {useEffect, useState, useContext} from "react";
 import {
     View,
-    Text,
-    Image,
     StyleSheet,
     TouchableOpacity,
     Platform
  } from "react-native";
 import { Select } from "native-base";
 
-import FormContainer from "../../Shared/Form/FormContainer";
-import Input from "../../Shared/Form/Input";
-import EasyButton from "../../Shared/StyledComponents/EasyButton";
-import Error from "../../Shared/Form/Error";
+import {
+    Container,
+    SelectContainer,
+    Button,
+    InputContainer,
+    MultilineInput,
+    TitleInput,
+    Submit
+} from "../../../Shared/StyledComponents/Form"
+
+import Text from "../../../Shared/StyledComponents/Text";
+
+import {
+    Image,
+    ImageContainer,
+    ImageButton,
+    Close
+} from "../../../Shared/StyledComponents/Image";
+
+import { AntDesign } from "react-native-vector-icons";
+
+import FormContainer from "../../../Shared/Form/FormContainer";
+import Input from "../../../Shared/Form/Input";
+import EasyButton from "../../../Shared/StyledComponents/EasyButton";
+import Error from "../../../Shared/Form/Error";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import Toast from "react-native-toast-message";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import baseURL from "../../assets/common/baseURL";
+import baseURL from "../../../assets/common/baseURL";
 import axios from "axios";
 
-import AuthGlobal from "../../Context/store/AuthGlobal";
+import { connect } from "react-redux";
+import postTagItems from "../../../Redux/Reducers/postTagItems";
+
+import AuthGlobal from "../../../Context/store/AuthGlobal";
 
 import * as ImagePicker from "expo-image-picker"
 import mime from "mime";
@@ -36,15 +58,16 @@ const ProductForm = (props) => {
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState();
-    const [mainImage, setMainImage] = useState('');
     const [category, setCategory] = useState();
-    const [categories, setCategories] = useState([]);
     const [token, setToken] = useState();
     const [error, setError] = useState();
     //const [isFeatured, setIsFeatured] = useState();
     const [richDescription, setRichDescription] = useState();
     const [item, setItem] = useState();
-    const [userProfile, setUserProfile] = useState();
+
+    useEffect(()=>{
+        setCategory(props.postTagItems.postTagItems);
+    },[props.postTagItems.postTagItems])
 
     useEffect(() => {
 
@@ -59,28 +82,22 @@ const ProductForm = (props) => {
             setMainImage(props.route.params.item.image)
             setImage(props.route.params.item.image);
             setCategory(props.route.params.item.category._id);
+            
         }
-
         AsyncStorage.getItem("jwt")
             .then((res)=>{
                 setToken(res)
-
+                /*
                 axios
                     .get(`${baseURL}users/${context.stateUser.user.userId}`, {
                         headers: {Authorization: `Bearer ${res}`}
                     })
                     .then((user) => setUserProfile(user.data))
                     .catch((error) => console.log(error))
+                */
             })
-            .catch((error)=> console.log(error))
+            .catch((error)=> console.log(error));
 
-        //Categories
-        axios
-            .get(`${baseURL}categories`)
-            .then((res)=>{
-                setCategories(res.data)
-            })
-            .catch((error)=> alert("Error to load Categories"));
 
         //Image Picker
         (async () => {
@@ -93,7 +110,6 @@ const ProductForm = (props) => {
         })();
 
         return () => {
-            setCategories([])
         }
     },[])
 
@@ -106,7 +122,6 @@ const ProductForm = (props) => {
         });
 
         if(!result.cancelled) {
-            setMainImage(result.uri);
             setImage(result.uri);
         }
     }
@@ -117,26 +132,28 @@ const ProductForm = (props) => {
             description == "" ||
             category == ""
         ) {
-            setError("필수항목들을 입력해 주세요")
+            setError("필수항목들을 입력해 주세요");
+            return;
         }
 
-        let formData = new FormData();
         //required step for iOS (not required for Android)
         const newImageUri = "file:///" + image.split("file:/").join("");
 
-        formData.append("name", name);
-        formData.append("price", price);
-        formData.append("description", description);
-        formData.append("category", category);
-        formData.append("richDescription", richDescription);
-        //formData.append("isFeatured", isFeatured);
+        let formData = new FormData();
+
         formData.append("image", {
             uri: newImageUri,
             type: mime.getType(newImageUri),
             name: newImageUri.split("/").pop()
         });
-        formData.append('userId', context.stateUser.user.userId);
-        //formData.append("userProfile", userProfile);
+        formData.append("name", name);
+        formData.append("price", price);
+        formData.append("description", description);
+        formData.append("category", category._id);
+        formData.append("categoryName", category.name);
+        formData.append("userId", context.stateUser.user.userId);
+        formData.append("userName", context.stateUser.userProfile.name);
+        formData.append("userImg", "img");
 
         const config = {
             headers: {
@@ -200,6 +217,80 @@ const ProductForm = (props) => {
     }
     
     return (
+        <>
+        <Container>
+            <ImageContainer>
+                {image ? (
+                <Close
+                    onPress={()=>setImage()}
+                >
+                    <AntDesign
+                        name="closecircle"
+                        size={12}
+                    />
+                </Close>) : null}
+                <ImageButton
+                    onPress={pickImage}
+                >
+                    {!image ? (
+                        <AntDesign
+                            name="camera"
+                            size={25}
+                            color="#8e93a1"
+                        />
+                    ) : (
+                        <Image
+                            source={{uri: image}}
+                        />
+                    )}
+                </ImageButton>
+            </ImageContainer>
+            <SelectContainer>
+                <Text semi color="#8e93a1">{category ? category.name : "카테고리를 선택하세요"}</Text>
+                <Button
+                    onPress={()=> props.navigation.navigate("CategorySelect")}
+                >
+                    <AntDesign
+                        name="doubleright"
+                        size={14}
+                        color="#8e93a1"
+                    />
+                </Button>
+            </SelectContainer>
+            <InputContainer>
+                <TitleInput
+                    placeholder="제목"
+                    multiline={true}
+                    value={name}
+                    onChangeText={(text)=>setName(text)}
+                    autoFocus={true}
+                />
+            </InputContainer>
+            <InputContainer>
+                <TitleInput
+                    placeholder="가격"
+                    keyboardType="numeric"
+                    value={price}
+                    onChangeText={(text)=>setPrice(text)}
+                    autoFocus={true}
+                />
+            </InputContainer>
+            <InputContainer>
+                <MultilineInput
+                    placeholder="게시글을 작성해 주세요"
+                    multiline={true}
+                    value={description}
+                    onChangeText={(text)=>setDescription(text)}
+                    autoFocus={true}
+                />
+            </InputContainer>
+        </Container>
+        <Submit
+            onPress={addProduct}
+        >
+            <Text medium heavy center color="white">등록</Text>
+        </Submit>
+        {/*
         <FormContainer
             title="Add Product"
         >
@@ -244,7 +335,7 @@ const ProductForm = (props) => {
                 onValueChange={(itemValue)=> [setPickerValue(itemValue), setCategory(itemValue)]}
             >
                 {categories.map((cat) => {
-                    return <Select.Item key={cat._id} label={cat.name} value={cat._id}/>
+                    return <Select.Item key={cat._id} label={cat.name} value={{id: cat._id, name: cat.name}}/>
                 })}
             </Select>
             {error ? <Error message={error}/> : null}
@@ -258,6 +349,8 @@ const ProductForm = (props) => {
                 </EasyButton>
             </View>
         </FormContainer>
+            */}
+        </>
     )
 }
 
@@ -302,4 +395,11 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ProductForm;
+const mapStateToProps = (state) => {
+    const {postTagItems} = state;
+    return {
+        postTagItems: postTagItems
+    }
+}
+
+export default connect(mapStateToProps, null)(ProductForm);

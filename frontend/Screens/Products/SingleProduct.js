@@ -28,8 +28,6 @@ import {Entypo, AntDesign} from "react-native-vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { connect } from "react-redux";
-import { addToChat } from "../../Redux/Actions/chatActions"
-import { addToWishList } from "../../Redux/Actions/wishListActions";
 import { setChatOpponent } from "../../Redux/Actions/chatActions";
 
 import axios from 'axios';
@@ -49,6 +47,7 @@ const SingleProduct = (props) => {
     const [availability, setAvailability] = useState('');
     const [token, setToken] = useState();
     const [userProfile, setUserprofile] = useState();
+    const [liked, setLiked] = useState(false);
 
     const context = useContext(AuthGlobal);
 
@@ -64,18 +63,35 @@ const SingleProduct = (props) => {
                             })
                             .then((res) => {
                                 if((res.status == 200 || res.status == 201) && !res.data.sameUser) {
-                                    console.log(res.data)
-                                    props.talkTo(res.data);
+                                    
+                                    if(!res.data.found) {
+                                        props.talkTo(null)
+                                    }
+                                    
+                                    //else 
+                                        props.talkTo(res.data);
+                                    
                                 }
                             })
                             .catch((error) => {
                                 console.log(error);
                             })
 
+                        axios
+                            .get(`${baseURL}wishlist/${context.stateUser.user.userId}`, {headers: { Authorization: `Bearer ${res}`}})
+                            .then((res)=>{
+                                if(res.data.productList.includes(item._id)) {
+                                    setLiked(true);
+                                }
+                            })
+                            .catch((error)=>console.log(error));
+        
+
                     })
                     .catch((error)=> console.log(error))
 
                 setUserprofile(context.stateUser.userProfile);
+
 
             },
             []
@@ -84,19 +100,14 @@ const SingleProduct = (props) => {
 
     const addWishList = () => {
 
-        const body = {
-            "productId": item._id
-        }
-
         const config = {
             headers: {
-                //"Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
             }
         }
-
         axios
-            .put(`${baseURL}users/wish/${context.stateUser.user.userId}`, body, config)
+            .put(`${baseURL}wishlist/${context.stateUser.user.userId}`, {type: "product", itemId: item._id}, config)
             .then((res)=>{
                 if(res.status == 200 || res.status == 201) {
                     Toast.show({
@@ -107,8 +118,9 @@ const SingleProduct = (props) => {
                 }
             })
             .catch((err)=>{
-                console.log(err)
+                console.log(err);
             });
+        
     }
 
     return (
@@ -124,12 +136,11 @@ const SingleProduct = (props) => {
                         />
                         <View style={{paddingLeft: 10}}>
                             <User>
-                                {userProfile ? userProfile.name : ""}
+                                {item.userName}
                             </User>
                             <Row>
                                 <Time>
-                                    {/*item.createdAt*/}
-                                    18일전
+                                    {item.dateCreated}
                                 </Time>
                                 <Entypo
                                     name="dot-single"
@@ -164,11 +175,16 @@ const SingleProduct = (props) => {
             </ScrollView>
             <BottomDivider/>
             <Footer>
-                <Like>
+                <Like
+                    onPress={()=>{
+                        addWishList()
+                        setLiked(!liked)
+                    }}
+                >
                     <AntDesign
-                        name="hearto" //heart if liked
+                        name={liked ? "heart" : "hearto"}
                         size={30}
-                        color="#222121" // blue if liked
+                        color={liked ? 'blue' : "#222121"}
                     />
                 </Like>
                 <BottomInfo>
@@ -176,12 +192,12 @@ const SingleProduct = (props) => {
                         {item.price}원
                     </Price>
                     <Category>
-                        의류
+                        {item.categoryName}
                     </Category>
                 </BottomInfo>
                 <Chat
                     onPress={()=>{
-                        props.navigation.navigate('Chat', {userName: item.userId})
+                        props.navigation.navigate('Chat_from_Product', {userName: item.userName, receiverId: item.userId})
                     }}
                 >
                     <ChatText>대화하기</ChatText>
@@ -193,12 +209,6 @@ const SingleProduct = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addItemToChat: (product) => {
-            dispatch(addToChat({product}))
-        },
-        addItemToWishList: (product) => {
-            dispatch(addToWishList({product}))
-        },
         talkTo: (conversation) => {
             dispatch(setChatOpponent({conversation}))
         }

@@ -1,8 +1,13 @@
 import React from "react";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
+import PostFeed from "../Screens/Feed/PostFeed/PostFeed";
+
 import ProductContainer from "../Screens/Products/ProductContainer";
 import SingleProduct from "../Screens/Products/SingleProduct";
+
+import CommunityNavigator from "./CommunityNavigatorr";
+
 import { BorderlessButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -13,8 +18,8 @@ function CommunityDrawer() {
     return (
         <Drawer.Navigator>
             <Drawer.Screen
-                name="Home"
-                component={ProductContainer}
+                name="post feed"
+                component={CommunityNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <Icon
@@ -74,6 +79,4 @@ function CommunityDrawer() {
     )
 }
 
-export default function CommunityNavigator() {
-    return <CommunityDrawer />;
-}
+export default CommunityDrawer;

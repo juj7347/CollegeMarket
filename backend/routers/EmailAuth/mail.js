@@ -5,28 +5,34 @@ const mongoose = require("mongoose");
 require("dotenv/config");
 
 router.post(`/`, async (req, res) => {
-    const text = req.body.text;
     const email = req.body.email;
 
     const code = Math.floor(Math.random()* 1000000) + 100000;
-    const transport = nodemailer.createTransport({
+    let transport = nodemailer.createTransport({
+        service: `${process.env.MAIL_SERVICE}`,
         host: `${process.env.MAIL_HOST}`,
-        port: process.env.MAIL_PORT,
+        secure: false,
         auth: {
-            user: `${process.env.MAIL_USER}`,
-            pass: `${process.env,MAIL_PASS}`
+            user: process.env.MAIL_USER,
+            pass: process.env.MAIL_PASS
         }
     })
 
-    await transport.sendMail({
-        from: `${process.env.MAIL_FROM}`,
+    const mailOptions = {
+        from: `${process.env.MAIL_USER}`,
         to: `${email}`,
-        subject: "test email",
-        html: `
-        <div>
-            ${text}
-        </div>
-        `
+        subject: "대학시장 가입 인증코드입니다",
+        text: `${code}`
+    }
+
+    await transport.sendMail(mailOptions, (error, responses) => {
+        if(error) {
+            console.log(error)
+            return res.status(500).json({success: false, message: "email send failed"})
+        }
+        else {
+            return res.status(200).send({code: code});
+        }
     })
 })
 

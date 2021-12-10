@@ -8,6 +8,12 @@ import {
     Button
 } from 'react-native';
 
+import {
+    Container,
+    ProductImage,
+    ProductInfo
+} from "./ProductCardStyles";
+
 var {width} = Dimensions.get("window");
 
 const ProductCard = (props) => {
@@ -15,6 +21,8 @@ const ProductCard = (props) => {
     const { name, price, image, countInStock} = props;
 
     return (
+        <>
+        {/*
         <View style={styles.container}>
             <Image 
                 style={styles.image}
@@ -30,6 +38,23 @@ const ProductCard = (props) => {
             <Text style={styles.price}>${price}</Text>
 
         </View>
+            */}
+        <Container>
+            <ProductImage
+                source={{uri: image ? image : "https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png"}}
+            />
+            <ProductInfo>
+                <Text>
+                    {name.length > 15 ? name.substring(0, 15 - 3)
+                        + '...' : name
+                    }
+                </Text>
+                <Text>
+                    {price}
+                </Text>
+            </ProductInfo>
+        </Container>
+        </>
     )
 }
 

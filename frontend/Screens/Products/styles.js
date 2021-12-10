@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+//Singlepage
 export const Container = styled.View`
     flex: 1;
 `
@@ -94,6 +94,7 @@ export const Seperator = styled.View`
 `
 export const BottomInfo = styled.View`
     height: 100%;
+    width: 40%;
 `
 
 export const Price = styled.Text`

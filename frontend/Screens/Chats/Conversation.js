@@ -27,7 +27,6 @@ const Conversation = (props) => {
 
     useEffect(()=>{
         const receiverId = props.conversation.members.find(id => id !== props.senderId);
-        console.log(props.conversation)
 
         axios
             .get(`${baseURL}users/${receiverId}`, {

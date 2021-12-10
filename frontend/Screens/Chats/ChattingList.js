@@ -37,6 +37,7 @@ const ChattingList = (props) => {
 
   useFocusEffect((
     useCallback(() => {
+      console.log(props.navigation.getState())
       AsyncStorage
       .getItem("jwt")
       .then((res)=>{
