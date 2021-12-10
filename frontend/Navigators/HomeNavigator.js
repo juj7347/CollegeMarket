@@ -7,6 +7,8 @@ import ChattingRoom from "../Screens/Chats/ChattingRoom";
 import ProductForm from "../Screens/Products/Upload/ProductForm";
 import CategorySelect from "../Screens/Products/Upload/CategorySelect";
 import CategoryScreen from "../Screens/Category/CategorySelect";
+import SearchScreen from "../Screens/Search/Search";
+import { TransitionPresets } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
