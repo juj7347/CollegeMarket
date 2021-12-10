@@ -1,3 +1,5 @@
+
+import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/Ionicons"
@@ -43,30 +45,32 @@ const CategorySelect = (props) => {
           ))}
         </View>
         </ScrollView>
+      
+    )
+}
 
 const styles = StyleSheet.create({
-    titleText: {
-      paddingLeft: 20,
-      fontSize: 26,
-      fontWeight: "bold"
+  titleText: {
+    paddingLeft: 20,
+    fontSize: 26,
+    fontWeight: "bold"
+},
+  container: {
+    flex: 1,
+    //alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: width,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'white',
+    alignContent: 'stretch'
   },
-    container: {
-      flex: 1,
-      //alignItems: 'center',
-      justifyContent: 'flex-start',
-      width: width,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      backgroundColor: 'white',
-      alignContent: 'stretch'
-    },
-    Button: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: 132,
-      width: width/3, 
-      backgroundColor: 'white'
-    }
-  })
-
+  Button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 132,
+    width: width/3, 
+    backgroundColor: 'white'
+  }
+})
 export default CategorySelect;
