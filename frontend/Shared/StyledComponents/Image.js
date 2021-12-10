@@ -12,6 +12,19 @@ export const ImageContainer = styled.View`
     justify-content: center;
     align-items: center;
 `
+export const ImageContainerProfile = styled.View`
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    width: 150px;
+    height: 150px;
+    border-width: 0.5px;
+    border-bottom-color: gainsboro;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+`
 export const ImageButton = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;

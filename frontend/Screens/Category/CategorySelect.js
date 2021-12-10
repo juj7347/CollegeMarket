@@ -7,27 +7,39 @@ import { View } from 'react-native'
 import { Select, ScrollView, FlatList, IconButton, Container } from 'native-base'
 import {
     Radio,
-    Text
+    Text,
+    Heading
 } from 'native-base';
 import { Dimensions } from 'react-native';
 import { marginBottom } from 'styled-system';
 
 const width = Dimensions.get("window").width;
-const data = ["인기매물", "중고차", "디지털기기", "생활가전", "가구/인테리어", "유아동", "생활/가공식품", "유아도서", "스포츠/레저"];
+const data = [
+  {name: "인기매물", icon: "star" }, 
+  {name: "중고차", icon: "car"}, 
+  {name: "디지털기기", icon: "laptop-outline"}, 
+  {name: "생활가전", icon: "home"}, 
+  {name: "가구/인테리어", icon: "easel-outline"}, 
+  {name: "유아동", icon: "laptop-outline"}, 
+  {name: "생활/가공식품", icon: "restaurant"}, 
+  {name: "유아도서", icon: "book"}, 
+  {name: "스포츠/레저", icon: "football"}
+];
 const icons = ["star", "car", "laptop-outline", "home", "easel-outline", "color-palette-outline", "restaurant", "book", "football"];
 
 const CategorySelect = (props) => {
   const navigation= useNavigation();
     return (
       <ScrollView style={{width: width, backgroundColor: 'white'}}>
+        <Heading style={styles.titleText}>카테고리</Heading>
         <View style={styles.container}>
-          {data.map(name =>(
+          {data.map(item =>(
             <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate("Home")}>
                 <Icon
-                  name="star"
+                  name={item.icon}
                   size={25}
                 />
-              <Text>{name}</Text>
+              <Text>{item.name}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -37,6 +49,11 @@ const CategorySelect = (props) => {
 }
 
 const styles = StyleSheet.create({
+  titleText: {
+    paddingLeft: 20,
+    fontSize: 26,
+    fontWeight: "bold"
+},
   container: {
     flex: 1,
     //alignItems: 'center',

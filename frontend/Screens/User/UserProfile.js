@@ -78,8 +78,7 @@ const UserProfile = (props) => {
       </View>
             <View style={styles.menuWrapper}>
             <TouchableOpacity style={styles.button} onPress={() => {
-                            AsyncStorage.removeItem("jwt"),
-                            logoutUser(context.dispatch)
+                            navigation.navigate("ProfileChange")
                         }}>
                 <View style={styles.menuItem}>
                 <Icon name="md-lock-closed-sharp" size={25}/>
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: 20,
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#fff',
       },
       userInfoSection: {
         marginLeft: 5,
