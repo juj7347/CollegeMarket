@@ -45,6 +45,9 @@ const productSchema = mongoose.Schema({
         type: String,
         default: ""
     },
+    school: {
+        type: String
+    },
     userImg: {
         type: String,
         default: ""

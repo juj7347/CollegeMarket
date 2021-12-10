@@ -120,6 +120,7 @@ const Register = (props) => {
             email: `${email}@${college}`,
             password: password,
             school: props.collegeItems.collegeItem.name,
+            collegeEmail: college.split(".").join(""),
             isAdmin: false
         }
 

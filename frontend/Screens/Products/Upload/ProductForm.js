@@ -81,7 +81,6 @@ const ProductForm = (props) => {
             setDescription(props.route.params.item.description);
             setMainImage(props.route.params.item.image)
             setImage(props.route.params.item.image);
-            setCategory(props.route.params.item.category._id);
             
         }
         AsyncStorage.getItem("jwt")
@@ -153,6 +152,7 @@ const ProductForm = (props) => {
         formData.append("categoryName", category.name);
         formData.append("userId", context.stateUser.user.userId);
         formData.append("userName", context.stateUser.userProfile.name);
+        formData.append("school", context.stateUser.userProfile.collegeEmail);
         formData.append("userImg", "img");
 
         const config = {
@@ -246,7 +246,7 @@ const ProductForm = (props) => {
                 </ImageButton>
             </ImageContainer>
             <SelectContainer>
-                <Text semi color="#8e93a1">{category ? category.name : "카테고리를 선택하세요"}</Text>
+                <Text semi color="#8e93a1">{category ? [category.name === "" ? "카테고리를 선택하세요" : category.name] : "카테고리를 선택하세요"}</Text>
                 <Button
                     onPress={()=> props.navigation.navigate("CategorySelect")}
                 >
