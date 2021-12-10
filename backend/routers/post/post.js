@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
         if(isValid) {
             uploadError = null;
         }
-        cb(uploadError, 'public/uploads');
+        cb(uploadError, 'public/postImages');
     },
     filename: function (req, file, cb) { 
         const fileName = file.originalname.split(' ').join('-');
@@ -56,18 +56,25 @@ router.get(`/:userId`, async (req, res) => {
 
 router.post('/', uploadOptions.single('image'), async (req, res) => {
     const file = req.file;
-    if(!file) {
-        return res.status(400).send('No image in request');
+
+    let fileName;
+    let basePath;
+    if(file) {
+        fileName =  file.filename;
+        basePath = `${req.protocol}://${req.get('host')}/public/postImages/`;
     }
 
-    const fileName =  file.filename;
-    const basePath = `${req.protocol}://${req.get('host')}/public/postImages/`;
+    
 
     let post = new Post({
         userId: req.body.userId,
+        userName: req.body.userName,
+        userImg: req.body.userImg,
         title: req.body.title,
         description: req.body.description,
-        image: `${basePath}${fileName}`
+        tag: req.body.tag,
+        tagName: req.body.tagName,
+        image: file ? `${basePath}${fileName}` : ""
     });
 
     post = await post.save();

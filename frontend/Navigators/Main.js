@@ -9,7 +9,10 @@ import HomeNavigator from "./HomeNavigator";
 import ChatNavigator from "./ChatNavigator";
 import UserNavigator from "./UserNavigator";
 import AdminNavigator from "./AdminNavigator";
-import CommunityNavigator from "./CommunityNavigator";
+
+import CommunityDrawer from "./CommunityDrawer";
+import CommunityNavigator from "./CommunityNavigatorr";
+
 import SearchScreen from "../Screens/Search/Search"
 import LoginNavigator from "./LoginNavigator"
 

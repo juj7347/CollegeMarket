@@ -1,13 +1,32 @@
 import React, {useEffect, useState, useContext} from "react";
 import {
     View,
-    Text,
-    Image,
     StyleSheet,
     TouchableOpacity,
     Platform
  } from "react-native";
 import { Select } from "native-base";
+
+import {
+    Container,
+    SelectContainer,
+    Button,
+    InputContainer,
+    MultilineInput,
+    TitleInput,
+    Submit
+} from "../../Shared/StyledComponents/Form"
+
+import Text from "../../Shared/StyledComponents/Text";
+
+import {
+    Image,
+    ImageContainer,
+    ImageButton,
+    Close
+} from "../../Shared/StyledComponents/Image";
+
+import { AntDesign } from "react-native-vector-icons";
 
 import FormContainer from "../../Shared/Form/FormContainer";
 import Input from "../../Shared/Form/Input";
@@ -60,7 +79,6 @@ const ProductForm = (props) => {
             setCategory(props.route.params.item.category._id);
             
         }
-        console.log(context.stateUser.userProfile)
         AsyncStorage.getItem("jwt")
             .then((res)=>{
                 setToken(res)
@@ -119,7 +137,8 @@ const ProductForm = (props) => {
             description == "" ||
             category == ""
         ) {
-            setError("필수항목들을 입력해 주세요")
+            setError("필수항목들을 입력해 주세요");
+            return;
         }
 
         //required step for iOS (not required for Android)
@@ -203,6 +222,80 @@ const ProductForm = (props) => {
     }
     
     return (
+        <>
+        <Container>
+            <ImageContainer>
+                {image ? (
+                <Close
+                    onPress={()=>setImage()}
+                >
+                    <AntDesign
+                        name="closecircle"
+                        size={12}
+                    />
+                </Close>) : null}
+                <ImageButton
+                    onPress={pickImage}
+                >
+                    {!image ? (
+                        <AntDesign
+                            name="camera"
+                            size={25}
+                            color="#8e93a1"
+                        />
+                    ) : (
+                        <Image
+                            source={{uri: image}}
+                        />
+                    )}
+                </ImageButton>
+            </ImageContainer>
+            <SelectContainer>
+                <Text semi color="#8e93a1">{category ? category.name : "카테고리를 선택하세요"}</Text>
+                <Button
+                    onPress={()=> props.navigation.navigate("Products")}
+                >
+                    <AntDesign
+                        name="doubleright"
+                        size={14}
+                        color="#8e93a1"
+                    />
+                </Button>
+            </SelectContainer>
+            <InputContainer>
+                <TitleInput
+                    placeholder="제목"
+                    multiline={true}
+                    value={name}
+                    onChangeText={(text)=>setName(text)}
+                    autoFocus={true}
+                />
+            </InputContainer>
+            <InputContainer>
+                <TitleInput
+                    placeholder="가격"
+                    keyboardType="numeric"
+                    value={price}
+                    onChangeText={(text)=>setPrice(text)}
+                    autoFocus={true}
+                />
+            </InputContainer>
+            <InputContainer>
+                <MultilineInput
+                    placeholder="게시글을 작성해 주세요"
+                    multiline={true}
+                    value={description}
+                    onChangeText={(text)=>setDescription(text)}
+                    autoFocus={true}
+                />
+            </InputContainer>
+        </Container>
+        <Submit
+            onPress={addProduct}
+        >
+            <Text medium heavy center color="white">등록</Text>
+        </Submit>
+        {/*
         <FormContainer
             title="Add Product"
         >
@@ -261,6 +354,8 @@ const ProductForm = (props) => {
                 </EasyButton>
             </View>
         </FormContainer>
+            */}
+        </>
     )
 }
 

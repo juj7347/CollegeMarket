@@ -5,8 +5,11 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    userProfile: {
-        type: Object
+    userName: {
+        type: String
+    },
+    userImg: {
+        type: String
     },
     title: {
         type: String,
@@ -18,6 +21,16 @@ const postSchema = mongoose.Schema({
     },
     image: {
         type: String
+    },
+    tag: {
+        type: mongoose.Schema.Types.ObjectId
+    },
+    tagName: {
+        type: String
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 })
 

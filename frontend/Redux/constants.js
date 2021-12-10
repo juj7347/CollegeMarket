@@ -10,3 +10,5 @@ export const CLEAR_WISHLIST = "CLEAR_WISHLIST";
 
 
 export const SET_COLLEGE = "SET_COLLEGE";
+
+export const SET_TAG = "SET_TAG";

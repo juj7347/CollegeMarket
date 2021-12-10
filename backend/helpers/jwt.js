@@ -28,6 +28,7 @@ function authJwt() {
             {url: /\/api\/v1\/messages(.*)/ , methods: ['GET', 'OPTIONS']}, // temp
             {url: /\/api\/v1\/messages(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
             {url: /\/api\/v1\/mail(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
+            `${api}/tags`, //temp
 
             `${api}/address`,
             `${api}/users/login`,

@@ -8,7 +8,7 @@ import {
     TextSection,
     NameText,
     TextSearch
-} from "./CollegeSelectStyles";
+} from "../../Shared/StyledComponents/SelectStyles";
 
 import { setCollege } from "../../Redux/Actions/collegeActions";
 import { connect } from "react-redux";

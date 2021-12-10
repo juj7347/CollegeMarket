@@ -25,6 +25,7 @@ const addressRouter = require('./routers/EmailAuth/college');
 const wishlistRouter = require('./routers/wishlist');
 const postRouter = require('./routers/post/post');
 const commentRouter = require('./routers/post/comment');
+const tagRouter = require('./routers/post/tag');
 //middleware
 app.use(express.json());
 app.use(morgan('tiny'));
@@ -43,8 +44,9 @@ app.use(`${api}/messages`, messageRouter);
 app.use(`${api}/mail`, mailRouter);
 app.use(`${api}/address`, addressRouter);
 app.use(`${api}/wishlist`, wishlistRouter);
-app.use(`${api}/post`, postRouter);
-app.use(`${api}/comment`, commentRouter);
+app.use(`${api}/posts`, postRouter);
+app.use(`${api}/comments`, commentRouter);
+app.use(`${api}/tags`, tagRouter);;
 
 mongoose.connect(process.env.CONNECTION_STRING)
 .then(() => {
