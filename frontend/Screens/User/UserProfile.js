@@ -47,24 +47,23 @@ const UserProfile = (props) => {
     }, [context.stateUser.isAuthenticated])
 
     return (
+        <ScrollView>
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.subContainer}>
-                <View style={{flexDirection:'row', marginTop:0, paddingLeft: 40}}>
+                <View style={{flexDirection:'row', marginTop:10, paddingLeft: 20}}>
             <Avatar
                 bg="green.500"
                 mr="1"
-                size="lg"
-                source={{
-                uri: "https://bit.ly/broken-link",
-                }}
+                size="xl"
+                source={require('../../assets/users/user-1.jpg')}
             >
                 123
             </Avatar>
             <View style={{marginLeft: 20}}>
                 <Text style={[styles.title, {
-                    marginTop: 15,
+                    marginTop: 20,
                     marginBottom: 5,
                 }]}>{userProfile ? userProfile.name : ""}</Text>
+                <Text style={{color:"#777777"}}>{userProfile ? userProfile.school : ""}</Text>
             </View>
             </View>
             <View style={styles.userInfoSection}>
@@ -76,9 +75,23 @@ const UserProfile = (props) => {
           <Icon name="phone-portrait-sharp" color="#777777" size={20}/>
           <Text style={{color:"#777777", marginLeft: 20}}>{userProfile ? userProfile.phone : ""}</Text>
         </View>
+        <View style={styles.row}>
+          
+        </View>
       </View>
             <View style={styles.menuWrapper}>
-            <TouchableOpacity onPress={() => navigation.navigate("SellPosts")}>
+            <TouchableOpacity style={styles.button} onPress={() => {
+                            AsyncStorage.removeItem("jwt"),
+                            logoutUser(context.dispatch)
+                        }}>
+                <View style={styles.menuItem}>
+                <Icon name="md-lock-closed-sharp" size={25}/>
+                <Text style={styles.menuItemText}>
+                        개인정보수정
+                    </Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("SellPosts")}>
                 <View style={styles.menuItem}>
                     <Icon name="logo-usd" size={25}/>
                     <Text style={styles.menuItemText}>
@@ -86,7 +99,7 @@ const UserProfile = (props) => {
                     </Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("CommunityPosts")}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("CommunityPosts")}>
                 <View style={styles.menuItem}>
                 <Icon name="md-library" size={25}/>
                 <Text style={styles.menuItemText}>
@@ -94,7 +107,7 @@ const UserProfile = (props) => {
                     </Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("CommentPosts")}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("CommentPosts")}>
                 <View style={styles.menuItem}>
                 <Icon name="md-journal-sharp" size={25}/>
                 <Text style={styles.menuItemText}>
@@ -102,7 +115,7 @@ const UserProfile = (props) => {
                     </Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("LikedPosts")}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("LikedPosts")}>
                 <View style={styles.menuItem}>
                 <Icon name="md-heart-sharp" size={25}/>
                 <Text style={styles.menuItemText}>
@@ -110,7 +123,7 @@ const UserProfile = (props) => {
                     </Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
+            <TouchableOpacity style={styles.button} onPress={() => {
                             AsyncStorage.removeItem("jwt"),
                             logoutUser(context.dispatch)
                         }}>
@@ -121,18 +134,31 @@ const UserProfile = (props) => {
                     </Text>
                 </View>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => {
+                            AsyncStorage.removeItem("jwt"),
+                            logoutUser(context.dispatch)
+                        }}>
+                <View style={styles.menuItem}>
+                <Icon name="help" size={25}/>
+                <Text style={styles.menuItemText}>
+                        고객센터
+                    </Text>
+                </View>
+            </TouchableOpacity>
+            </View>
             </View>
             </ScrollView>
-            </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: 20,
+        backgroundColor: '#f2f2f2',
       },
       userInfoSection: {
-        marginLeft: 20,
+        marginLeft: 5,
         marginTop: 30,
         paddingHorizontal: 30,
         marginBottom: 25,
@@ -156,7 +182,6 @@ const styles = StyleSheet.create({
         borderTopColor: '#dddddd',
         borderTopWidth: 1,
         flexDirection: 'row',
-        height: 100,
       },
       infoBox: {
         width: '50%',
@@ -164,7 +189,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
       menuWrapper: {
-        marginTop: 30,
+        marginTop: 0
       },
       menuItem: {
         flexDirection: 'row',
@@ -179,9 +204,13 @@ const styles = StyleSheet.create({
         lineHeight: 26,
       },
     subContainer: {
-        width: 300,
+        width: '100%',
         maxWidth: 450,
         marginTop: 60
+    },
+    button: {
+        backgroundColor: '#fff',
+        flex: 1
     }
 })
 

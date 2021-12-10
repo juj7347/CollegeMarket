@@ -9,6 +9,9 @@ import { TransitionPresets } from "@react-navigation/stack";
 import SearchScreen from "../Screens/Search/Search";
 import UserProfile from "../Screens/User/UserProfile";
 import WishList from "../Screens/User/WishList/WishList";
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const Stack = createStackNavigator();
 
@@ -19,35 +22,45 @@ function UserStack() {
                 name="Profile"
                 component={UserProfile}
                 options={{
-                    headerShown: false
+                    headerLeft: null,
+                    headerRight: (props) => {
+                        const navigation = useNavigation();
+                        return (
+                          <TouchableOpacity
+                            onPress={() => navigation.navigate("SearchScreen")}
+                            style={{ marginRight: 15 }}
+                          >
+                            <Icon
+                              name="md-search"
+                              size={Platform.OS === "ios" ? 22 : 25}
+                            />
+                          </TouchableOpacity>
+                        )
+                    }
                 }}
             />
             <Stack.Screen
                 name="SellPosts"
-                component={UserProfile}
+                component={WishList}
                 options={{
-                    headerShown: false
                 }}
             />
             <Stack.Screen
                 name="CommunityPosts"
-                component={UserProfile}
+                component={WishList}
                 options={{
-                    headerShown: false
                 }}
             />
             <Stack.Screen
                 name="CommentPosts"
-                component={UserProfile}
+                component={WishList}
                 options={{
-                    headerShown: false
                 }}
             />
             <Stack.Screen
                 name="LikedPosts"
                 component={WishList}
                 options={{
-                    headerShown: false
                 }}
             />
         </Stack.Navigator>

@@ -38,7 +38,7 @@ const Main = () => {
                 component={HomeNavigator}
                 options={{
                     title: "대학시장",
-                    headerLeft: (props) => <LogoImage {...props} />,
+                    headerLeft: (props) => <Icon name="school"/>,
                     tabBarIcon: ({ color }) => (
                         <Icon
                             name="home"
@@ -51,16 +51,6 @@ const Main = () => {
                         const navigation = useNavigation();
                         return (
                           <View style={{flexDirection: 'row'}}>
-                            <TouchableOpacity
-                            onPress={() => navigation.navigate("AppDrawer")}
-                            style={{ marginRight: 15 }}
-                          >
-                           <Icon
-                                    style={{ marginRight: 10}}
-                                      name="md-menu"
-                                      size={Platform.OS === "ios" ? 22 : 25}
-                                    />
-                                    </TouchableOpacity>
                           <TouchableOpacity
                             onPress={() => navigation.navigate("SearchScreen")}
                             style={{ marginRight: 15 }}
@@ -167,6 +157,7 @@ const Main = () => {
                 name="User"
                 component={UserNavigator}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({color}) => (
                         <Icon
                             name="md-person"
@@ -174,21 +165,7 @@ const Main = () => {
                             color={color}
                             size={30}
                         />
-                    ),
-                    headerRight: (props) => {
-                        const navigation = useNavigation();
-                        return (
-                          <TouchableOpacity
-                            onPress={() => navigation.navigate("SearchScreen")}
-                            style={{ marginRight: 15 }}
-                          >
-                            <Icon
-                              name="md-search"
-                              size={Platform.OS === "ios" ? 22 : 25}
-                            />
-                          </TouchableOpacity>
-                        )
-                    }
+                    )
                 }}
             />
             <Tab.Screen
