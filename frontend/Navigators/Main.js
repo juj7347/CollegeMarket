@@ -267,15 +267,6 @@ const Market = () => {
                     }
                 }}
             />
-            <Tab.Screen
-                name="SearchScreen"
-                component={SearchScreen}
-                options={{
-                  tabBarButton: () => null,
-                  tabBarVisible: false
-                }}
-            />
-            
         </Tab.Navigator>
     )
 }
