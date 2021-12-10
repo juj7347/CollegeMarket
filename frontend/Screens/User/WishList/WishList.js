@@ -16,8 +16,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { connect } from "react-redux";
-import { clearWishList } from "../../../Redux/Actions/wishListActions";
 
 import baseURL from "../../../assets/common/baseURL";
 import axios from 'axios';
@@ -56,7 +54,7 @@ const WishList = (props) => {
                     })}
                     <Button
                         title="Clear"
-                        onPress={()=> props.clearWishList()}
+                        onPress={()=>{}}
                     />
                 </Container>
             ) : (
@@ -70,20 +68,6 @@ const WishList = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    const { wishListItems } = state;
-    return {
-        wishListItems: wishListItems
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        clearWishList: () => {
-            dispatch(clearWishList())
-        }
-    }
-}
 
 const styles = StyleSheet.create({
     emptyContainer: {
@@ -103,4 +87,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(WishList);
+export default WishList;

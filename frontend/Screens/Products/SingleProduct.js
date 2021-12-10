@@ -28,8 +28,6 @@ import {Entypo, AntDesign} from "react-native-vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { connect } from "react-redux";
-import { addToChat } from "../../Redux/Actions/chatActions"
-import { addToWishList } from "../../Redux/Actions/wishListActions";
 import { setChatOpponent } from "../../Redux/Actions/chatActions";
 
 import axios from 'axios';
@@ -211,12 +209,6 @@ const SingleProduct = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addItemToChat: (product) => {
-            dispatch(addToChat({product}))
-        },
-        addItemToWishList: (product) => {
-            dispatch(addToWishList({product}))
-        },
         talkTo: (conversation) => {
             dispatch(setChatOpponent({conversation}))
         }

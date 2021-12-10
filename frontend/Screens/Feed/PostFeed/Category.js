@@ -12,11 +12,11 @@ import baseURL from "../../../assets/common/baseURL";
 import axios from "axios";
 
 import { connect } from "react-redux";
-import { setTag } from "../../../Redux/Actions/postTagActions";
+import { setTag } from "../../../Redux/Actions/postTagActions"; 
 
 const Category = (props) => {
 
-    const [tags, setTags] = useState();
+    const [tags, setTags] = useState([]);
 
     useEffect(()=>{
         axios

@@ -3,13 +3,11 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 
 import chatItems from './Reducers/chatItems';
-import wishListItems from './Reducers/wishListItems';
 import collegeItems from './Reducers/collegeItems';
 import postTagItems from './Reducers/postTagItems';
 
 const reducers = combineReducers({
     chatItems: chatItems,
-    wishListItems: wishListItems,
     collegeItems: collegeItems,
     postTagItems: postTagItems
 })

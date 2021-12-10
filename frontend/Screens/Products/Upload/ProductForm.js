@@ -15,32 +15,35 @@ import {
     MultilineInput,
     TitleInput,
     Submit
-} from "../../Shared/StyledComponents/Form"
+} from "../../../Shared/StyledComponents/Form"
 
-import Text from "../../Shared/StyledComponents/Text";
+import Text from "../../../Shared/StyledComponents/Text";
 
 import {
     Image,
     ImageContainer,
     ImageButton,
     Close
-} from "../../Shared/StyledComponents/Image";
+} from "../../../Shared/StyledComponents/Image";
 
 import { AntDesign } from "react-native-vector-icons";
 
-import FormContainer from "../../Shared/Form/FormContainer";
-import Input from "../../Shared/Form/Input";
-import EasyButton from "../../Shared/StyledComponents/EasyButton";
-import Error from "../../Shared/Form/Error";
+import FormContainer from "../../../Shared/Form/FormContainer";
+import Input from "../../../Shared/Form/Input";
+import EasyButton from "../../../Shared/StyledComponents/EasyButton";
+import Error from "../../../Shared/Form/Error";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import Toast from "react-native-toast-message";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import baseURL from "../../assets/common/baseURL";
+import baseURL from "../../../assets/common/baseURL";
 import axios from "axios";
 
-import AuthGlobal from "../../Context/store/AuthGlobal";
+import { connect } from "react-redux";
+import postTagItems from "../../../Redux/Reducers/postTagItems";
+
+import AuthGlobal from "../../../Context/store/AuthGlobal";
 
 import * as ImagePicker from "expo-image-picker"
 import mime from "mime";
@@ -55,14 +58,16 @@ const ProductForm = (props) => {
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState();
-    const [mainImage, setMainImage] = useState('');
     const [category, setCategory] = useState();
-    const [categories, setCategories] = useState([]);
     const [token, setToken] = useState();
     const [error, setError] = useState();
     //const [isFeatured, setIsFeatured] = useState();
     const [richDescription, setRichDescription] = useState();
     const [item, setItem] = useState();
+
+    useEffect(()=>{
+        setCategory(props.postTagItems.postTagItems);
+    },[props.postTagItems.postTagItems])
 
     useEffect(() => {
 
@@ -94,14 +99,6 @@ const ProductForm = (props) => {
             .catch((error)=> console.log(error));
 
 
-        //Categories
-        axios
-            .get(`${baseURL}categories`)
-            .then((res)=>{
-                setCategories(res.data)
-            })
-            .catch((error)=> alert("Error to load Categories"));
-
         //Image Picker
         (async () => {
             if (Platform.OS !== "web") {
@@ -113,7 +110,6 @@ const ProductForm = (props) => {
         })();
 
         return () => {
-            setCategories([])
         }
     },[])
 
@@ -126,7 +122,6 @@ const ProductForm = (props) => {
         });
 
         if(!result.cancelled) {
-            setMainImage(result.uri);
             setImage(result.uri);
         }
     }
@@ -154,7 +149,7 @@ const ProductForm = (props) => {
         formData.append("name", name);
         formData.append("price", price);
         formData.append("description", description);
-        formData.append("category", category.id);
+        formData.append("category", category._id);
         formData.append("categoryName", category.name);
         formData.append("userId", context.stateUser.user.userId);
         formData.append("userName", context.stateUser.userProfile.name);
@@ -253,7 +248,7 @@ const ProductForm = (props) => {
             <SelectContainer>
                 <Text semi color="#8e93a1">{category ? category.name : "카테고리를 선택하세요"}</Text>
                 <Button
-                    onPress={()=> props.navigation.navigate("Products")}
+                    onPress={()=> props.navigation.navigate("CategorySelect")}
                 >
                     <AntDesign
                         name="doubleright"
@@ -400,4 +395,11 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ProductForm;
+const mapStateToProps = (state) => {
+    const {postTagItems} = state;
+    return {
+        postTagItems: postTagItems
+    }
+}
+
+export default connect(mapStateToProps, null)(ProductForm);

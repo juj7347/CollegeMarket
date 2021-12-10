@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { 
     View, 
-    StyleSheet, 
+    StyleSheet,
+    Button,
     ActivityIndicator, 
     FlatList, 
     ScrollView, 
@@ -115,6 +116,10 @@ const ProductContainer = (props) => {
         <>
         {!loading ? (
         <SafeAreaView>
+            <Button
+                title='sdf'
+                onPress={()=> props.navigation.navigate("ProductForm")}
+            />
             <SearchBar
                 searchFilter={searchKeyword}
             />

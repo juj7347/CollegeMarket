@@ -26,7 +26,7 @@ function ChatStack() {
                 name="Chat"
                 component={ChattingRoom}
                 options={({route}) => ({
-                    title: route.params.userName,
+                        
                     headerBackTitleVisible: false
                 })}
             />

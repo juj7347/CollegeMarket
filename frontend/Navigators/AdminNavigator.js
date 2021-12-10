@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Products from "../Screens/Admin/Products";
-import ProductForm from "../Screens/Admin/ProductForm";
+import ProductForm from "../Screens/Products/Upload/ProductForm";
 import Categories from "../Screens/Admin/Categories";
 
 const Stack = createStackNavigator();
