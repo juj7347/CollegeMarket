@@ -6,6 +6,7 @@ import SingleProduct from "../Screens/Products/SingleProduct";
 import ChattingRoom from "../Screens/Chats/ChattingRoom";
 import ProductForm from "../Screens/Products/Upload/ProductForm";
 import CategorySelect from "../Screens/Products/Upload/CategorySelect";
+import CategoryScreen from "../Screens/Category/CategorySelect";
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,11 @@ function HomeStack() {
                     headerTransparent: true,
                     title: ""
                 }}
+            />
+            <Stack.Screen
+                name="CategoryScreen"
+                component={CategoryScreen}
+                options={{}}
             />
             <Stack.Screen
                 name="ProductForm"
