@@ -11,6 +11,12 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { 
+    ButtonContainer,
+    FloatingButton
+} from '../../Shared/StyledComponents/FloatingButton';
+import { AntDesign } from "react-native-vector-icons"
+
+import { 
     Container, 
     Text
 } from 'native-base';
@@ -170,6 +176,14 @@ const ProductContainer = (props) => {
                 <ActivityIndicator size='large' color='red'/>
             </Container>
         )}
+        <ButtonContainer>
+            <FloatingButton>
+                <AntDesign
+                    name="pluscircle"
+                    size={20}
+                />
+            </FloatingButton>
+        </ButtonContainer>
         </>
     )
 }
