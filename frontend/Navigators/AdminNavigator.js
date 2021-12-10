@@ -2,7 +2,6 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Products from "../Screens/Admin/Products";
-import ProductForm from "../Screens/Products/Upload/ProductForm";
 import Categories from "../Screens/Admin/Categories";
 
 const Stack = createStackNavigator();
@@ -20,10 +19,6 @@ function AdminStack() {
             <Stack.Screen
                 name="Categories"
                 component={Categories}
-            />
-            <Stack.Screen
-                name="ProductForm"
-                component={ProductForm}
             />
         </Stack.Navigator>
     )

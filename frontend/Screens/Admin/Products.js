@@ -96,14 +96,6 @@ const Products = (props) => {
                 <EasyButton
                     secondary
                     medium
-                    onPress={() => props.navigation.navigate("ProductForm")}
-                >
-                    <Icon name="add" size={18} color="white" />
-                    <Text style={styles.buttonText}>Products</Text>
-                </EasyButton>
-                <EasyButton
-                    secondary
-                    medium
                     onPress={() => props.navigation.navigate("Categories")}
                 >
                     <Icon name="add" size={18} color="white" />

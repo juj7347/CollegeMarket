@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     View,
     Dimensions,
@@ -27,13 +27,14 @@ const WishList = (props) => {
     
     const context = useContext(AuthGlobal);
 
+    const [wishlist, setWishlist] = useState([]);
 
     return (
         <>
             <Heading style={{alignSelf: 'center'}}>관심목록</Heading>
-            {props.wishListItems.length ?  (
+            {wishlist.length ?  (
                 <Container>
-                    {props.wishListItems.map((item)=>{
+                    {wishlist.map((item)=>{
                         return (
                             <List.Item
                                 style={styles.listItem}
