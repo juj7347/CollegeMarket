@@ -120,6 +120,10 @@ const ProductContainer = (props) => {
                 title='sdf'
                 onPress={()=> props.navigation.navigate("ProductForm")}
             />
+            <Button
+                title='sdff'
+                onPress={()=> props.navigation.navigate("CategoryScreen")}
+            />
             <SearchBar
                 searchFilter={searchKeyword}
             />
