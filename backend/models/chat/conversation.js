@@ -3,9 +3,15 @@ const mongoose = require('mongoose');
 const conversationSchema = mongoose.Schema(
     {
         members: {
-            type: Array
+            type: Array,
         },
-
+        lastMessage: {
+            type: String,
+            default: ''
+        },
+        lastSend: {
+            type: Date
+        }
     },
     { timestamps: true }
 )

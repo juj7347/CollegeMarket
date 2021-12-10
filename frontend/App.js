@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 //native-base
 import {
   Text,
@@ -44,11 +44,6 @@ const config = {
 
 // extend the theme
 export const theme = extendTheme({ config });
-
-//for test
-import ChatRoom from "./Screens/Chats/ChatRoom";
-import LoginPage from "./components/Body/Login/LoginPage";
-import MainPage from "./components/Body/MainPage/MainPage";
 
 LogBox.ignoreAllLogs(true);
 

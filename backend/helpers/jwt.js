@@ -13,12 +13,28 @@ function authJwt() {
             {url: /\/public\/uploads(.*)/ , methods: ['GET', 'OPTIONS']},
             {url: /\/api\/v1\/products(.*)/ , methods: ['GET', 'OPTIONS']},
             {url: /\/api\/v1\/categories(.*)/ , methods: ['GET', 'OPTIONS']},
+            
+            {url: /\/api\/v1\/address(.*)/ , methods: ['GET', 'OPTIONS']},
+            {url: /\/api\/v1\/address(.*)/ , methods: ['POST', 'OPTIONS']},
 
-            {url: /\/api\/v1\/conversations(.*)/ , methods: ['GET', 'OPTIONS']}, //needs to be deleted, chat requires authorization
-            {url: /\/api\/v1\/conversations(.*)/ , methods: ['POST', 'OPTIONS']},
+            {url: /\/api\/v1\/users(.*)/ , methods: ['GET', 'OPTIONS']},
 
+            {url: /\/api\/v1\/wishlist(.*)/ , methods: ['PUT', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/wishlist(.*)/ , methods: ['GET', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/conversations(.*)/ , methods: ['GET', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/conversations(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/conversations(.*)/ , methods: ['PUT', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/conversations(.*)/ , methods: ['DELETE', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/messages(.*)/ , methods: ['GET', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/messages(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
+            {url: /\/api\/v1\/mail(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
+            `${api}/tags`, //temp
+
+            `${api}/address`,
             `${api}/users/login`,
-            `${api}/users/register`
+            `${api}/users/check`,
+            `${api}/users/register`,
+            `${api}/wishlist`
         ]
     })
 }

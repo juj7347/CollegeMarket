@@ -44,6 +44,14 @@ router.get(`/:id`, async (req, res)=>{
     res.send(product);
 })
 
+router.get(`/:userId`, async (req, res) => {
+    const products = await Product.find({userId: req.params.userId});
+
+    if(!products) {
+        return res.status(500).json({success: false});
+    }
+    res.send(products);
+})
 //filter
 router.get(`/`, async (req,res)=>{
     let filter = {};
@@ -65,12 +73,12 @@ router.post(`/`, uploadOptions.single('image'), async (req, res)=>{
     if(!category) {
         return res.status(400).send('Invalid Category');
     }
-
+    
     const file = req.file;
     if(!file) {
         return res.status(400).send('No image in request');
     }
-
+    
     const fileName =  file.filename;
     const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
 
@@ -81,7 +89,11 @@ router.post(`/`, uploadOptions.single('image'), async (req, res)=>{
         image: `${basePath}${fileName}`,
         price: req.body.price,
         category: req.body.category,
-        dataCreated: req.body.dataCreated
+        categoryName: req.body.categoryName,
+        dataCreated: req.body.dataCreated,
+        userId: req.body.userId,
+        userName: req.body.userName,
+        userImg: req.body.userImg
     })
 
     product = await product.save();

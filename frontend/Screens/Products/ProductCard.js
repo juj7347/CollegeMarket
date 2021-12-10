@@ -5,7 +5,6 @@ import {
     Dimensions,
 
 } from 'react-native';
-
 import { MaterialCommunityIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import {
   NativeBaseProvider,
@@ -25,7 +24,6 @@ import {
   Image,
 } from 'native-base';
 import { borderRadius } from 'styled-system';
-
 
 var {width} = Dimensions.get("window");
 

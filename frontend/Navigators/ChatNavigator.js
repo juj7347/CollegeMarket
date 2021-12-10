@@ -1,19 +1,34 @@
 import React from "react";
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Chat from "../Screens/Chats/Chat";
+import ChattingList from "../Screens/Chats/ChattingList"
+import ChattingRoom from "../Screens/Chats/ChattingRoom";
+
+import { useNavigation } from "@react-navigation/native";
+
+import { Button } from "react-native";
 
 const Stack = createStackNavigator();
 
 function ChatStack() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            initialRouteName="Message"
+        >
+            <Stack.Screen
+                name="Message"
+                component={ChattingList}
+                options={{
+                    //headerShown: false
+                }}
+            />
             <Stack.Screen
                 name="Chat"
-                component={Chat}
-                options={{
-                    headerShown: false
-                }}
+                component={ChattingRoom}
+                options={({route}) => ({
+                        
+                    headerBackTitleVisible: false
+                })}
             />
             
             
