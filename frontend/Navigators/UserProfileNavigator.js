@@ -7,48 +7,53 @@ import CategorySelect from "../Screens/Category/CategorySelect";
 import { HeaderStyleInterpolators } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
 import SearchScreen from "../Screens/Search/Search";
+import UserProfile from "../Screens/User/UserProfile";
+import WishList from "../Screens/User/WishList/WishList";
 
 const Stack = createStackNavigator();
 
-function HomeStack() {
+function UserStack() {
     return (
         <Stack.Navigator>
-            <Stack.Screen
-                name="Home"
-                component={ProductContainer}
-                options={{
-                    headerShown: false
-                }}
-            />
-            
-            <Stack.Screen
-                name="Product_Detail"
-                component={SingleProduct}
+        <Stack.Screen
+                name="Profile"
+                component={UserProfile}
                 options={{
                     headerShown: false
                 }}
             />
             <Stack.Screen
-                name="AppDrawer"
-                component = {CategorySelect}
+                name="SellPosts"
+                component={UserProfile}
                 options={{
-                    headerShown: false,
-                    ...TransitionPresets.SlideFromRightIOS
+                    headerShown: false
                 }}
             />
             <Stack.Screen
-                name="SearchScreen"
-                component={SearchScreen}
+                name="CommunityPosts"
+                component={UserProfile}
                 options={{
-                    headerShown: false,
-                    ...TransitionPresets.SlideFromRightIOS
+                    headerShown: false
                 }}
             />
-            
+            <Stack.Screen
+                name="CommentPosts"
+                component={UserProfile}
+                options={{
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="LikedPosts"
+                component={WishList}
+                options={{
+                    headerShown: false
+                }}
+            />
         </Stack.Navigator>
     )
 }
 
 export default function HomeNavigator() {
-    return <HomeStack />;
+    return <UserStack />;
 }

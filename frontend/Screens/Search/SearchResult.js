@@ -101,7 +101,7 @@ const SearchResult = (props) => {
     return (
         <>
         {!loading ? (
-        <SafeAreaView>
+        <SafeAreaView style={{flex:1}}>
             <ScrollView contentContainerStyle={styles.listcontainer}>
                 <View>
                     {productsFiltered.length > 0 ? (

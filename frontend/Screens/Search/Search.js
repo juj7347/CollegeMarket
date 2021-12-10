@@ -3,7 +3,7 @@ import { View, Dimensions } from "react-native";
 import { Inputm, Text } from "native-base";
 import { Container } from "../Styles/wrapper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import SearchBar from "../Products/SearchBar"
+import SearchBar from "./SearchBar"
 import SearchData from "./SearchData.json"
 import SearchGoods from "./SearchContainer/SearchGoods";
 import SearchNote from "./SearchContainer/SearchNote"
@@ -25,7 +25,6 @@ const SearchScreen = (props) => {
     }
     return (
         <Container>
-            <Text> 검색값 : {text} </Text>
             <SearchBar onSearch={getText}/>
             {content}
             {content2}

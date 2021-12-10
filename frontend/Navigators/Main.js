@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { Menu, Pressable, Text } from "native-base"
 
 //Stack
 import HomeNavigator from "./HomeNavigator";
@@ -13,7 +14,7 @@ import SearchScreen from "../Screens/Search/Search"
 import AuthGlobal from "../Context/store/AuthGlobal";
 
 //new
-import { BorderlessButton } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import CommunityMainPage from "../components/Body/Community/CommunityMainPage";
 import CategorySelect from "../Screens/Category/CategorySelect";
@@ -50,16 +51,17 @@ const Main = () => {
                         const navigation = useNavigation();
                         return (
                           <View style={{flexDirection: 'row'}}>
-                            <BorderlessButton
-                            onPress={() => navigation.navigate("CategorySelect")}
+                            <TouchableOpacity
+                            onPress={() => navigation.navigate("AppDrawer")}
                             style={{ marginRight: 15 }}
                           >
-                            <Icon
-                              name="md-menu"
-                              size={Platform.OS === "ios" ? 22 : 25}
-                            />
-                          </BorderlessButton>
-                          <BorderlessButton
+                           <Icon
+                                    style={{ marginRight: 10}}
+                                      name="md-menu"
+                                      size={Platform.OS === "ios" ? 22 : 25}
+                                    />
+                                    </TouchableOpacity>
+                          <TouchableOpacity
                             onPress={() => navigation.navigate("SearchScreen")}
                             style={{ marginRight: 15 }}
                           >
@@ -67,7 +69,7 @@ const Main = () => {
                               name="md-search"
                               size={Platform.OS === "ios" ? 22 : 25}
                             />
-                          </BorderlessButton>
+                          </TouchableOpacity>
                           </View>
                         )
                     }
@@ -88,7 +90,7 @@ const Main = () => {
                     headerRight: (props) => {
                         const navigation = useNavigation();
                         return (
-                          <BorderlessButton
+                          <TouchableOpacity
                             onPress={() => navigation.navigate("SearchScreen")}
                             style={{ marginRight: 15 }}
                           >
@@ -96,7 +98,7 @@ const Main = () => {
                               name="md-search"
                               size={Platform.OS === "ios" ? 22 : 25}
                             />
-                          </BorderlessButton>
+                          </TouchableOpacity>
                         )
                     }
                 }}
@@ -117,7 +119,7 @@ const Main = () => {
                     headerRight: (props) => {
                         const navigation = useNavigation();
                         return (
-                          <BorderlessButton
+                          <TouchableOpacity
                             onPress={() => navigation.navigate("SearchScreen")}
                             style={{ marginRight: 15 }}
                           >
@@ -125,7 +127,7 @@ const Main = () => {
                               name="md-search"
                               size={Platform.OS === "ios" ? 22 : 25}
                             />
-                          </BorderlessButton>
+                          </TouchableOpacity>
                         )
                     }
                 }}
@@ -148,7 +150,7 @@ const Main = () => {
                     headerRight: (props) => {
                         const navigation = useNavigation();
                         return (
-                          <BorderlessButton
+                          <TouchableOpacity
                             onPress={() => navigation.navigate("SearchScreen")}
                             style={{ marginRight: 15 }}
                           >
@@ -156,7 +158,7 @@ const Main = () => {
                               name="md-search"
                               size={Platform.OS === "ios" ? 22 : 25}
                             />
-                          </BorderlessButton>
+                          </TouchableOpacity>
                         )
                     }
                 }}
@@ -176,7 +178,7 @@ const Main = () => {
                     headerRight: (props) => {
                         const navigation = useNavigation();
                         return (
-                          <BorderlessButton
+                          <TouchableOpacity
                             onPress={() => navigation.navigate("SearchScreen")}
                             style={{ marginRight: 15 }}
                           >
@@ -184,17 +186,9 @@ const Main = () => {
                               name="md-search"
                               size={Platform.OS === "ios" ? 22 : 25}
                             />
-                          </BorderlessButton>
+                          </TouchableOpacity>
                         )
                     }
-                }}
-            />
-            <Tab.Screen
-                name="SearchScreen"
-                component={SearchScreen}
-                options={{
-                  tabBarButton: () => null,
-                  tabBarVisible: false
                 }}
             />
             <Tab.Screen
@@ -213,7 +207,6 @@ const Main = () => {
                   tabBarVisible: false
                 }}
             />
-            
         </Tab.Navigator>
     )
 }

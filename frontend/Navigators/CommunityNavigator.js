@@ -16,9 +16,10 @@ function CommunityDrawer() {
     return (
         <Drawer.Navigator>
             <Drawer.Screen
-                name="커뮤니티"
+                name="CommunityHome"
                 component={CommunityMainPage}
                 options={{
+                  title: "커뮤니티",
                     tabBarIcon: ({ color }) => (
                         <Icon
                             name="home"
@@ -172,7 +173,7 @@ function CommunityDrawer() {
                         const navigation = useNavigation();
                         return (
                           <BorderlessButton
-                            onPress={() => navigation.navigate("CommunityMainPage")}
+                            onPress={() => navigation.navigate("CommunityHome")}
                             style={{ marginRight: 15 }}
                           >
                             <Icon
