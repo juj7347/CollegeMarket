@@ -4,12 +4,17 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import PostFeed from "../Screens/Feed/PostFeed/PostF";
 import Category from "../Screens/Feed/PostFeed/Category";
+import Community from "../Screens/Community/Community";
 
 const Stack = createStackNavigator();
 
 function CommunityStack() {
     return (
         <Stack.Navigator>
+            <Stack.Screen
+                name="Community"
+                component={Community}
+            />
             <Stack.Screen
                 name="post feed"
                 component={PostFeed}
