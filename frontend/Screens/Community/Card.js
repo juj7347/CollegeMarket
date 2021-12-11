@@ -14,6 +14,7 @@ import {
 import { TouchableOpacity, View } from "react-native";
 
 import {
+    Container,
     CardContainer,
     Header,
     Row,
@@ -24,7 +25,7 @@ import {
 
 import Avatar from "../../Shared/Avatar";
 
-import {Entypo, AntDesign} from "react-native-vector-icons";
+import { Entypo } from "react-native-vector-icons";
 
 import BoxBottom from "./BoxBottom"
 /*
