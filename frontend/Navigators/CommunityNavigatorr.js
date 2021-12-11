@@ -4,6 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import PostFeed from "../Screens/Feed/PostFeed/PostF";
 import Category from "../Screens/Feed/PostFeed/Category";
+import CommunityMainPage from "../components/Body/Community/CommunityMainPage";
+
 
 const Stack = createStackNavigator();
 

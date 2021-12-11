@@ -14,15 +14,15 @@ import Icon from "react-native-vector-icons/Ionicons";
 import CommunityMainPage from "../components/Body/Community/CommunityMainPage";
 import MakePostPage from "../components/Body/Community/MakePostPage/MakePostPage";
 import { MaterialCommunityIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
-
+import CN from "./CommunityNavigatorr";
 const Drawer = createDrawerNavigator();
 
 function CommunityDrawer() {
     return (
         <Drawer.Navigator>
             <Drawer.Screen
-                name="post feed"
-                component={CommunityNavigator}
+                name="커뮤니티"
+                component={CommunityMainPage}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <Icon
@@ -163,7 +163,7 @@ function CommunityDrawer() {
             />
             <Drawer.Screen
                 name="새 게시물"
-                component={MakePostPage}
+                component={CN}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <Icon
@@ -177,7 +177,7 @@ function CommunityDrawer() {
                         const navigation = useNavigation();
                         return (
                           <BorderlessButton
-                            onPress={() => navigation.navigate("CommunityMainPage")}
+                            onPress={() => navigation.navigate("커뮤니티")}
                             style={{ marginRight: 15 }}
                           >
                             <Icon

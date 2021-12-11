@@ -210,7 +210,7 @@ const Market = () => {
             
             <Tab.Screen
                 name="Community"
-                component={CommunityNavigator}
+                component={CommunityDrawer}
                 options={{
                     headerShown: false, 
                     tabBarIcon: ({color}) => (
@@ -268,14 +268,6 @@ const Market = () => {
             <Tab.Screen
                 name="SearchScreen"
                 component={SearchScreen}
-                options={{
-                  tabBarButton: () => null,
-                  tabBarVisible: false
-                }}
-            />
-            <Tab.Screen
-                name="CommunityMainPage"
-                component={CommunityMainPage}
                 options={{
                   tabBarButton: () => null,
                   tabBarVisible: false

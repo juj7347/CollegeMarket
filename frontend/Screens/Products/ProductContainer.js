@@ -14,7 +14,8 @@ import {
     Container, 
     HStack, 
     Text,
-    VStack
+    VStack,
+    Box
 } from 'native-base';
 
 import { useFocusEffect } from '@react-navigation/native';
@@ -119,24 +120,12 @@ const ProductContainer = (props) => {
         {!loading ? (
         <SafeAreaView>
             <Button
-                title='sdf'
+                title='판매 물품 등록'
                 onPress={()=> props.navigation.navigate("ProductForm")}
-            />
-            <SearchBar
-                searchFilter={searchKeyword}
             />
             <ScrollView backgroundColor = 'white'>
 
-                <View>
-                    <View>
-                        <CategoryFilter
-                            categories={categories}
-                            categoryFilter={changeCtg}
-                            productsCtg={productsCtg}
-                            active={active}
-                            setActive={setActive}
-                        />
-                    </View>
+                <Box backgroundColor = 'white' >
                     <Text mx = {5} my = {3} fontWeight = 'bold' fontSize = "20px">최근 등록된 상품</Text>
                     {productsFiltered.length > 0 ? (
                         <View style={styles.listContainer}>
@@ -166,7 +155,7 @@ const ProductContainer = (props) => {
                             <Text>No products</Text>
                         </View>
                     )}
-                </View>
+                </Box>
             </ScrollView>
         </SafeAreaView>
         ) 
