@@ -51,7 +51,7 @@ router.get(`/:id`, async (req, res)=>{
     res.send(product);
 })
 
-router.get(`/:userId`, async (req, res) => {
+router.get(`/myProducts/:userId`, async (req, res) => {
     const products = await Product.find({userId: req.params.userId});
 
     if(!products) {

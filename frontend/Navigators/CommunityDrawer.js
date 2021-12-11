@@ -6,7 +6,7 @@ import PostFeed from "../Screens/Feed/PostFeed/PostFeed";
 import ProductContainer from "../Screens/Products/ProductContainer";
 import SingleProduct from "../Screens/Products/SingleProduct";
 
-import CommunityNavigator from "./CommunityNavigatorr";
+import CommunityNavigator from "./CommunityNavigator";
 
 import { BorderlessButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";

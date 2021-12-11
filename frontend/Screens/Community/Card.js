@@ -30,9 +30,11 @@ import BoxBottom from "./BoxBottom"
 /*
     content = {title: string, subtitle: string, text: string, image: string, id: String, time: number}로 할 예정
 */
-const Card = ({title, subtitle, text, image, id, time, category}) => {
+const Card = ({title, subtitle, text, image, id, time, category, ...props}) => {
   return (
-    <CardContainer>
+    <CardContainer
+        onPress={()=>props.navigation.navigate("SinglePost")}
+    >
         <Box my = {2} alignSelf= 'center' 
         w = '100%'
         overflow="hidden"
