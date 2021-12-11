@@ -11,7 +11,7 @@ import UserNavigator from "./UserNavigator";
 import AdminNavigator from "./AdminNavigator";
 
 import CommunityDrawer from "./CommunityDrawer";
-import CommunityNavigator from "./CommunityNavigatorr";
+import CommunityNavigator from "./CommunityNavigator";
 
 import SearchScreen from "../Screens/Search/Search"
 import LoginNavigator from "./LoginNavigator"

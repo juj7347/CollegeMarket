@@ -24,7 +24,7 @@ import { alignContent } from 'styled-system';
 import CategorySelector from './CategorySelector';
 
 /* setContents =[...contents, {title: string, subtitle: string, text: string, image: string, id(작성자): String, time(작성시간): number}]*/
-const Community = () => {
+const Community = (props) => {
     const contents = Dummy.contents;
     const category = Dummy2.data;
 
@@ -61,6 +61,7 @@ const Community = () => {
                     id = {content.id} 
                     time = {content.title}
                     category = {content.category}
+                    {...props}
                     />:
                 <>
                 </>
