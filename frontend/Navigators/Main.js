@@ -17,6 +17,7 @@ import SearchScreen from "../Screens/Search/Search"
 import LoginNavigator from "./LoginNavigator"
 
 import AuthGlobal from "../Context/store/AuthGlobal";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 //new
 import { BorderlessButton } from "react-native-gesture-handler";
@@ -131,7 +132,17 @@ const Market = () => {
                   headerRight: (props) => {
                       const navigation = useNavigation();
                       return (
-                        <BorderlessButton
+                        <View style={{flexDirection:'row'}}>
+                          <TouchableOpacity
+                          onPress={() => navigation.navigate("Category")}
+                          style={{ marginRight: 15 }}
+                        >
+                          <Icon
+                            name="menu"
+                            size={Platform.OS === "ios" ? 22 : 27}
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity
                           onPress={() => navigation.navigate("SearchScreen")}
                           style={{ marginRight: 15 }}
                         >
@@ -139,7 +150,8 @@ const Market = () => {
                             name="md-search"
                             size={Platform.OS === "ios" ? 22 : 25}
                           />
-                        </BorderlessButton>
+                        </TouchableOpacity>
+                        </View>
                       )
                   }
                   

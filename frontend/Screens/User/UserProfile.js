@@ -130,10 +130,7 @@ const UserProfile = (props) => {
                     </Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {
-                            AsyncStorage.removeItem("jwt"),
-                            logoutUser(context.dispatch)
-                        }}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("CustomerService")}>
                 <View style={styles.menuItem}>
                 <Icon name="help" size={25}/>
                 <Text style={styles.menuItemText}>
