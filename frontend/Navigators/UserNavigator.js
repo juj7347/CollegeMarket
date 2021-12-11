@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import WishList from "../Screens/User/WishList/WishList";
 
+import CustomerService from "../Screens/User/CustomerService";
 import UserProfile from "../Screens/User/UserProfile";
 import ProfileChange from "../Screens/User/ProfileChange";
 
@@ -44,6 +45,12 @@ function UserStack() {
             <Stack.Screen
                 name="LikedPosts"
                 component={WishList}
+                options={{
+                }}
+            />
+            <Stack.Screen
+                name="CustomerService"
+                component={CustomerService}
                 options={{
                 }}
             />

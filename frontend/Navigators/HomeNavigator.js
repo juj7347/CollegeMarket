@@ -8,6 +8,7 @@ import ProductForm from "../Screens/Products/Upload/ProductForm";
 import CategorySelect from "../Screens/Products/Upload/CategorySelect";
 import SearchScreen from "../Screens/Search/Search";
 import { TransitionPresets } from "@react-navigation/stack";
+import CategorySelect1 from "../Screens/Category/CategorySelect";
 
 const Stack = createStackNavigator();
 
@@ -51,6 +52,14 @@ function HomeStack() {
             <Stack.Screen
                 name="SearchScreen"
                 component={SearchScreen}
+                options={{
+                    //headerShown: false,
+                    ...TransitionPresets.SlideFromRightIOS
+                }}
+            />
+            <Stack.Screen
+                name="Category"
+                component={CategorySelect1}
                 options={{
                     //headerShown: false,
                     ...TransitionPresets.SlideFromRightIOS
