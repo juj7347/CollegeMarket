@@ -1,0 +1,32 @@
+{
+    "data": [
+      {
+        "category": "일상",
+        "key": "1"
+      },
+      {
+        "category": "행사",
+        "key": "2"
+      },
+      {
+        "category": "과외",
+        "key": "3"
+      },
+      {
+        "category": "진로",
+        "key": "4"
+      },
+      {
+        "category": "기타",
+        "key": "5"
+      },
+      {
+        "category": "temp1",
+        "key": "6"
+      },
+      {
+        "category": "temp2",
+        "key": "7"
+      }
+    ]
+  }

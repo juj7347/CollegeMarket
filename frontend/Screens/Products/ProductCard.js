@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -30,27 +30,32 @@ var {width} = Dimensions.get("window");
 const ProductCard = (props) => {
 
     const { name, price, image, countInStock} = props;
-
+    var now = new Date();
     return (
         <>
-            <Box backgroundColor = 'white' h = {width/2 + 24} w = "100%">
+            <Box backgroundColor = 'white' h = {width/1.3 + 30} w = "100%">
                     <Image 
                         w = {width/2 - 40}
-                        h = {width/2 - 40}
-                        borderRadius = {15}
+                        h = {width/2 - 15}
+                        borderRadius = {7}
                         backgroundColor= 'transparent'
                         source={{uri:"https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg"}}
                         alignSelf = 'center'
                     />
-                    <VStack mx = {5}>
-                        <Text>
+                    <VStack mx = {5} mt = {3}>
+                        {name.length < 19 ?
+                        <Text fontWeight = 'bold' fontSize = "20">
                             {name}
+                        </Text>:
+                        <Text fontWeight = 'bold' fontSize = "20">
+                            {name.split(0, 15)}...
                         </Text>
-                        <Text fontWeight = 'bold'>
+                        }
+                        <Text fontSize= "16">
                             {price}원
                         </Text>
                         <Text color = 'gray.400'>
-                            올린 시간
+                            {now.toString()}
                         </Text>
                     </VStack>
             </Box>

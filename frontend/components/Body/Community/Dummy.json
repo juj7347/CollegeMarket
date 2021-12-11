@@ -6,7 +6,8 @@
         "text": "내용1",
         "image": "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
         "id": "1",
-        "time": "1"
+        "time": "1",
+        "category": "일상"
       },
       {
         "title": "제목2",
@@ -14,7 +15,8 @@
         "text": "내용2",
         "image": "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
         "id": "2",
-        "time": "2"
+        "time": "2",
+        "category": "과외"
       }
     ]
   }

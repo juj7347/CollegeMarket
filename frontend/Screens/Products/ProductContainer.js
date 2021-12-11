@@ -128,9 +128,9 @@ const ProductContainer = (props) => {
                 <Box backgroundColor = 'white' >
                     <Text mx = {5} my = {3} fontWeight = 'bold' fontSize = "20px">최근 등록된 상품</Text>
                     {productsFiltered.length > 0 ? (
-                        <View style={styles.listContainer}>
+                        <Box>
                             <HStack space = {2}>    
-                                <VStack w = "50%">
+                                <VStack w = "49%">
                                     {productsFiltered.map((item) => {
                                         return(
                                             productsFiltered.indexOf(item) % 2 === 0 ?
@@ -139,17 +139,17 @@ const ProductContainer = (props) => {
                                         )
                                     })}
                                 </VStack>
-                                <VStack w = "50%">
+                                <VStack w = "49%">
                                     {productsFiltered.map((item) => {
                                         return(
-                                            (productsFiltered.indexOf(item)) % 2 === 1 ?
+                                            (productsFiltered.indexOf(item)) % 2 === 0 ?
                                             <ProductList key = {item._id} item = {item} navigation = {props.navigation}/>:
                                             <></>
                                         )
                                     })}
                                 </VStack>
                             </HStack>
-                        </View>
+                        </Box>
                     ) : (
                         <View style={[styles.center, {height: height / 2}]}>
                             <Text>No products</Text>

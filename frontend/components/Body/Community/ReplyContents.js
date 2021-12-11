@@ -31,7 +31,7 @@ const ReplyContents = ({profile, id, textValue, time}) => {
                 <Button size = 'sm' variant = 'ghost' _text = {{color: 'red.400'}}>신고</Button>
             </HStack>
         </HStack>
-        <Text>{textValue}</Text>
+        <Text ml = {2}>{textValue}</Text>
         </>
     );
 };

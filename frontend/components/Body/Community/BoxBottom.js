@@ -31,10 +31,9 @@ const BoxBottom = () => {
             <Box>
                 <HStack space = {2} justifyContent = 'space-between'>
                     <HStack space = '1'>
-                        <IconButton icon = {<Icon as = {FontAwesome} name = 'thumbs-o-up'/>}/>
-                        <IconButton icon = {<Icon as = {FontAwesome} name = 'thumbs-o-down'/>} />
                     </HStack>
                     <HStack space = '2'>
+                        <Text mt = {3}>댓글</Text>
                         <IconButton icon = {<Icon as = {FontAwesome} name = 'comments'  onPress = {toggleState}/>}/>
                     </HStack>
                 </HStack>

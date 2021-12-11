@@ -14,10 +14,10 @@ import BoxBottom from "./BoxBottom"
 /*
     content = {title: string, subtitle: string, text: string, image: string, id: String, time: number}로 할 예정
 */
-const Card = ({title, subtitle, text, image, id, time}) => {
+const Card = ({title, subtitle, text, image, id, time, category}) => {
   return (
-    <Box my = {2}
-      w = '100%'
+    <Box my = {2} alignSelf= 'center' 
+      w = '92%'
       rounded="lg"
       overflow="hidden"
       borderColor="coolGray.200"
@@ -35,8 +35,8 @@ const Card = ({title, subtitle, text, image, id, time}) => {
       }}
     >
       <Box>
-        <HStack>
-        <AspectRatio w="5%" ratio={1 / 1} mx = {1}>
+        <HStack mt = {3}>
+        <AspectRatio w="10%" ratio={1 / 1} ml = {4} mr = {2}>
           <Image
             source={{
               uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
@@ -44,29 +44,22 @@ const Card = ({title, subtitle, text, image, id, time}) => {
             alt="image"
           />
         </AspectRatio>
-        <Text>
-            {id}
-        </Text>
-        </HStack>
-        <HStack alignItems="center" space={4} justifyContent="space-between">
-          <HStack alignItems="center">
-            <Text
-              color="coolGray.600"
-              _dark={{
-                color: "warmGray.200",
-              }}
-              fontWeight="400"
-            >
-              작성시간:
+        <Box>
+          <Text fontSize = "11">
+              {id}(김정환)
+          </Text>
+          <Text
+                fontSize = "11"
+                color = 'gray.400'
+                fontWeight="400"
+              >
+                작성시간(1시간전)
             </Text>
-            <Text>
-                {time}
-            </Text>
-          </HStack>
+        </Box>
         </HStack>
       </Box>
-      <Box>
-        <AspectRatio w="100%" ratio={16 / 9}>
+      <Box mt = {2}>
+        <AspectRatio w="92%" ratio={16 / 9} alignSelf = 'center'>
           <Image
             source={{
               uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
@@ -74,7 +67,6 @@ const Card = ({title, subtitle, text, image, id, time}) => {
             alt="image"
           />
         </AspectRatio>
-
       </Box>
       <Stack p="4" space={3}>
         <Stack space={2}>
