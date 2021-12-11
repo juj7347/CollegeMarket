@@ -45,7 +45,6 @@ function CommunityDrawer() {
                     }
                 }}
             />
-            
             <Drawer.Screen
                 name="Product_Detail"
                 component={SingleProduct}
