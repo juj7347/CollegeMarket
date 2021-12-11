@@ -4,6 +4,13 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const multer = require('multer');
+
+//gridfs
+const crypto = require("crypto");
+const GridFsStorage = require("multer-gridfs-storage");
+const Grid = require("gridfs-stream");
+const methodOverride = require("method-override");
+
 //delete image
 const fs = require('fs');
 const util = require('util');

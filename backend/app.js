@@ -6,6 +6,8 @@ const cors = require('cors');
 const authJwt = require('./helpers/jwt')
 const errorHandler = require('./helpers/error-handler');
 
+const methodOverride = require("method-override");
+
 require('dotenv/config');
 
 var server = require('http').createServer(app);
@@ -26,6 +28,7 @@ const wishlistRouter = require('./routers/wishlist');
 const postRouter = require('./routers/post/post');
 const commentRouter = require('./routers/post/comment');
 const tagRouter = require('./routers/post/tag');
+const { application } = require('express');
 //middleware
 app.use(express.json());
 app.use(morgan('tiny'));
@@ -33,6 +36,7 @@ app.use(cors());
 app.options('*', cors());
 app.use(authJwt());
 app.use(errorHandler);
+app.use(methodOverride("_method"));
 app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
 
 

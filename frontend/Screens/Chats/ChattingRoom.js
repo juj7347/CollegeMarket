@@ -13,7 +13,6 @@ import baseURL from "../../assets/common/baseURL";
 import axios from "axios";
 
 import {io} from 'socket.io-client';
-import {NetworkInfo} from "react-native-network-info"; //npm remove
 
 import { connect } from "react-redux";
 import chatItems from "../../Redux/Reducers/chatItems";
