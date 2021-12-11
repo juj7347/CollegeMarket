@@ -52,6 +52,16 @@ router.get(`/:userId`, async (req, res) => {
     }
     res.send(products);
 })
+
+router.get('/school/:school', async (req, res) => {
+    const product = await Product.find({school: req.params.school}).populate('category');
+
+    if(!product) {
+        return res.status(500).json({success: false});
+    }
+    res.send(product);
+
+})
 //filter
 router.get(`/`, async (req,res)=>{
     let filter = {};
@@ -93,7 +103,8 @@ router.post(`/`, uploadOptions.single('image'), async (req, res)=>{
         dataCreated: req.body.dataCreated,
         userId: req.body.userId,
         userName: req.body.userName,
-        userImg: req.body.userImg
+        userImg: req.body.userImg,
+        school: req.body.school
     })
 
     product = await product.save();

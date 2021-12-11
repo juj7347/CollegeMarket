@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { 
     View, 
     StyleSheet,
@@ -9,6 +9,12 @@ import {
     Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { 
+    ButtonContainer,
+    FloatingButton
+} from '../../Shared/StyledComponents/FloatingButton';
+import { AntDesign } from "react-native-vector-icons"
 
 import { 
     Container, 
@@ -26,12 +32,15 @@ import CategoryFilter from './CategoryFilter';
 import SearchBar from './SearchBar';
 import { backgroundColor } from 'styled-system';
 
+import AuthGlobal from '../../Context/store/AuthGlobal';
+
 var {width, height} = Dimensions.get('window');
 
 const ProductContainer = (props) => {
 
+    const context = useContext(AuthGlobal);
+
     const [products, setProducts] = useState([]);
-    
 
     //category
     const [categories, setCategories] = useState([]);
@@ -52,7 +61,7 @@ const ProductContainer = (props) => {
         
                 //products
                 axios
-                    .get(`${baseURL}products`)
+                    .get(`${baseURL}products/school/${context.stateUser.userProfile.collegeEmail}`)
                     .then((res) => {
                         setProducts(res.data);
                         setProductsFiltered(res.data);
@@ -62,6 +71,7 @@ const ProductContainer = (props) => {
                     })
                     .catch((err)=>{
                         console.log('Api call error');
+                        console.log(context.stateUser.userProfile.school)
                     })
         
                 //categories
@@ -166,6 +176,14 @@ const ProductContainer = (props) => {
                 <ActivityIndicator size='large' color='red'/>
             </Container>
         )}
+        <ButtonContainer>
+            <FloatingButton>
+                <AntDesign
+                    name="pluscircle"
+                    size={20}
+                />
+            </FloatingButton>
+        </ButtonContainer>
         </>
     )
 }
