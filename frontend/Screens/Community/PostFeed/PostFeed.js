@@ -164,7 +164,7 @@ const PostFeed = (props) => {
                 <MultilineInput
                     placeholder="게시글을 작성해 주세요"
                     multiline={true}
-                    value={desc}
+                    defaultValue={desc}
                     onChangeText={(text)=>setDesc(text)}
                     autoFocus={true}
                 />

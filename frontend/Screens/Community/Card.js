@@ -4,12 +4,14 @@ import {
   Heading,
   AspectRatio,
   Image,
-  Text,
   Center,
   HStack,
   Stack,
   NativeBaseProvider,
 } from "native-base"
+
+import { SmallBox } from "../../Shared/StyledComponents/SmallCard";
+import Text from "../../Shared/StyledComponents/Text";
 
 import { TouchableOpacity, View } from "react-native";
 
@@ -32,7 +34,7 @@ import BoxBottom from "./BoxBottom"
 /*
     content = {title: string, subtitle: string, text: string, image: string, id: String, time: number}로 할 예정
 */
-const Card = ({id, text, image, ...props}) => {
+const Card = ({tag, id, name, text, image, ...props}) => {
     return (
     <CardContainer
         onPress={()=>props.navigation.navigate("SinglePost", {content: {text: text, image: image, id: id}})}
@@ -52,6 +54,10 @@ const Card = ({id, text, image, ...props}) => {
             backgroundColor: "gray.50",
         }}
         >
+        <SmallBox>
+            <Text tiny center>{tag}</Text>
+        </SmallBox>
+        
 
         <Header>
             <Row>
@@ -60,7 +66,7 @@ const Card = ({id, text, image, ...props}) => {
                 />
                 <View style={{paddingLeft: 10}}>
                     <User>
-                        {"sdf"}
+                        {name}
                     </User>
                     
                     <Row>
