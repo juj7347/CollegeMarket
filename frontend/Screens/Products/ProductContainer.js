@@ -72,12 +72,24 @@ const ProductContainer = (props) => {
 
       if(props.filterItems.category.category) {
           changeCtg(props.filterItems.category.category._id);
+          setProductsFiltered(productsCtg);
       }
 
       return () => {
           
       }
   }, [props.filterItems.category])
+
+  useEffect(() => {
+
+    if(props.filterItems.search.search) {
+        setProductsFiltered(productsCtg.filter((item) => item.name.includes(props.filterItems.search.search)))
+    }
+
+    return () => {
+        
+    }
+}, [props.filterItems.search])
 
   useEffect(()=>{
     axios
@@ -133,9 +145,9 @@ const ProductContainer = (props) => {
                         />
                     </View>
                     */}
-                    {productsCtg.length > 0 ? (
+                    {productsFiltered.length > 0 ? (
                         <ListContainer>
-                            {productsCtg.map((item)=>{
+                            {productsFiltered.map((item)=>{
                                 return(
                                     <ProductList
                                         key={item._id}

@@ -21,7 +21,7 @@ const SearchBar = (props) => {
             py="1"
             px="2"
             placeholderTextColor="gray.500"
-            onChangeText={(text) => setSearched(text), (text) => props.onSearch(text)}
+            onChangeText={(text) => setSearched(text)}
             _hover={{ bg: 'gray.200', borderWidth: 0 }}
             borderWidth="0"
             _web={{
