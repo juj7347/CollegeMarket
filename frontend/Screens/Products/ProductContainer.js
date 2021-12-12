@@ -6,7 +6,8 @@ import {
     ActivityIndicator, 
     FlatList, 
     ScrollView, 
-    Dimensions
+    Dimensions,
+    TouchableOpacity
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -17,9 +18,11 @@ import {
 import { AntDesign } from "react-native-vector-icons"
 
 import { 
-    Container, 
-    Text
-} from 'native-base';
+    Container,
+    ListContainer
+} from './ProductCardStyles';
+
+import Text from '../../Shared/StyledComponents/Text';
 
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -28,9 +31,8 @@ import baseURL from '../../assets/common/baseURL';
 import axios from 'axios';
 
 import ProductList from './ProductList';
+import ProductCard from './ProductCard';
 import CategoryFilter from './CategoryFilter';
-import SearchBar from './SearchBar';
-import { backgroundColor } from 'styled-system';
 
 import AuthGlobal from '../../Context/store/AuthGlobal';
 
@@ -111,24 +113,11 @@ const ProductContainer = (props) => {
         }
     };
 
-    //Search
-    const searchKeyword = (keyword) => {
-        {
-            keyword === ""
-                ? setProductsFiltered(productsCtg)
-                : setProductsFiltered(
-                    productsCtg.filter((i) => i.name.toLowerCase().includes(keyword.toLowerCase()))
-                );
-        }
-    }
 
     return (
         <>
         {!loading ? (
-        <SafeAreaView>
-            <SearchBar
-                searchFilter={searchKeyword}
-            />
+        <Container>
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
@@ -143,7 +132,7 @@ const ProductContainer = (props) => {
                         />
                     </View>
                     {productsCtg.length > 0 ? (
-                        <View style={styles.listContainer}>
+                        <ListContainer>
                             {productsCtg.map((item)=>{
                                 return(
                                     <ProductList
@@ -153,7 +142,7 @@ const ProductContainer = (props) => {
                                     />
                                 )
                             })}
-                        </View>
+                        </ListContainer>
                     ) : (
                         <View style={[styles.center, {height: height / 2}]}>
                             <Text>No products</Text>
@@ -161,7 +150,8 @@ const ProductContainer = (props) => {
                     )}
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </Container>
+                    
         ) 
         : (
             <Container style={[styles.center, {backgroundColor: "#f2f2f2"}]}>

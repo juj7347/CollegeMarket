@@ -14,6 +14,7 @@ export const Container = styled.View`
 
 export const CardContainer = styled.TouchableOpacity`
     flex: 1;
+    width: ${props => props.width ?? '100%'};
 `
 
 export const ScrollContainer = styled.ScrollView`

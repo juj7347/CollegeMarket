@@ -101,7 +101,10 @@ const PostFeed = (props) => {
                     topOffset: 60,
                     type: "success",
                     text1: "게시글 등록 완료",
-                })
+                });
+                setTimeout(() => {
+                    props.navigation.navigate("Community");
+                }, 500)
             })
             .catch((error)=>console.log(error));
     }
