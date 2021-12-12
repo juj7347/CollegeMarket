@@ -225,8 +225,9 @@ const Market = () => {
             <Tab.Screen
                 name="Community"
                 component={CommunityNavigator}
-                options={{
-                    headerShown: false, 
+                options={({navigation})=>({
+                    headerShown: false,
+                    tabBarStyle: {display: getTabBarVisibility(navigation)},
                     tabBarIcon: ({color}) => (
                         <Icon
                             name="school"
@@ -249,7 +250,7 @@ const Market = () => {
                           </BorderlessButton>
                         )
                     }
-                }}
+                })}
             />
             <Tab.Screen
                 name="User"

@@ -14,26 +14,28 @@ import {
 import { TouchableOpacity, View } from "react-native";
 
 import {
+    Container,
     CardContainer,
     Header,
     Row,
     User,
     Time,
-    BottomDivider
+    BottomDivider,
+    Photo
 } from "../../Shared/StyledComponents/Card";
 
 import Avatar from "../../Shared/Avatar";
 
-import {Entypo, AntDesign} from "react-native-vector-icons";
+import { Entypo } from "react-native-vector-icons";
 
 import BoxBottom from "./BoxBottom"
 /*
     content = {title: string, subtitle: string, text: string, image: string, id: String, time: number}로 할 예정
 */
-const Card = ({title, subtitle, text, image, id, time, category, ...props}) => {
-  return (
+const Card = ({id, text, image, ...props}) => {
+    return (
     <CardContainer
-        onPress={()=>props.navigation.navigate("SinglePost")}
+        onPress={()=>props.navigation.navigate("SinglePost", {content: {text: text, image: image, id: id}})}
     >
         <Box my = {2} alignSelf= 'center' 
         w = '100%'
@@ -89,19 +91,14 @@ const Card = ({title, subtitle, text, image, id, time, category, ...props}) => {
         </Header>
 
         <Stack p="4" space={3}>
-            <Text fontWeight="400">
+            <Text fontWeight="400" numberOfLines={5}>
                 {text}
             </Text>
         </Stack>
         <Box mt = {2}>
-            <AspectRatio w="100%" ratio={16 / 9} alignSelf = 'center'>
-            <Image
-                source={{
-                uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
-                }}
-                alt="image"
+            <Photo
+                source={{uri: image ? image : "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg"}}
             />
-            </AspectRatio>
         </Box>
         <BoxBottom/>
         </Box>

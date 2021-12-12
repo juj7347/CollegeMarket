@@ -126,14 +126,6 @@ const ProductContainer = (props) => {
         <>
         {!loading ? (
         <SafeAreaView>
-            <Button
-                title='sdf'
-                onPress={()=> props.navigation.navigate("ProductForm")}
-            />
-            <Button
-                title='sdff'
-                onPress={()=> props.navigation.navigate("CategoryScreen")}
-            />
             <SearchBar
                 searchFilter={searchKeyword}
             />
@@ -177,10 +169,13 @@ const ProductContainer = (props) => {
             </Container>
         )}
         <ButtonContainer>
-            <FloatingButton>
+            <FloatingButton
+                onPress={()=> props.navigation.navigate("ProductForm")}
+            >
                 <AntDesign
                     name="pluscircle"
-                    size={20}
+                    size={40}
+                    color="blue"
                 />
             </FloatingButton>
         </ButtonContainer>

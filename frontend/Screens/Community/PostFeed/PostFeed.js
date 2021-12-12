@@ -41,7 +41,6 @@ const PostFeed = (props) => {
     const [tagName, setTagName] = useState("");
     const [tagId, setTagId] = useState();
     const [image, setImage] = useState();
-    const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
     const [token, setToken] = useState();
 
@@ -59,7 +58,7 @@ const PostFeed = (props) => {
     }
 
     const postFeed = () => {
-        if(title == "" || desc == "" || tagName == "") {
+        if(desc == "" || tagName == "") {
             Toast.show({
                 topOffset: 60,
                 type: "error",
@@ -87,7 +86,6 @@ const PostFeed = (props) => {
                 name: newImageUri.split("/").pop()
             });
         }
-        formData.append("title", title);
         formData.append("tag", tagId);
         formData.append("tagName", tagName);
         formData.append("description", desc);
@@ -162,15 +160,6 @@ const PostFeed = (props) => {
                     />
                 </Button>
             </SelectContainer>
-            <InputContainer>
-                <TitleInput
-                    placeholder="제목"
-                    multiline={true}
-                    value={title}
-                    onChangeText={(text)=>setTitle(text)}
-                    autoFocus={true}
-                />
-            </InputContainer>
             <InputContainer>
                 <MultilineInput
                     placeholder="게시글을 작성해 주세요"

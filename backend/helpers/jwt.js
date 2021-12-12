@@ -11,6 +11,8 @@ function authJwt() {
     }).unless({
         path: [
             {url: /\/public\/uploads(.*)/ , methods: ['GET', 'OPTIONS']},
+            
+            {url: /\/public\/postImages(.*)/ , methods: ['GET', 'OPTIONS']},
             {url: /\/api\/v1\/products(.*)/ , methods: ['GET', 'OPTIONS']},
             {url: /\/api\/v1\/categories(.*)/ , methods: ['GET', 'OPTIONS']},
             
@@ -30,6 +32,7 @@ function authJwt() {
             {url: /\/api\/v1\/messages(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
             {url: /\/api\/v1\/mail(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
             `${api}/tags`, //temp
+            {url: /\/api\/v1(.*)/ , methods: ['GET', 'OPTIONS']},// tmp
 
             `${api}/address`,
             `${api}/users/login`,
