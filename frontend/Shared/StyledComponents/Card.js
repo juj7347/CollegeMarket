@@ -1,11 +1,29 @@
 import styled from "styled-components";
+import { backgroundColor } from "styled-system";
 
 export const Container = styled.View`
     flex: 1;
+
+    ${({white}) => {
+        switch(true) {
+            case white:
+                return `backgroundColor: white` 
+        }
+    }}
 `
 
 export const CardContainer = styled.TouchableOpacity`
     flex: 1;
+`
+
+export const ScrollContainer = styled.ScrollView`
+    flex: 1;
+    ${({white}) => {
+        switch(true) {
+            case white:
+                return `backgroundColor: white` 
+        }
+    }}
 `
 
 export const Header = styled.View`
@@ -58,8 +76,8 @@ export const Photo = styled.Image`
 
 export const Footer = styled.View`
     flex-direction: row;
-    justify-content: space-between;
-    height: 50px;
+    justify-content: ${props => props.justifyContent ?? 'space-between'};
+    height: ${props => props.height ?? '50px'};
 `
 
 export const Like = styled.TouchableOpacity`
@@ -89,6 +107,7 @@ export const BottomDivider = styled.View`
     height: 1px;
     background: #d0d0d0;
     align-self: center;
+    margin-top: ${props => props.marginTop ?? 0};
 `
 
 export const Seperator = styled.View`
@@ -115,4 +134,15 @@ export const Category = styled.Text`
 export const GoBack = styled.TouchableOpacity`
     flex-direction: row;
     padding: 10px;
+`
+
+export const ButtonWithText = styled.TouchableOpacity`
+    flex-direction: row;
+    align-items: center;
+    margin-left: ${props => props.marginLeft ?? 0};
+    margin-right: ${props => props.marginRight ?? 0};
+`
+
+export const TextBox = styled.View`
+    margin-left: 60px;
 `

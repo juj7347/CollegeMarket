@@ -1,8 +1,6 @@
 import React from "react";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import PostFeed from "../Screens/Feed/PostFeed/PostFeed";
-
 import ProductContainer from "../Screens/Products/ProductContainer";
 import SingleProduct from "../Screens/Products/SingleProduct";
 

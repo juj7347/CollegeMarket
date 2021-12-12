@@ -28,7 +28,9 @@ export const loginUser = (user, dispatch) => {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 .then((res)=>{
-                    dispatch(setCurrentUser(decoded, res.data)) 
+                    let user = res.data;
+                    user["token"] = token;
+                    dispatch(setCurrentUser(decoded, user)) 
                 })
                 .catch((error) => {
                     console.log(error);

@@ -37,7 +37,7 @@ const Category = (props) => {
                     <Card
                         onPress={()=>{
                             props.setTagItem(item)
-                            props.navigation.navigate("post feed")
+                            props.navigation.navigate("PostFeed")
                         }}
                     >
                         <TextSection>

@@ -70,7 +70,6 @@ router.post('/', uploadOptions.single('image'), async (req, res) => {
         userId: req.body.userId,
         userName: req.body.userName,
         userImg: req.body.userImg,
-        title: req.body.title,
         description: req.body.description,
         tag: req.body.tag,
         tagName: req.body.tagName,

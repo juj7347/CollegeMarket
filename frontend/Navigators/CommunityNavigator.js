@@ -2,8 +2,8 @@ import React from "react";
 
 import { createStackNavigator } from "@react-navigation/stack";
 
-import PostFeed from "../Screens/Feed/PostFeed/PostF";
-import Category from "../Screens/Feed/PostFeed/Category";
+import PostFeed from "../Screens/Community/PostFeed/PostFeed"
+import Category from "../Screens/Community/PostFeed/Category";
 import Community from "../Screens/Community/Community";
 import SinglePost from "../Screens/Community/SinglePost";
 
@@ -21,7 +21,7 @@ function CommunityStack() {
                 component={SinglePost}
             />
             <Stack.Screen
-                name="post feed"
+                name="PostFeed"
                 component={PostFeed}
             />
             <Stack.Screen

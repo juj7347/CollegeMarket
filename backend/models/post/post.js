@@ -11,16 +11,13 @@ const postSchema = mongoose.Schema({
     userImg: {
         type: String
     },
-    title: {
-        type: String,
-        default: ""
-    },
     description: {
         type: String,
         default: ""
     },
     image: {
-        type: String
+        type: String,
+        default: ''
     },
     tag: {
         type: mongoose.Schema.Types.ObjectId

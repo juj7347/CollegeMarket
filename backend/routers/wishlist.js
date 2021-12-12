@@ -67,7 +67,7 @@ router.put('/:userId', async (req, res)=>{
     else if(req.body.type === "post") {
         newList = wishlist.postList;
         if(newList.includes(req.body.itemId)) {
-            newList.filter(id => id !== req.body.itemId);
+            newList = newList.filter(id => id !== req.body.itemId);
         }
         else {
             newList.push(req.body.itemId);
@@ -76,7 +76,7 @@ router.put('/:userId', async (req, res)=>{
         const updatedList = await Wishlist.findByIdAndUpdate(
             wishlist._id,
             {
-                productList: newList
+                postList: newList
             },
             {new: true}
         )
