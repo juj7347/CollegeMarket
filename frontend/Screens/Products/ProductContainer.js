@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { 
     View, 
     StyleSheet,
@@ -25,6 +25,9 @@ import {
 import Text from '../../Shared/StyledComponents/Text';
 
 import { useFocusEffect } from '@react-navigation/native';
+
+import { connect } from 'react-redux';
+import filterItems from '../../Redux/Reducers/filterItems';
 
 //connect
 import baseURL from '../../assets/common/baseURL';
@@ -56,63 +59,60 @@ const ProductContainer = (props) => {
     //loading
     const [loading, setLoading] = useState(true);
 
-    useFocusEffect((
-        useCallback(
-            () => {
-                setActive(-1);
-        
-                //products
-                axios
-                    .get(`${baseURL}products/school/${context.stateUser.userProfile.collegeEmail}`)
-                    .then((res) => {
-                        setProducts(res.data);
-                        setProductsFiltered(res.data);
-                        setProductsCtg(res.data);
-                        setInitialState(res.data);
-                        setLoading(false);
-                    })
-                    .catch((err)=>{
-                        console.log('Api call error');
-                        console.log(context.stateUser.userProfile.school)
-                    })
-        
-                //categories
-                axios
-                    .get(`${baseURL}categories`)
-                    .then((res) => {
-                        setCategories(res.data)
-                    })
-                    .catch((err)=>{
-                        console.log('Api call error');
-                    })
-        
-                return () => {
-                    setProducts([]);
-                    setProductsFiltered([]);
-        
-                    setCategories([]);
-                    setActive();
-                    setInitialState([]);
-                }
-            },[]
-        )
-    )
-  )
-
     //Categories
     const changeCtg = (ctg) => {
         {
             ctg === 'all'
-                ? [setProductsCtg(initialState), setActive(true)]
-                : [
-                    setProductsCtg(
-                        products.filter((i) => i.category._id === ctg),
-                        setActive(true)
-                    ),
-                ];
+                ? setProductsCtg(initialState)
+                : setProductsCtg(products.filter((i) => i.category._id === ctg));
         }
     };
 
+  useEffect(() => {
+
+      if(props.filterItems.category.category) {
+          changeCtg(props.filterItems.category.category._id);
+      }
+
+      return () => {
+          
+      }
+  }, [props.filterItems.category])
+
+  useEffect(()=>{
+    axios
+        .get(`${baseURL}products/school/${context.stateUser.userProfile.collegeEmail}`)
+        .then((res) => {
+            setProducts(res.data);
+            setProductsFiltered(res.data);
+            setProductsCtg(res.data);
+            setInitialState(res.data);
+            setLoading(false);
+        })
+        .catch((err)=>{
+            console.log('Api call error');
+            console.log(context.stateUser.userProfile.school)
+        })
+
+    //categories
+    axios
+        .get(`${baseURL}categories`)
+        .then((res) => {
+            setCategories(res.data)
+        })
+        .catch((err)=>{
+            console.log('Api call error');
+        })
+
+    return () => {
+        setProducts([]);
+        setProductsFiltered([]);
+
+        setCategories([]);
+        setActive();
+        setInitialState([]);
+    }
+  },[])
 
     return (
         <>
@@ -122,6 +122,7 @@ const ProductContainer = (props) => {
                 showsVerticalScrollIndicator={false}
             >
                 <View>
+                    {/*
                     <View>
                         <CategoryFilter
                             categories={categories}
@@ -131,6 +132,7 @@ const ProductContainer = (props) => {
                             setActive={setActive}
                         />
                     </View>
+                    */}
                     {productsCtg.length > 0 ? (
                         <ListContainer>
                             {productsCtg.map((item)=>{
@@ -193,4 +195,11 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ProductContainer;
+const mapStateToProps = (state) => {
+    const { filterItems } = state;
+    return {
+        filterItems: filterItems
+    }
+}
+
+export default connect(mapStateToProps, null)(ProductContainer);

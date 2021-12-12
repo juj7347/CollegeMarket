@@ -7,3 +7,6 @@ export const SET_CONVERSATION = "SET_CONVERSATION";
 export const SET_COLLEGE = "SET_COLLEGE";
 
 export const SET_TAG = "SET_TAG";
+
+export const SET_CATEGORY = "SET_CATEGORY";
+export const SET_SEARCH = "SET_SEARCH"; 
