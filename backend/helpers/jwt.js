@@ -21,18 +21,9 @@ function authJwt() {
 
             {url: /\/api\/v1\/users(.*)/ , methods: ['GET', 'OPTIONS']},
 
-            {url: /\/api\/v1\/products(.*)/ , methods: ['POST', 'OPTIONS']}, //temp
-            {url: /\/api\/v1\/wishlist(.*)/ , methods: ['PUT', 'OPTIONS']}, // temp
-            {url: /\/api\/v1\/wishlist(.*)/ , methods: ['GET', 'OPTIONS']}, // temp
-            {url: /\/api\/v1\/conversations(.*)/ , methods: ['GET', 'OPTIONS']}, // temp
-            {url: /\/api\/v1\/conversations(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
-            {url: /\/api\/v1\/conversations(.*)/ , methods: ['PUT', 'OPTIONS']}, // temp
-            {url: /\/api\/v1\/conversations(.*)/ , methods: ['DELETE', 'OPTIONS']}, // temp
-            {url: /\/api\/v1\/messages(.*)/ , methods: ['GET', 'OPTIONS']}, // temp
-            {url: /\/api\/v1\/messages(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
-            {url: /\/api\/v1\/mail(.*)/ , methods: ['POST', 'OPTIONS']}, // temp
-            `${api}/tags`, //temp
             {url: /\/api\/v1(.*)/ , methods: ['GET', 'OPTIONS']},// tmp
+            {url: /\/api\/v1(.*)/ , methods: ['POST', 'OPTIONS']},// tmp
+            {url: /\/api\/v1(.*)/ , methods: ['PUT', 'OPTIONS']},// tmp
 
             `${api}/address`,
             `${api}/users/login`,

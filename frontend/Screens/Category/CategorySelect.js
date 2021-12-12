@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/Ionicons"
@@ -11,7 +11,12 @@ import {
     Heading
 } from 'native-base';
 import { Dimensions } from 'react-native';
-import { marginBottom } from 'styled-system';
+
+import { connect } from "react-redux";
+import { setCategory } from '../../Redux/Actions/filterActions';
+
+import baseURL from '../../assets/common/baseURL';
+import axios from 'axios';
 
 const width = Dimensions.get("window").width;
 const data = [
@@ -25,27 +30,47 @@ const data = [
   {name: "유아도서", icon: "book"}, 
   {name: "스포츠/레저", icon: "football"}
 ];
-const icons = ["star", "car", "laptop-outline", "home", "easel-outline", "color-palette-outline", "restaurant", "book", "football"];
 
 const CategorySelect = (props) => {
+  
   const navigation= useNavigation();
-    return (
-      <ScrollView style={{width: width, backgroundColor: 'white'}}>
-        <Heading style={styles.titleText}>카테고리</Heading>
-        <View style={styles.container}>
-          {data.map(item =>(
-            <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate("Home")}>
-                <Icon
-                  name={item.icon}
-                  size={25}
-                />
-              <Text>{item.name}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-        </ScrollView>
-      
-    )
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(()=>{
+    axios
+      .get(`${baseURL}categories`)
+      .then((res)=>{
+        setCategories(res.data);
+      })
+      .catch((error) => {
+        console.log("category get failed");
+      })
+  },[])
+
+  return (
+    <ScrollView style={{width: width, backgroundColor: 'white'}}>
+      <Heading style={styles.titleText}>카테고리</Heading>
+      <View style={styles.container}>
+        {categories.map(item =>(
+          <TouchableOpacity
+            style={styles.Button}
+            onPress={() => {
+              props.setCategory(item);
+              navigation.navigate("Home");
+            }}
+          >
+              <Icon
+                name={item.icon}
+                size={25}
+              />
+            <Text>{item.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      </ScrollView>
+    
+  )
 }
 
 const styles = StyleSheet.create({
@@ -72,4 +97,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   }
 })
-export default CategorySelect;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCategory: (category) => {
+      dispatch(setCategory({category}))
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(CategorySelect);

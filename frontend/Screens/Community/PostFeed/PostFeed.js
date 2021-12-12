@@ -101,7 +101,10 @@ const PostFeed = (props) => {
                     topOffset: 60,
                     type: "success",
                     text1: "게시글 등록 완료",
-                })
+                });
+                setTimeout(() => {
+                    props.navigation.navigate("Community");
+                }, 500)
             })
             .catch((error)=>console.log(error));
     }
@@ -164,7 +167,7 @@ const PostFeed = (props) => {
                 <MultilineInput
                     placeholder="게시글을 작성해 주세요"
                     multiline={true}
-                    value={desc}
+                    defaultValue={desc}
                     onChangeText={(text)=>setDesc(text)}
                     autoFocus={true}
                 />

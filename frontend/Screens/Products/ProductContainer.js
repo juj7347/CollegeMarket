@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { 
     View, 
     StyleSheet,
@@ -6,7 +6,8 @@ import {
     ActivityIndicator, 
     FlatList, 
     ScrollView, 
-    Dimensions
+    Dimensions,
+    TouchableOpacity
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -17,20 +18,24 @@ import {
 import { AntDesign } from "react-native-vector-icons"
 
 import { 
-    Container, 
-    Text
-} from 'native-base';
+    Container,
+    ListContainer
+} from './ProductCardStyles';
+
+import Text from '../../Shared/StyledComponents/Text';
 
 import { useFocusEffect } from '@react-navigation/native';
+
+import { connect } from 'react-redux';
+import filterItems from '../../Redux/Reducers/filterItems';
 
 //connect
 import baseURL from '../../assets/common/baseURL';
 import axios from 'axios';
 
 import ProductList from './ProductList';
+import ProductCard from './ProductCard';
 import CategoryFilter from './CategoryFilter';
-import SearchBar from './SearchBar';
-import { backgroundColor } from 'styled-system';
 
 import AuthGlobal from '../../Context/store/AuthGlobal';
 
@@ -54,85 +59,82 @@ const ProductContainer = (props) => {
     //loading
     const [loading, setLoading] = useState(true);
 
-    useFocusEffect((
-        useCallback(
-            () => {
-                setActive(-1);
-        
-                //products
-                axios
-                    .get(`${baseURL}products/school/${context.stateUser.userProfile.collegeEmail}`)
-                    .then((res) => {
-                        setProducts(res.data);
-                        setProductsFiltered(res.data);
-                        setProductsCtg(res.data);
-                        setInitialState(res.data);
-                        setLoading(false);
-                    })
-                    .catch((err)=>{
-                        console.log('Api call error');
-                        console.log(context.stateUser.userProfile.school)
-                    })
-        
-                //categories
-                axios
-                    .get(`${baseURL}categories`)
-                    .then((res) => {
-                        setCategories(res.data)
-                    })
-                    .catch((err)=>{
-                        console.log('Api call error');
-                    })
-        
-                return () => {
-                    setProducts([]);
-                    setProductsFiltered([]);
-        
-                    setCategories([]);
-                    setActive();
-                    setInitialState([]);
-                }
-            },[]
-        )
-    )
-  )
-
     //Categories
     const changeCtg = (ctg) => {
         {
             ctg === 'all'
-                ? [setProductsCtg(initialState), setActive(true)]
-                : [
-                    setProductsCtg(
-                        products.filter((i) => i.category._id === ctg),
-                        setActive(true)
-                    ),
-                ];
+                ? setProductsCtg(initialState)
+                : setProductsCtg(products.filter((i) => i.category._id === ctg));
         }
     };
 
-    //Search
-    const searchKeyword = (keyword) => {
-        {
-            keyword === ""
-                ? setProductsFiltered(productsCtg)
-                : setProductsFiltered(
-                    productsCtg.filter((i) => i.name.toLowerCase().includes(keyword.toLowerCase()))
-                );
-        }
+  useEffect(() => {
+
+      if(props.filterItems.category.category) {
+          changeCtg(props.filterItems.category.category._id);
+          setProductsFiltered(productsCtg);
+      }
+
+      return () => {
+          
+      }
+  }, [props.filterItems.category])
+
+  useEffect(() => {
+
+    if(props.filterItems.search.search) {
+        setProductsFiltered(productsCtg.filter((item) => item.name.includes(props.filterItems.search.search)))
     }
+
+    return () => {
+        
+    }
+}, [props.filterItems.search])
+
+  useEffect(()=>{
+    axios
+        .get(`${baseURL}products/school/${context.stateUser.userProfile.collegeEmail}`)
+        .then((res) => {
+            setProducts(res.data);
+            setProductsFiltered(res.data);
+            setProductsCtg(res.data);
+            setInitialState(res.data);
+            setLoading(false);
+        })
+        .catch((err)=>{
+            console.log('Api call error');
+            console.log(context.stateUser.userProfile.school)
+        })
+
+    //categories
+    axios
+        .get(`${baseURL}categories`)
+        .then((res) => {
+            setCategories(res.data)
+        })
+        .catch((err)=>{
+            console.log('Api call error');
+        })
+
+    return () => {
+        setProducts([]);
+        setProductsFiltered([]);
+
+        setCategories([]);
+        setActive();
+        setInitialState([]);
+    }
+  },[])
 
     return (
         <>
         {!loading ? (
-        <SafeAreaView>
-            <SearchBar
-                searchFilter={searchKeyword}
-            />
+        <Container>
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
                 <View>
+                    {/*
                     <View>
                         <CategoryFilter
                             categories={categories}
@@ -142,9 +144,10 @@ const ProductContainer = (props) => {
                             setActive={setActive}
                         />
                     </View>
-                    {productsCtg.length > 0 ? (
-                        <View style={styles.listContainer}>
-                            {productsCtg.map((item)=>{
+                    */}
+                    {productsFiltered.length > 0 ? (
+                        <ListContainer>
+                            {productsFiltered.map((item)=>{
                                 return(
                                     <ProductList
                                         key={item._id}
@@ -153,7 +156,7 @@ const ProductContainer = (props) => {
                                     />
                                 )
                             })}
-                        </View>
+                        </ListContainer>
                     ) : (
                         <View style={[styles.center, {height: height / 2}]}>
                             <Text>No products</Text>
@@ -161,7 +164,8 @@ const ProductContainer = (props) => {
                     )}
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </Container>
+                    
         ) 
         : (
             <Container style={[styles.center, {backgroundColor: "#f2f2f2"}]}>
@@ -203,4 +207,11 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ProductContainer;
+const mapStateToProps = (state) => {
+    const { filterItems } = state;
+    return {
+        filterItems: filterItems
+    }
+}
+
+export default connect(mapStateToProps, null)(ProductContainer);

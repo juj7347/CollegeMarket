@@ -5,11 +5,13 @@ import { composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 import chatItems from './Reducers/chatItems';
 import collegeItems from './Reducers/collegeItems';
 import postTagItems from './Reducers/postTagItems';
+import filterItems from './Reducers/filterItems';
 
 const reducers = combineReducers({
     chatItems: chatItems,
     collegeItems: collegeItems,
-    postTagItems: postTagItems
+    postTagItems: postTagItems,
+    filterItems: filterItems
 })
 
 const initialState = {

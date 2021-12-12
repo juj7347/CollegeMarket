@@ -198,7 +198,7 @@ const ProductForm = (props) => {
                             text1: "물품이 등록되었습니다"
                         });
                         setTimeout(() => {
-                            props.navigation.navigate("Products");
+                            props.navigation.navigate("Home");
                         }, 500)
                     }
                 })

@@ -9,6 +9,7 @@ const TextStyles = styled.Text`
     color: ${props => props.color ?? "#414959"};
     margin: ${props => props.margin ?? 0};
     margin-left: ${props => props.marginLeft ?? 0};
+    margin-top: ${props => props.marginTop ?? 0};
     padding: ${props => props.padding ?? 0};
     ${({title, large, medium, small, tiny}) =>{
         switch (true) {

@@ -2,22 +2,23 @@ import React, {useState, useEffect, useCallback, useContext} from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import {
-  NativeBaseProvider,
   Box,
-  Text,
-  Heading,
   VStack,
-  FormControl,
-  Input,
   Link,
   Button,
   Icon,
   IconButton,
   HStack,
-  Divider,
   ScrollView,
-  View
+  View,
+  FlatList
 } from 'native-base';
+
+import Text from '../../Shared/StyledComponents/Text';
+
+import { 
+    SmallCard
+} from '../../Shared/StyledComponents/SmallCard';
 
 import { 
     ButtonContainer,
@@ -28,9 +29,6 @@ import { Container } from '../../Shared/StyledComponents/Card';
 import { AntDesign } from "react-native-vector-icons";
 
 import Card from './Card';
-import { alignContent } from 'styled-system';
-import CategorySelector from './CategorySelector';
-
 
 import baseURL from '../../assets/common/baseURL';
 import axios from 'axios';
@@ -48,23 +46,37 @@ const Community = (props) => {
     };
 
     const [posts, setPosts] = useState([]);
-    const [filteted, setFiltered] = useState([]);
+    const [filtered, setFiltered] = useState([]);
     const [token, setToken] = useState();
+    const [tags, setTags] = useState([]);
     const [loading , setLoading] = useState(true);
+
+    const pickTag = (picked) => {
+        setFiltered(posts.filter(item => item.tag === picked._id));
+    }
 
     useFocusEffect((
         useCallback(()=>{
             axios 
-            .get(`${baseURL}posts`, {headers: {Authorization: `Bearer ${context.stateUser.userProfile.token}`}})
-            .then((res)=>{
-                setPosts(res.data);
-                setLoading(false);
-            })
+                .get(`${baseURL}posts`, {headers: {Authorization: `Bearer ${context.stateUser.userProfile.token}`}})
+                .then((res)=>{
+                    setPosts(res.data);
+                    setFiltered(res.data);
+                    setLoading(false);
+                })
+                .catch((error)=>console.log(error));
 
-            .catch((error)=>console.log(error));
+            axios
+            .get(`${baseURL}tags`, {headers: {Authorization: `Bearer ${context.stateUser.userProfile.token}`}})
+                .then((res)=>{
+                    setTags(res.data);
+                })
+                .catch((error) => console.log(error));
+
             return () => {
                 setPosts([]);
                 setFiltered([]);
+                setTags([]);
             }
         },[])
     ))
@@ -73,26 +85,28 @@ const Community = (props) => {
         
         <>
         {!loading ? (
-            /*
-        <Box alignItems= 'center'>
-        <HStack>
-            {category.map( (selection) => (
-                <CategorySelector 
-                    key = {selection.key} 
-                    choice = {selection.category} 
-                    Handler = {selectionHandler}
-                />))}
-        </HStack>
-        </Box>
-        */
        <View>
-        {posts.length > 0 ? (
+        <FlatList
+            horizontal
+            data={tags}
+            keyExtractor={(item) => item.id}
+            renderItem={({item}) => (
+                <SmallCard
+                    onPress={() => pickTag(item)}
+                >
+                    <Text center color="gray" heavy>{item.name}</Text>
+                </SmallCard>
+            )}
+        />
+        {filtered.length > 0 ? (
         <ScrollView>
-            {posts.map((content) => 
+            {filtered.map((content) => 
                 <Card 
                     id={content._id}
                     text={content.description} 
                     image={content.image}
+                    name={content.userName}
+                    tag={content.tagName}
                     {...props}
                 />
                 )}
