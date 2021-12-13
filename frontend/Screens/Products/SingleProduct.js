@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from "react";
+import React, { useState, useContext, useCallback ,useLayoutEffect } from "react";
 import { Image, ScrollView, View, StyleSheet, Text, Button, TouchableOpacity } from "react-native";
 import {
     Header,
@@ -48,8 +48,18 @@ const SingleProduct = (props) => {
     const [token, setToken] = useState();
     const [userProfile, setUserprofile] = useState();
     const [liked, setLiked] = useState(false);
+    const [hideScroll, setHideScroll] = useState(true);
 
     const context = useContext(AuthGlobal);
+
+    const getScrollY = (event) => {
+        if(event.nativeEvent.contentOffset.y > 208) {
+            setHideScroll(false);
+        }
+        else {
+            setHideScroll(true);
+        }
+    } 
 
     useFocusEffect(
         useCallback(
@@ -123,9 +133,18 @@ const SingleProduct = (props) => {
         
     }
 
+    useLayoutEffect(()=>{
+        props.navigation.setOptions({
+            headerShown: hideScroll
+        })
+    },[props.navigation, hideScroll])
+
     return (
         <Container>
-            <ScrollView style={styles.scrolView}>
+            <ScrollView
+                scrollEventThrottle={16}
+                onScroll={(e) => getScrollY(e)}
+            >
                 <Photo
                     source={{uri: item.image ? item.image : require("../../assets/users/post1.jpg")}}
                 />

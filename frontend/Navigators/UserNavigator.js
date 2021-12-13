@@ -1,10 +1,12 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import WishList from "../Screens/User/WishList/WishList";
+import WishList from "../Screens/User/MyItems/WishList";
+import MyProducts from "../Screens/User/MyItems/MyProducts";
 
 import CustomerService from "../Screens/User/CustomerService";
 import UserProfile from "../Screens/User/UserProfile";
 import ProfileChange from "../Screens/User/ProfileChange";
+import SingleProduct from "../Screens/Products/SingleProduct";
 
 const Stack = createStackNavigator();
 
@@ -26,19 +28,19 @@ function UserStack() {
             />
             <Stack.Screen
                 name="SellPosts"
-                component={WishList}
+                component={MyProducts}
                 options={{
                 }}
             />
             <Stack.Screen
                 name="CommunityPosts"
-                component={WishList}
+                component={CustomerService}
                 options={{
                 }}
             />
             <Stack.Screen
                 name="CommentPosts"
-                component={WishList}
+                component={CustomerService}
                 options={{
                 }}
             />
@@ -52,6 +54,14 @@ function UserStack() {
                 name="CustomerService"
                 component={CustomerService}
                 options={{
+                }}
+            />
+            <Stack.Screen
+                name="Product_Detail"
+                component={SingleProduct}
+                options={{
+                    headerTransparent: true,
+                    title: ""
                 }}
             />
         </Stack.Navigator>

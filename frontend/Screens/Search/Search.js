@@ -44,27 +44,16 @@ const SearchScreen = (props) => {
                 </InputContainer>
             )
         });
-    })
-    const [text, setText] = useState("");
-    const getText = (text) => {
-        setText(text);
-    }
-    let content = null;
-    let content1 = null;
-    if (text === ""){
-        content = <SearchGoods/>;
-        content1 = <SuggestedSearch/>;
-    }
-    else {
-        content = <SearchResult/>;
-    }
+    },[props.navigation])
+
+
     return (
         <ScrollView>
         <View style={style.container}>
             </View>
             <View style={style.container}>
-            {content}
-            {content1}
+                <SearchGoods/>
+                <SuggestedSearch/>
             </View>
         </ScrollView>
     )

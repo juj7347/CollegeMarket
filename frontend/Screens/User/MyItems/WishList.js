@@ -3,10 +3,10 @@ import {
     View,
     Dimensions,
     StyleSheet,
-    Button
+    Button,
+    ScrollView
 } from "react-native";
 import {
-    Container,
     Text,
     List,
     Heading,
@@ -14,6 +14,14 @@ import {
     Avatar
 } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import {
+    Container,
+    ListContainer
+} from "../../Products/ProductCardStyles";
+
+import ProductList from "../../Products/ProductList";
+
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
@@ -29,42 +37,39 @@ const WishList = (props) => {
 
     const [wishlist, setWishlist] = useState([]);
 
+    useEffect(() => {
+        axios
+            .get(`${baseURL}wishlist/product/${context.stateUser.user.userId}`)
+            .then((res) => {
+                setWishlist(res.data.productList);
+            })
+            .catch((error)=>{
+                console.log("wishlist get failed");
+            })
+    },[])
+
     return (
         <>
-            <Heading style={{alignSelf: 'center'}}>관심목록</Heading>
+        <ScrollView>
             {wishlist.length ?  (
-                <Container>
+                <ListContainer>
                     {wishlist.map((item)=>{
                         return (
-                            <List.Item
-                                style={styles.listItem}
-                                key={Math.random()}
-                            >
-                                <Avatar
-                                    source={{
-                                        uri: item.product.image
-                                            ? item.product.image
-                                            : "https://cdnweb01.wikitree.co.kr/webdata/editor/202004/07/img_20200407162305_1f42c686.webp"
-                                    }}
-                                />
-                                <Box style={styles.body}>
-                                    <Text>{item.product.name}</Text>
-                                </Box>
-                            </List.Item>
+                            <ProductList
+                                key={item._id}
+                                item={item}
+                                navigation={props.navigation}
+                            />
                         );
                     })}
-                    <Button
-                        title="Clear"
-                        onPress={()=>{}}
-                    />
-                </Container>
+                </ListContainer>
             ) : (
                 <Container style={styles.emptyContainer}>
                     <Text>관심목록이 비어있습니다</Text>
                     <Text>관심품목을 추가해주세요</Text>
                 </Container>
             )}
-
+        </ScrollView>
         </>
     )
 }

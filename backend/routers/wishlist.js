@@ -1,10 +1,25 @@
 const {Wishlist} = require('../models/wishlist');
-const {User} = require('../models/user');
+const {Product} = require('../models/product');
 const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose");
 
-router.get(`/:userId`, async (req, res)=>{
+router.get(`/product/:userId`, async (req, res)=>{
+    const wishlist = await Wishlist.findOne({
+        userId: req.params.userId
+    }).populate('productList');
+
+    if(!wishlist) {
+        return res.status(404).send("whshlist not found");
+    }
+
+    console.log(wishlist)
+
+    res.status(200).send(wishlist);
+
+})
+
+router.get(`/post/:userId`, async (req, res)=>{
     const wishlist = await Wishlist.findOne({
         userId: req.params.userId
     });
@@ -12,6 +27,8 @@ router.get(`/:userId`, async (req, res)=>{
     if(!wishlist) {
         return res.status(404).send("whshlist not found");
     }
+
+    console.log(wishlist)
 
     res.status(200).send(wishlist);
 

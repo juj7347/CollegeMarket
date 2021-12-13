@@ -6,10 +6,12 @@ const wishlistSchema = new mongoose.Schema({
         required: true
     },
     productList: [{
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
     }],
     postList: [{
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'
     }]
 })
 
