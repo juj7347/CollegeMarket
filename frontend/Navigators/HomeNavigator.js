@@ -53,7 +53,7 @@ function HomeStack() {
                 name="SearchScreen"
                 component={SearchScreen}
                 options={{
-                    //headerShown: false,
+                    headerShown: false,
                     ...TransitionPresets.SlideFromRightIOS
                 }}
             />
