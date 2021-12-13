@@ -55,7 +55,7 @@ const SinglePost = (props) => {
         };
 
         axios
-            .put(`${baseURL}wishlist/${context.stateUser.user.userId}`, {type: "post", itemId: id}, config)
+            .put(`${baseURL}wishlist/post/like/${context.stateUser.user.userId}`, {like: !liked, itemId: id}, config)
             .then((res) => {
 
             })
@@ -72,7 +72,7 @@ const SinglePost = (props) => {
             .catch((error)=>console.log(error));
 
         axios
-            .get(`${baseURL}wishlist/${context.stateUser.user.userId}`, {headers: {Authorization: `Bearer ${context.stateUser.userProfile.token}`}})
+            .get(`${baseURL}wishlist/post/${context.stateUser.user.userId}`, {headers: {Authorization: `Bearer ${context.stateUser.userProfile.token}`}})
             .then((res)=>{
                 if(res.data.postList.includes(id)) {
                     setLiked(true)

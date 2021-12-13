@@ -13,8 +13,6 @@ router.get(`/product/:userId`, async (req, res)=>{
         return res.status(404).send("whshlist not found");
     }
 
-    console.log(wishlist)
-
     res.status(200).send(wishlist);
 
 })
@@ -28,7 +26,6 @@ router.get(`/post/:userId`, async (req, res)=>{
         return res.status(404).send("whshlist not found");
     }
 
-    console.log(wishlist)
 
     res.status(200).send(wishlist);
 
@@ -49,7 +46,7 @@ router.post(`/`, async (req, res)=>{
     res.status(200).send(wishlist);
 })
 
-router.put('/:userId', async (req, res)=>{
+router.put(`/product/like/:userId`, async (req, res)=>{
     if(!mongoose.isValidObjectId(req.params.userId)) {
         return res.status(400).send('Invalid User ID');
     }
@@ -60,49 +57,68 @@ router.put('/:userId', async (req, res)=>{
         return res.status(500).send("wishlist of given user ID not found");
     }
     
-    let newList;
-
-    if(req.body.type === "product") {
-        newList = wishlist.productList;
-        if(newList.includes(req.body.itemId)) {
-            newList = newList.filter(id => id != req.body.itemId);
-        }
-        else {
-            newList.push(req.body.itemId);
-        }
+    let updatedList = [];
     
-        const updatedList = await Wishlist.findByIdAndUpdate(
+    if(req.body.like) {
+        updatedList = await Wishlist.findByIdAndUpdate(
             wishlist._id,
             {
-                productList: newList
-            },
-            {new: true}
+                $push: {productList: req.body.itemId}
+            }
         )
-
-        return res.status(200).send(updatedList);
     }
-    else if(req.body.type === "post") {
-        newList = wishlist.postList;
-        if(newList.includes(req.body.itemId)) {
-            newList = newList.filter(id => id !== req.body.itemId);
-        }
-        else {
-            newList.push(req.body.itemId);
-        }
-    
-        const updatedList = await Wishlist.findByIdAndUpdate(
+    else {
+        updatedList = await Wishlist.findByIdAndUpdate(
             wishlist._id,
             {
-                postList: newList
-            },
-            {new: true}
+                $pull: {productList: req.body.itemId}
+            }
         )
-
-        return res.status(200).send(updatedList);
     }
-
-
     
+    if(!updatedList) {
+        return res.status(500).json({success: false});
+    }
+    
+    res.status(200).send(updatedList);
+
 })
 
+router.put(`/post/like/:userId`, async (req, res)=>{
+    if(!mongoose.isValidObjectId(req.params.userId)) {
+        return res.status(400).send('Invalid User ID');
+    }
+
+    const wishlist = await Wishlist.findOne({userId: req.params.userId});
+
+    if(!wishlist) {
+        return res.status(500).send("wishlist of given user ID not found");
+    }
+    
+    let updatedList = [];
+    
+    if(req.body.like) {
+        updatedList = await Wishlist.findByIdAndUpdate(
+            wishlist._id,
+            {
+                $push: {postList: req.body.itemId}
+            }
+        )
+    }
+    else {
+        updatedList = await Wishlist.findByIdAndUpdate(
+            wishlist._id,
+            {
+                $pull: {postList: req.body.itemId}
+            }
+        )
+    }
+    
+    if(!updatedList) {
+        return res.status(500).json({success: false});
+    }
+    
+    res.status(200).send(updatedList);
+
+})
 module.exports = router;

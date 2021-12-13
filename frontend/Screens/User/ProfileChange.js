@@ -91,33 +91,7 @@ const ProfileChange = () => {
                     )}
                 </ImageButton>
             </ImageContainerProfile>
-            <View style={styles.container}>
-            <Text>
-                이름
-            </Text>
-                <TextInput
-                    placeholder="이름"
-                    placeholderTextColor="#666666"
-                    value={userProfile ? userProfile.name : ""}/>
-            </View>
-            <View style={styles.container}>
-            <Text>
-                이메일
-            </Text>
-                <TextInput
-                    placeholder="이메일"
-                    placeholderTextColor="#666666"
-                    value={userProfile ? userProfile.email : ""}/>
-            </View>
-            <View style={styles.container}>
-            <Text>
-                학교
-            </Text>
-                <TextInput
-                    placeholder="이메일"
-                    placeholderTextColor="#666666"
-                    value={userProfile ? userProfile.school : ""}/>
-            </View>
+
         </View>
     )
 
