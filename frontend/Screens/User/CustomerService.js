@@ -22,7 +22,8 @@ export default CustomerService;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
+        flex:1
     },
     text: {
         marginTop: 0,
