@@ -33,7 +33,7 @@ const CategorySelect = (props) => {
         <Heading style={styles.titleText}>최근 검색어</Heading>
         <View style={styles.container}>
           {data.map(item =>(
-            <TouchableOpacity style={styles.Button}>
+            <TouchableOpacity style={styles.Button} onPress={ () => props.setSearch(item.name) }>
               <Text>{item.name}</Text>
             </TouchableOpacity>
           ))}

@@ -24,6 +24,10 @@ const SearchScreen = (props) => {
     const navigation = useNavigation();
 
     const [search, setSearch] = useState("");
+    const trigger = () => {
+        props.setSearch(search);
+        navigation.navigate("Home");
+    }
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
@@ -49,11 +53,12 @@ const SearchScreen = (props) => {
 
     return (
         <ScrollView>
+            <Text>{search}</Text>
         <View style={style.container}>
             </View>
             <View style={style.container}>
-                <SearchGoods/>
-                <SuggestedSearch/>
+                <SearchGoods setSearch={trigger}/>
+                <SuggestedSearch setSearch={trigger}/>
             </View>
         </ScrollView>
     )

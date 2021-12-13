@@ -6,17 +6,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import goodsData from "../SearchData.json"
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { marginBottom } from "styled-system";
+import { useNavigation } from "@react-navigation/native";
 
 const {width} = Dimensions.get('window').width;
 
-export default function SearchGoods() {
+export default function SearchGoods(props) {
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <Heading style={styles.titleText}>추천 검색어</Heading>
-                <ScrollView horizontal={true} sc>
+                <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} sc>
             {goodsData.map((goods) => {
                 return (
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={ () => props.setSearch(goods.keyword) }>
                     <Text style={styles.contentText}> { goods.keyword }</Text>
                 </TouchableOpacity>
             )})}
