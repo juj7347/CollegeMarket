@@ -61,14 +61,14 @@ const ProductContainer = (props) => {
 
     //Categories
     const changeCtg = (ctg) => {
-        {
-            ctg === 'all'
-                ? setProductsCtg(initialState)
-                : setProductsCtg(products.filter((i) => i.category._id === ctg));
+        if(ctg !== "") {
+            let newProducts = products.filter((i) => i.category._id === ctg);
+            setProductsCtg(newProducts);
+            setProductsFiltered(newProducts);
         }
     };
-
-  useEffect(() => {
+    
+    useEffect(() => {
 
       if(props.filterItems.category.category) {
           changeCtg(props.filterItems.category.category._id);
@@ -78,9 +78,9 @@ const ProductContainer = (props) => {
       return () => {
           
       }
-  }, [props.filterItems.category])
+    }, [props.filterItems.category])
 
-  useEffect(() => {
+    useEffect(() => {
 
     if(props.filterItems.search.search) {
         setProductsFiltered(productsCtg.filter((item) => item.name.includes(props.filterItems.search.search)))
@@ -89,7 +89,7 @@ const ProductContainer = (props) => {
     return () => {
         
     }
-}, [props.filterItems.search])
+    }, [props.filterItems.search])
 
   useEffect(()=>{
     axios

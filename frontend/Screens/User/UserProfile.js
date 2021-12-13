@@ -10,7 +10,6 @@ import { useNavigation } from "@react-navigation/native";
 import AuthGlobal from "../../Context/store/AuthGlobal";
 import { logoutUser } from "../../Context/actions/Auth.actions";
 
-import WishList from './WishList/WishList'
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { alignContent, alignItems } from "styled-system";
 var {width} = Dimensions.get("window");

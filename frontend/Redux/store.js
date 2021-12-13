@@ -16,7 +16,8 @@ const reducers = combineReducers({
 
 const initialState = {
     collegeItems: {collegeItem:{name: "",address: ""}},
-    postTagItems: {postTagItems:{name: ""}}
+    postTagItems: {postTagItems:{name: ""}},
+    filterItems: {category: {category: {_id: "", name: ""}}, search: {search: ""}}
 }
 
 const store = createStore(
