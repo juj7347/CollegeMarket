@@ -94,7 +94,7 @@ export const Chat = styled.TouchableOpacity`
     height: 100%;
     justify-content: center;
     align-self: center;
-    background: red;
+    background: #64B5F6;
 `
 export const ChatText = styled.Text`
     font-weight: bold;

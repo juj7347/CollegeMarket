@@ -15,7 +15,7 @@ import {
     ButtonContainer,
     FloatingButton
 } from '../../Shared/StyledComponents/FloatingButton';
-import { AntDesign } from "react-native-vector-icons"
+import { FontAwesome5 } from "react-native-vector-icons"
 
 import { 
     Container,
@@ -46,59 +46,54 @@ const ProductContainer = (props) => {
     const context = useContext(AuthGlobal);
 
     const [products, setProducts] = useState([]);
-
-    //category
-    const [categories, setCategories] = useState([]);
-    const [active, setActive] = useState();
-    const [initialState, setInitialState] = useState([]);
-    const [productsCtg, setProductsCtg] = useState([]);
-
     //search
     const [productsFiltered, setProductsFiltered] = useState([]);
 
     //loading
     const [loading, setLoading] = useState(true);
 
-    //Categories
-    const changeCtg = (ctg) => {
-        if(ctg !== "") {
-            let newProducts = products.filter((i) => i.category._id === ctg);
-            setProductsCtg(newProducts);
-            setProductsFiltered(newProducts);
-        }
-    };
+
     
     useEffect(() => {
 
-      if(props.filterItems.category.category) {
-          changeCtg(props.filterItems.category.category._id);
-          setProductsFiltered(productsCtg);
-      }
+        axios
+            .get(`${baseURL}products/school/${context.stateUser.userProfile.collegeEmail}/${props.filterItems.category.category._id}`)
+            .then((res) => {
+                setProducts(res.data);
+                setProductsFiltered(res.data);
+                setLoading(false);
+            })
+            .catch((err)=>{
+                console.log('Api call error');
+                console.log(context.stateUser.userProfile.school)
+            })
 
-      return () => {
-          
-      }
+
+
+    return () => {
+        setProducts([]);
+        setProductsFiltered([]);
+    }
     }, [props.filterItems.category])
 
     useEffect(() => {
 
     if(props.filterItems.search.search) {
-        setProductsFiltered(productsCtg.filter((item) => item.name.includes(props.filterItems.search.search)))
+        console.log(props.filterItems.search)
+        setProductsFiltered(products.filter((item) => item.name.includes(props.filterItems.search.search)))
     }
 
     return () => {
         
     }
     }, [props.filterItems.search])
-
+    
   useEffect(()=>{
     axios
-        .get(`${baseURL}products/school/${context.stateUser.userProfile.collegeEmail}`)
+        .get(`${baseURL}products/school/${context.stateUser.userProfile.collegeEmail}/all`)
         .then((res) => {
             setProducts(res.data);
             setProductsFiltered(res.data);
-            setProductsCtg(res.data);
-            setInitialState(res.data);
             setLoading(false);
         })
         .catch((err)=>{
@@ -106,23 +101,10 @@ const ProductContainer = (props) => {
             console.log(context.stateUser.userProfile.school)
         })
 
-    //categories
-    axios
-        .get(`${baseURL}categories`)
-        .then((res) => {
-            setCategories(res.data)
-        })
-        .catch((err)=>{
-            console.log('Api call error');
-        })
 
     return () => {
         setProducts([]);
         setProductsFiltered([]);
-
-        setCategories([]);
-        setActive();
-        setInitialState([]);
     }
   },[])
 
@@ -176,10 +158,10 @@ const ProductContainer = (props) => {
             <FloatingButton
                 onPress={()=> props.navigation.navigate("ProductForm")}
             >
-                <AntDesign
-                    name="pluscircle"
-                    size={40}
-                    color="blue"
+                <FontAwesome5
+                    name="pen"
+                    size={20}
+                    color="white"
                 />
             </FloatingButton>
         </ButtonContainer>

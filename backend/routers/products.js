@@ -60,8 +60,14 @@ router.get(`/myProducts/:userId`, async (req, res) => {
     res.send(products);
 })
 
-router.get('/school/:school', async (req, res) => {
-    const product = await Product.find({school: req.params.school}).populate('category');
+router.get('/school/:school/:category', async (req, res) => {
+    let product = [];
+    if(req.params.category == "all") {
+        product = await Product.find({school: req.params.school}).populate('category');
+    }
+    else {
+        product = await Product.find({school: req.params.school, category: req.params.category}).populate('category');
+    }
 
     if(!product) {
         return res.status(500).json({success: false});

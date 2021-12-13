@@ -40,6 +40,6 @@ export const Submit = styled.TouchableOpacity`
     height: 40px;
     bottom: 0px;
     border-radius: 5px;
-    background-color: blue;
+    background-color: #64B5F6;
     justify-content: center;
 `

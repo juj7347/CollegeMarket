@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useLayoutEffect} from "react";
-import { View, Dimensions, StyleSheet } from "react-native";
-import { Inputm, Text } from "native-base";
+import { View, Dimensions, StyleSheet, Text, TextInput} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SuggestedSearch from "./SearchContainer/SuggestedSearch"
 import SearchData from "./SearchData.json"
@@ -23,25 +22,24 @@ const width = Dimensions.get('window').width;
 const SearchScreen = (props) => {
     const navigation = useNavigation();
 
-    const [search, setSearch] = useState("");
+    const [keyword, setKeyword] = useState("");
     const trigger = () => {
-        props.setSearch(search);
+        props.setSearch(keyword);
         navigation.navigate("Home");
     }
 
     React.useLayoutEffect(() => {
-        navigation.setOptions({
+        props.navigation.setOptions({
             headerTitle: () => (
                 <InputContainer>
                     <InputBox>
                         <Input
                             placeholder="검색어를 입력하세요"
-                            onChangeText={(text)=>setSearch(text)}
+                            onChangeText={(text) => setKeyword(text)}
                             onSubmitEditing={()=>{
-                                if(search !== "") {
-                                    props.setSearch(search);
-                                    navigation.navigate("Home");
-                                }
+                                console.log(keyword)
+                                props.setSearch(keyword);
+                                navigation.navigate("Home");
                             }}
                         />
                     </InputBox>
@@ -53,12 +51,13 @@ const SearchScreen = (props) => {
 
     return (
         <ScrollView>
-            <Text>{search}</Text>
         <View style={style.container}>
             </View>
             <View style={style.container}>
+                {/*
                 <SearchGoods setSearch={trigger}/>
                 <SuggestedSearch setSearch={trigger}/>
+                */}
             </View>
         </ScrollView>
     )

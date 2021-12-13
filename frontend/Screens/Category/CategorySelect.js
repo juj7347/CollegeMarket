@@ -52,6 +52,19 @@ const CategorySelect = (props) => {
     <ScrollView style={{width: width, backgroundColor: 'white'}}>
       <Heading style={styles.titleText}>카테고리</Heading>
       <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.Button}
+          onPress={() => {
+            props.setCategory({_id: "all", name: "all"});
+            navigation.navigate("Home");
+          }}
+        >
+            <Icon
+              name="star"
+              size={25}
+            />
+          <Text>모든 카테고리</Text>
+        </TouchableOpacity>
         {categories.map(item =>(
           <TouchableOpacity
             style={styles.Button}

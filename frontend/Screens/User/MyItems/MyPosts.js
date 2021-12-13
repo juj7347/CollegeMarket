@@ -36,7 +36,7 @@ import axios from 'axios';
 import AuthGlobal from '../../../Context/store/AuthGlobal';
 
 /* setContents =[...contents, {title: string, subtitle: string, text: string, image: string, id(작성자): String, time(작성시간): number}]*/
-const Community = (props) => {
+const MyPosts = (props) => {
     
     const context = useContext(AuthGlobal);
 
@@ -126,4 +126,4 @@ const Community = (props) => {
     );
 };
 
-export default Community;
+export default MyPosts;
