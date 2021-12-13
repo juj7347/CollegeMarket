@@ -88,9 +88,10 @@ const SingleProduct = (props) => {
                             })
 
                         axios
-                            .get(`${baseURL}wishlist/${context.stateUser.user.userId}`, {headers: { Authorization: `Bearer ${res}`}})
+                            .get(`${baseURL}wishlist/product/${context.stateUser.user.userId}`, {headers: { Authorization: `Bearer ${res}`}})
                             .then((res)=>{
-                                if(res.data.productList.includes(item._id)) {
+                                if(res.data.productList.find(product => product.id === item._id)) {
+
                                     setLiked(true);
                                 }
                             })
@@ -117,7 +118,7 @@ const SingleProduct = (props) => {
             }
         }
         axios
-            .put(`${baseURL}wishlist/${context.stateUser.user.userId}`, {type: "product", itemId: item._id}, config)
+            .put(`${baseURL}wishlist/product/like/${context.stateUser.user.userId}`, {like: !liked, itemId: item._id}, config)
             .then((res)=>{
                 if(res.status == 200 || res.status == 201) {
                     Toast.show({
@@ -140,6 +141,7 @@ const SingleProduct = (props) => {
     },[props.navigation, hideScroll])
 
     return (
+        <>
         <Container>
             <ScrollView
                 scrollEventThrottle={16}
@@ -223,6 +225,7 @@ const SingleProduct = (props) => {
                 </Chat>
             </Footer>
         </Container>
+        </>
     )
 }
 
