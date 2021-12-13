@@ -48,7 +48,7 @@ const MyProducts = (props) => {
                     </ListContainer>
                 ) : (
                     <Container>
-                        <Text>관심목록이 비어있습니다</Text>
+                        <Text>판매목록이 비어있습니다</Text>
                         <Text>관심품목을 추가해주세요</Text>
                     </Container>
                 )}

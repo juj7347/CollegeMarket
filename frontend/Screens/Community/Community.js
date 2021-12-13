@@ -100,7 +100,7 @@ const Community = (props) => {
         />
         {filtered.length > 0 ? (
         <ScrollView>
-            {filtered.map((content) => 
+            {filtered.reverse().map((content) => 
                 <Card 
                     id={content._id}
                     text={content.description} 
