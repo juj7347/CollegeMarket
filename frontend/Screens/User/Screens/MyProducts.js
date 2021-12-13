@@ -1,13 +1,21 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { 
     View, 
-    StyleSheet, 
+    StyleSheet,
+    Button,
     ActivityIndicator, 
     FlatList, 
     ScrollView, 
     Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { 
+    ButtonContainer,
+    FloatingButton
+} from '../../../Shared/StyledComponents/FloatingButton';
+import { AntDesign } from "react-native-vector-icons"
+
 import { 
     Container, 
     Text
@@ -16,18 +24,23 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 
 //connect
-import baseURL from '../../assets/common/baseURL';
+import baseURL from '../../../assets/common/baseURL';
 import axios from 'axios';
 
-import ProductList from '../Products/ProductList';
+import ProductList from '../../Products/ProductList';
+import CategoryFilter from '../../Products/CategoryFilter';
+import SearchBar from '../../Products/SearchBar';
 import { backgroundColor } from 'styled-system';
+
+import AuthGlobal from '../../../Context/store/AuthGlobal';
 
 var {width, height} = Dimensions.get('window');
 
-const SearchResult = (props) => {
+const MyProducts = (props) => {
+
+    const context = useContext(AuthGlobal);
 
     const [products, setProducts] = useState([]);
-    
 
     //category
     const [categories, setCategories] = useState([]);
@@ -45,10 +58,10 @@ const SearchResult = (props) => {
         useCallback(
             () => {
                 setActive(-1);
-        
+                console.log(context.stateUser.user.userId);
                 //products
                 axios
-                    .get(`${baseURL}products`)
+                    .get(`${baseURL}products/myProducts/${context.stateUser.user.userId}`)
                     .then((res) => {
                         setProducts(res.data);
                         setProductsFiltered(res.data);
@@ -58,18 +71,8 @@ const SearchResult = (props) => {
                     })
                     .catch((err)=>{
                         console.log('Api call error');
+                        console.log(context.stateUser.userProfile.school)
                     })
-        
-                //categories
-                axios
-                    .get(`${baseURL}categories`)
-                    .then((res) => {
-                        setCategories(res.data)
-                    })
-                    .catch((err)=>{
-                        console.log('Api call error');
-                    })
-        
                 return () => {
                     setProducts([]);
                     setProductsFiltered([]);
@@ -96,6 +99,7 @@ const SearchResult = (props) => {
                 ];
         }
     };
+
     //Search
     const searchKeyword = (keyword) => {
         {
@@ -107,16 +111,17 @@ const SearchResult = (props) => {
         }
     }
 
-
     return (
         <>
         {!loading ? (
-        <SafeAreaView style={{flex:1}}>
-            <ScrollView contentContainerStyle={styles.listcontainer}>
+        <SafeAreaView>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+            >
                 <View>
-                    {productsFiltered.length > 0 ? (
+                    {productsCtg.length > 0 ? (
                         <View style={styles.listContainer}>
-                            {productsFiltered.map((item)=>{
+                            {productsCtg.map((item)=>{
                                 return(
                                     <ProductList
                                         key={item._id}
@@ -140,6 +145,14 @@ const SearchResult = (props) => {
                 <ActivityIndicator size='large' color='red'/>
             </Container>
         )}
+        <ButtonContainer>
+            <FloatingButton>
+                <AntDesign
+                    name="pluscircle"
+                    size={20}
+                />
+            </FloatingButton>
+        </ButtonContainer>
         </>
     )
 }
@@ -164,4 +177,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default SearchResult;
+export default MyProducts;

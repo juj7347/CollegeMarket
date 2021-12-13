@@ -46,6 +46,7 @@ const UserProfile = (props) => {
     return (
         <ScrollView>
         <View style={styles.container}>
+            <View style={{backgroundColor: "#fff"}}>
                 <View style={{flexDirection:'row', marginTop:10, paddingLeft: 20}}>
             <Avatar
                 bg="green.500"
@@ -75,6 +76,7 @@ const UserProfile = (props) => {
         <View style={styles.row}>
           
         </View>
+        </View>
       </View>
             <View style={styles.menuWrapper}>
             <TouchableOpacity style={styles.button} onPress={() => {
@@ -87,7 +89,7 @@ const UserProfile = (props) => {
                     </Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("SellPosts")}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("MyProducts")}>
                 <View style={styles.menuItem}>
                     <Icon name="logo-usd" size={25}/>
                     <Text style={styles.menuItemText}>
@@ -148,7 +150,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: 20,
-        backgroundColor: '#fff',
       },
       userInfoSection: {
         marginLeft: 5,
@@ -182,7 +183,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
       menuWrapper: {
-        marginTop: 0
+        marginTop: 23
       },
       menuItem: {
         flexDirection: 'row',

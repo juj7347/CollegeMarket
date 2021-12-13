@@ -5,6 +5,7 @@ import WishList from "../Screens/User/WishList/WishList";
 import CustomerService from "../Screens/User/CustomerService";
 import UserProfile from "../Screens/User/UserProfile";
 import ProfileChange from "../Screens/User/ProfileChange";
+import MyProducts from "../Screens/User/Screens/MyProducts";
 
 const Stack = createStackNavigator();
 
@@ -25,8 +26,8 @@ function UserStack() {
                 }}
             />
             <Stack.Screen
-                name="SellPosts"
-                component={WishList}
+                name="MyProducts"
+                component={MyProducts}
                 options={{
                 }}
             />
