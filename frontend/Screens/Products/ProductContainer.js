@@ -147,7 +147,7 @@ const ProductContainer = (props) => {
                     */}
                     {productsFiltered.length > 0 ? (
                         <ListContainer>
-                            {productsFiltered.map((item)=>{
+                            {productsFiltered.reverse().map((item)=>{
                                 return(
                                     <ProductList
                                         key={item._id}
