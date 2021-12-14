@@ -1,15 +1,23 @@
 import styled from "styled-components";
 
 export const InputContainer = styled.View`
-    flex: 1;
-    justify-content: center;
+    marginTop: 50;
+    justify-content: space-between;
     flex-direction: row;
+`
+
+export const BackButton = styled.TouchableOpacity`
+    marginTop: 2;
+    align-items: center;
+    marginLeft: 10;
+
 `
 export const InputBox = styled.View`
     border-radius: 10px;
-    width: 100%;
+    marginRight: 20;
+    width: 80%;
     height: 35px;
-    align-self: center;
+    align-self: flex-end;
     background-color: gainsboro;
     padding: 10px;
 `

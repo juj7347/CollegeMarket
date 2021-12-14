@@ -56,6 +56,9 @@ const CategorySelect = (props) => {
           <TouchableOpacity
             style={styles.Button}
             onPress={() => {
+              if (item ==="all") {
+                props.setActive(-1)
+              }
               props.setCategory(item);
               navigation.navigate("Home");
             }}
