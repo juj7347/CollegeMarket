@@ -11,6 +11,7 @@ import {
 
 import Text from '../../Shared/StyledComponents/Text';
 
+import { getDate } from '../../Shared/Date/getDate';
 
 const ProductCard = (props) => {
 
@@ -31,7 +32,7 @@ const ProductCard = (props) => {
                     }
                 </Text>
                 <Text small color='lightgray' heavy marginTop={"7px"}>
-                    {dateCreated}
+                    {getDate(dateCreated)}
                 </Text>
                 
             </ProductInfo>

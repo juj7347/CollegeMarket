@@ -107,6 +107,7 @@ const Community = (props) => {
                     image={content.image}
                     name={content.userName}
                     tag={content.tagName}
+                    time={content.createdAt}
                     {...props}
                 />
                 )}
@@ -123,16 +124,14 @@ const Community = (props) => {
                 </Text>
             </View>
         )}
-        <ButtonContainer>
-            <FloatingButton
-                onPress={()=>props.navigation.navigate("PostFeed")}                
-            >
-                <FontAwesome5
-                    name="pen"
-                    size={20}
-                    color="white"
-                />
-            </FloatingButton>
+        <ButtonContainer
+            onPress={()=>props.navigation.navigate("PostFeed")}                
+        >
+            <FontAwesome5
+                name="pen"
+                size={20}
+                color="white"
+            />
         </ButtonContainer>
         </>
     );

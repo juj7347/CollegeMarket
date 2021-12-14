@@ -24,7 +24,6 @@ const MyProducts = (props) => {
             .get(`${baseURL}products/myProducts/${context.stateUser.user.userId}`)
             .then((res) => {
                 setProducts(res.data);
-                console.log(res.data)
             })
             .catch((error)=>{
                 console.log("products get failed");
@@ -32,7 +31,7 @@ const MyProducts = (props) => {
     },[])
 
     return (
-        <>
+        <Container>
             <ScrollView>
                 {products.length ?  (
                     <ListContainer>
@@ -53,7 +52,7 @@ const MyProducts = (props) => {
                     </Container>
                 )}
             </ScrollView>
-        </>
+        </Container>
     )
 }
 

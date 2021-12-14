@@ -35,6 +35,7 @@ import axios from 'axios';
 
 import AuthGlobal from "../../Context/store/AuthGlobal";
 
+import { getDate } from "../../Shared/Date/getDate";
 
 const SinglePost = (props) => { 
     
@@ -43,6 +44,7 @@ const SinglePost = (props) => {
     const [text, setText] = useState(props.route.params.content.text);
     const [image, setImage] = useState(props.route.params.content.image);
     const [id, setId] = useState(props.route.params.content.id);
+    const [time, setTime] = useState(props.route.params.content.time);
     const [liked, setLiked] = useState(false);
 
     const [comments, setComments] = useState([]);
@@ -109,7 +111,7 @@ const SinglePost = (props) => {
                                 
                                 <Row>
                                     <Time>
-                                        {Date.now()}
+                                        {getDate(time)}
                                     </Time>
                                     <Entypo
                                         name="dot-single"
@@ -183,7 +185,7 @@ const SinglePost = (props) => {
                                 onPress={() => textFocus.current.focus()}
                             >
                                 <AntDesign
-                                    name="book"
+                                    name="message1"
                                     size={18}
                                 />
                                 <Text medium marginLeft={18}>댓글 {comments.length}</Text>

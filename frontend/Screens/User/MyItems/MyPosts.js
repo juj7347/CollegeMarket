@@ -111,17 +111,6 @@ const MyPosts = (props) => {
                 </Text>
             </View>
         )}
-        <ButtonContainer>
-            <FloatingButton
-                onPress={()=>props.navigation.navigate("PostFeed")}                
-            >
-                <AntDesign
-                    name="pluscircle"
-                    size={40}
-                    color="blue"
-                />
-            </FloatingButton>
-        </ButtonContainer>
         </>
     );
 };

@@ -79,6 +79,13 @@ export const Footer = styled.View`
     flex-direction: row;
     justify-content: ${props => props.justifyContent ?? 'space-between'};
     height: ${props => props.height ?? '50px'};
+    
+    ${({center}) => {
+        switch(true) {
+            case center:
+                return `align-items: center`;
+        }
+    }}
 `
 
 export const Like = styled.TouchableOpacity`
