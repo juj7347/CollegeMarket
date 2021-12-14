@@ -26,7 +26,7 @@ import {
 } from '../../Shared/StyledComponents/FloatingButton';
 
 import { Container } from '../../Shared/StyledComponents/Card';
-import { AntDesign } from "react-native-vector-icons";
+import { FontAwesome5 } from "react-native-vector-icons";
 
 import Card from './Card';
 
@@ -127,10 +127,10 @@ const Community = (props) => {
             <FloatingButton
                 onPress={()=>props.navigation.navigate("PostFeed")}                
             >
-                <AntDesign
-                    name="pluscircle"
-                    size={40}
-                    color="blue"
+                <FontAwesome5
+                    name="pen"
+                    size={20}
+                    color="white"
                 />
             </FloatingButton>
         </ButtonContainer>

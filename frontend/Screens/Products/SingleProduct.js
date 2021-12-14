@@ -20,7 +20,7 @@ import {
     Category,
     Container,
     GoBack
-} from "./styles";
+} from "../../Shared/StyledComponents/Card";
 import Avatar from "../../Shared/Avatar";
 
 import {Entypo, AntDesign} from "react-native-vector-icons";

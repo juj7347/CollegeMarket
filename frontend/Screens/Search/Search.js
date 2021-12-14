@@ -77,4 +77,3 @@ const style = StyleSheet.create({
         backgroundColor: "#fff"
     }
 })
-

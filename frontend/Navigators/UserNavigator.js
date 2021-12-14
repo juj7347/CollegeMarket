@@ -7,7 +7,7 @@ import CustomerService from "../Screens/User/CustomerService";
 import UserProfile from "../Screens/User/UserProfile";
 import ProfileChange from "../Screens/User/ProfileChange";
 import SingleProduct from "../Screens/Products/SingleProduct";
-import MyPosts from "../Screens/User/MyItems/MyPosts"
+import MyPosts from "../Screens/User/MyItems/MyPosts";
 
 const Stack = createStackNavigator();
 

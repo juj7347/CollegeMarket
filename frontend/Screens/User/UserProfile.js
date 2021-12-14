@@ -12,11 +12,12 @@ import { logoutUser } from "../../Context/actions/Auth.actions";
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { alignContent, alignItems } from "styled-system";
+
 var {width} = Dimensions.get("window");
 const UserProfile = (props) => {
     const navigation = useNavigation();
     const context = useContext(AuthGlobal);
-    const [userProfile, setUserProfile] = useState()
+    const [userProfile, setUserProfile] = useState(context.stateUser.userProfile);
 
     useEffect(() => {
         if (
@@ -26,20 +27,6 @@ const UserProfile = (props) => {
             props.navigation.navigate("Login") 
         }
 
-        AsyncStorage.getItem("jwt")
-            .then((res) => {
-                axios
-                    .get(`${baseURL}users/${context.stateUser.user.userId}`, {
-                        headers: { Authorization: `Bearer ${res}`},
-                    })
-                    .then((user)=> setUserProfile(user.data))
-            })
-            .catch((error) => console.log(error))
-        
-        return () => {
-            setUserProfile();
-        }
-
     }, [context.stateUser.isAuthenticated])
 
     return (
@@ -47,13 +34,11 @@ const UserProfile = (props) => {
         <View style={styles.container}>
                 <View style={{flexDirection:'row', marginTop:10, paddingLeft: 20}}>
             <Avatar
-                bg="green.500"
+                bg="lightgray"
                 mr="1"
                 size="xl"
-                source={require('../../assets/users/user-1.jpg')}
-            >
-                123
-            </Avatar>
+                source={{uri: userProfile ? userProfile.userImg : "../../assets/users/graduation-cap/png"}}
+            />
             <View style={{marginLeft: 20}}>
                 <Text style={[styles.title, {
                     marginTop: 20,

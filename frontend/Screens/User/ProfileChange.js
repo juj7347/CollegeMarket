@@ -3,7 +3,6 @@ import React, {useState, useEffect, useContext} from "react";
 
 import {
     View,
-    Text,
     TextInput,
     TouchableOpacity,
     StyleSheet
@@ -20,14 +19,30 @@ import {
     ImageButton,
     Close
 } from "../../Shared/StyledComponents/Image";
+
+import { 
+    Container,
+    Main,
+    Auth,
+    AuthContainer,
+    AuthTitle,
+    AuthField,
+    SignInContainer
+} from "./LoginStyles";
+
+import Text from "./TextStyle";
+
 import { AntDesign } from "react-native-vector-icons";
 import defaultimg from "../../assets/users/user-1.jpg"
-import { alignSelf } from "styled-system";
-const defaultimguri = Image.resolveAssetSource(defaultimg).uri
+
 const ProfileChange = () => {
-    const [image, setImage] = useState(defaultimguri);
-    const [userProfile, setUserProfile] = useState();
+    
     const context = useContext(AuthGlobal);
+    const [userProfile, setUserProfile] = useState(context.stateUser.userProfile);
+    const [image, setImage] = useState(context.stateUser.userProfile.userImg);
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -40,31 +55,18 @@ const ProfileChange = () => {
             setImage(result.uri);
         }
     }
-    useEffect(() => {
-        if (
-            context.stateUser.isAuthenticated === false ||
-            context.stateUser.isAuthenticated === null
-        ) {
-            props.navigation.navigate("Login") 
-        }
 
-        AsyncStorage.getItem("jwt")
-            .then((res) => {
-                axios
-                    .get(`${baseURL}users/${context.stateUser.user.userId}`, {
-                        headers: { Authorization: `Bearer ${res}`},
-                    })
-                    .then((user)=> setUserProfile(user.data))
-            })
-            .catch((error) => console.log(error))
+    const handleSubmit = () => {
         
-        return () => {
-            setUserProfile();
-        }
+    }
 
-    }, [context.stateUser.isAuthenticated])
     return (
-        <View>
+        <Container>
+            <Main>
+                <Text title semi center>
+                    프로필 변경
+                </Text>
+            </Main>
             <ImageContainerProfile>
                 {image ? (
                 <Close
@@ -91,8 +93,36 @@ const ProfileChange = () => {
                     )}
                 </ImageButton>
             </ImageContainerProfile>
-
-        </View>
+            <Auth>
+                <AuthContainer>
+                    <AuthTitle>이름</AuthTitle>
+                    <AuthField
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            autoFocus={true}
+                            defaultValue={userProfile.name}
+                            onChangeText={(text)=> setName(text)}
+                        />
+                </AuthContainer>
+                <AuthContainer>
+                    <AuthTitle>전화번호</AuthTitle>
+                    <AuthField
+                            autoCapitalize="none"
+                            placeholder="- 빼고 입력"
+                            autoCorrect={false}
+                            autoFocus={true}
+                            keyboardType="numeric"
+                            defaultValue={userProfile.phone}
+                            onChangeText={(text)=> setPhone(text)}
+                        />
+                </AuthContainer>
+            </Auth>
+            <SignInContainer
+            onPress={() => handleSubmit()} 
+          >
+            <Text bold center color="#ffffff">프로필 변경</Text>
+          </SignInContainer>
+        </Container>
     )
 
 }
