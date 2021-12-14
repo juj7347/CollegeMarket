@@ -27,7 +27,6 @@ const UserProfile = (props) => {
             props.navigation.navigate("Login") 
         }
 
-        console.log(userProfile);
     }, [context.stateUser.isAuthenticated])
 
     return (
