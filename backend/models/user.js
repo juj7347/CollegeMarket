@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema({
     collegeEmail: {
         type: String,
         required: true
+    },
+    userImg: {
+        type: String,
+        default: "",
     }
 })
 

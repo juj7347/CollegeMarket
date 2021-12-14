@@ -63,7 +63,8 @@ router.post(`/register`, async (req, res)=>{
         isAdmin: req.body.isAdmin,
         place: req.body.place,
         school: req.body.school,
-        collegeEmail: req.body.collegeEmail
+        collegeEmail: req.body.collegeEmail,
+        userImg: `${req.protocol}://${req.get('host')}/public/userImages/graduation-cap.png`
     })
 
     user = await user.save();

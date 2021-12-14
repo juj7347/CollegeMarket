@@ -39,6 +39,8 @@ app.use(errorHandler);
 app.use(methodOverride("_method"));
 app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
 app.use('/public/postImages', express.static(__dirname + '/public/postImages'));
+app.use('/public/userImages', express.static(__dirname + '/public/userImages'));
+
 
 
 app.use(`${api}/products`, productRouter);
