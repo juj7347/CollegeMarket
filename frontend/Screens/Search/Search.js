@@ -25,16 +25,16 @@ const SearchScreen = (props) => {
     const navigation = useNavigation();
 
     const [search, setSearch] = useState("");
-    const trigger = (search) => {
-        setSearch(search);
-        navigation.navigate("Home");
+    const trigger = (text) => {
+        setSearch(text);
+        navigation.navigate("Home", {search: text});
     }
 
 
 
     return (
         
-        <ScrollView>
+        <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
             <InputContainer>
                     <BackButton onPress={()=> navigation.navigate("Home")}>
                         <AntDesign name="arrowleft" size={30}/>
@@ -44,6 +44,7 @@ const SearchScreen = (props) => {
                         defaultValue={search}
                             placeholder="검색어를 입력하세요"
                             onChangeText={text=>setSearch(text)}
+                            value={search}
                             onSubmitEditing={()=>{
                                     trigger(search);
                             }}

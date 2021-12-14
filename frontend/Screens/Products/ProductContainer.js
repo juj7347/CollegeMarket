@@ -76,17 +76,12 @@ const ProductContainer = (props) => {
     }
     }, [props.filterItems.category])
 
-    useEffect(() => {
 
-    if(props.filterItems.search.search) {
-        console.log(props.filterItems.search)
-        setProductsFiltered(products.filter((item) => item.name.includes(props.filterItems.search.search)))
-    }
-
-    return () => {
-        
-    }
-    }, [props.filterItems.search])
+    useEffect(()=>{
+        if(props.route.params) {
+            setProductsFiltered(products.filter(item => item.name.includes(props.route.params.search)));
+        }
+    },[props.route.params])
     
   useEffect(()=>{
     axios
