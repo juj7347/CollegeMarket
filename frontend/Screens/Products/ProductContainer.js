@@ -52,15 +52,18 @@ const ProductContainer = (props) => {
     //loading
     const [loading, setLoading] = useState(true);
 
-
-    
-    useEffect(() => {
-
-        axios
+    useFocusEffect((
+        useCallback(()=>{
+            axios
             .get(`${baseURL}products/school/${context.stateUser.userProfile.collegeEmail}/${props.filterItems.category.category._id}`)
             .then((res) => {
                 setProducts(res.data);
-                setProductsFiltered(res.data);
+                if(props.route.params) {
+                    setProductsFiltered(res.data.filter(item => item.name.includes(props.route.params.search)));
+                }
+                else {
+                    setProductsFiltered(res.data);
+                }
                 setLoading(false);
             })
             .catch((err)=>{
@@ -70,39 +73,13 @@ const ProductContainer = (props) => {
 
 
 
-    return () => {
-        setProducts([]);
-        setProductsFiltered([]);
-    }
-    }, [props.filterItems.category])
-
-
-    useEffect(()=>{
-        if(props.route.params) {
-            setProductsFiltered(products.filter(item => item.name.includes(props.route.params.search)));
+        return () => {
+            setProducts([]);
+            setProductsFiltered([]);
         }
-    },[props.route.params])
+        },[props.filterItems.category, props.route.params])
+    ))
     
-  useEffect(()=>{
-    axios
-        .get(`${baseURL}products/school/${context.stateUser.userProfile.collegeEmail}/all`)
-        .then((res) => {
-            setProducts(res.data);
-            setProductsFiltered(res.data);
-            setLoading(false);
-        })
-        .catch((err)=>{
-            console.log('Api call error');
-            console.log(context.stateUser.userProfile.school)
-        })
-
-
-    return () => {
-        setProducts([]);
-        setProductsFiltered([]);
-    }
-  },[])
-
     return (
         <>
         {!loading ? (
@@ -111,17 +88,6 @@ const ProductContainer = (props) => {
                 showsVerticalScrollIndicator={false}
             >
                 <View>
-                    {/*
-                    <View>
-                        <CategoryFilter
-                            categories={categories}
-                            categoryFilter={changeCtg}
-                            productsCtg={productsCtg}
-                            active={active}
-                            setActive={setActive}
-                        />
-                    </View>
-                    */}
                     {productsFiltered.length > 0 ? (
                         <ListContainer>
                             {productsFiltered.reverse().map((item)=>{
@@ -149,16 +115,14 @@ const ProductContainer = (props) => {
                 <ActivityIndicator size='large' color='red'/>
             </Container>
         )}
-        <ButtonContainer>
-            <FloatingButton
-                onPress={()=> props.navigation.navigate("ProductForm")}
-            >
-                <FontAwesome5
-                    name="pen"
-                    size={20}
-                    color="white"
-                />
-            </FloatingButton>
+        <ButtonContainer
+            onPress={()=> props.navigation.navigate("ProductForm")}
+        >
+            <FontAwesome5
+                name="pen"
+                size={20}
+                color="white"
+            />
         </ButtonContainer>
         </>
     )

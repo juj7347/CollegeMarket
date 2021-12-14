@@ -4,7 +4,6 @@ import { MaterialCommunityIcons, Ionicons, FontAwesome } from '@expo/vector-icon
 import {
   NativeBaseProvider,
   Box,
-  Text,
   Heading,
   VStack,
   FormControl,
@@ -18,6 +17,16 @@ import {
   ScrollView,
 } from 'native-base';
 
+import {
+    Container,
+    Row,
+    Footer
+} from '../../Shared/StyledComponents/Card';
+
+import Text from '../../Shared/StyledComponents/Text';
+
+import {AntDesign} from "react-native-vector-icons"
+
 
 const BoxBottom = () => {
     const [visible, setVisible] = React.useState(false)
@@ -27,16 +36,15 @@ const BoxBottom = () => {
 
     return(
         <>
-            <Box>
-                <HStack space = {2} justifyContent = 'space-between'>
-                    <HStack space = '1'>
-                    </HStack>
-                    <HStack space = '2'>
-                        <Text mt = {3}>댓글</Text>
-                        <IconButton icon = {<Icon as = {FontAwesome} name = 'comments'  onPress = {toggleState}/>}/>
-                    </HStack>
-                </HStack>
-            </Box>
+            <Container>
+                <Footer justifyContent={"center"} height={"35px"} center>
+                    <Text heavy medium marginRight={10}>댓글쓰기</Text>
+                    <AntDesign
+                        name="message1"
+                        size={18}
+                    />
+                </Footer>
+            </Container>
         </>
     );
 };

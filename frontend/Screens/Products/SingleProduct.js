@@ -20,7 +20,7 @@ import {
     Category,
     Container,
     GoBack
-} from "../../Shared/StyledComponents/Card";
+} from "./styles";
 import Avatar from "../../Shared/Avatar";
 
 import {Entypo, AntDesign} from "react-native-vector-icons";
@@ -38,8 +38,7 @@ import AuthGlobal from "../../Context/store/AuthGlobal";
 
 import Toast from "react-native-toast-message";
 
-import EasyButton from "../../Shared/StyledComponents/EasyButton";
-import { fontStyle } from "styled-system";
+import {getDate} from "../../Shared/Date/getDate"; 
 
 const SingleProduct = (props) => {
 
@@ -161,7 +160,7 @@ const SingleProduct = (props) => {
                             </User>
                             <Row>
                                 <Time>
-                                    {item.dateCreated}
+                                    {getDate(item.dateCreated)}
                                 </Time>
                                 <Entypo
                                     name="dot-single"

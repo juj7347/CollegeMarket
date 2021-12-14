@@ -31,13 +31,13 @@ import Avatar from "../../Shared/Avatar";
 import { Entypo } from "react-native-vector-icons";
 
 import BoxBottom from "./BoxBottom"
-/*
-    content = {title: string, subtitle: string, text: string, image: string, id: String, time: number}로 할 예정
-*/
-const Card = ({tag, id, name, text, image, ...props}) => {
+
+import { getDate } from "../../Shared/Date/getDate";
+
+const Card = ({tag, id, name, text, image, time, ...props}) => {
     return (
-    <CardContainer
-        onPress={()=>props.navigation.navigate("SinglePost", {content: {text: text, image: image, id: id}})}
+    <Container
+        
     >
         <Box my = {2} alignSelf= 'center' 
         w = '100%'
@@ -71,7 +71,7 @@ const Card = ({tag, id, name, text, image, ...props}) => {
                     
                     <Row>
                         <Time>
-                            {Date.now()}
+                            {getDate(time)}
                         </Time>
                         <Entypo
                             name="dot-single"
@@ -106,9 +106,13 @@ const Card = ({tag, id, name, text, image, ...props}) => {
                 source={{uri: image ? image : "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg"}}
             />
         </Box>
-        <BoxBottom/>
+        <TouchableOpacity
+            onPress={()=>props.navigation.navigate("SinglePost", {content: {text: text, image: image, id: id, time: time}})}
+        >
+            <BoxBottom/>
+        </TouchableOpacity>
         </Box>
-    </CardContainer>
+    </Container>
   )
 };
 

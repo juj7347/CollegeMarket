@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ButtonContainer = styled.View`
+export const ButtonContainer = styled.TouchableOpacity`
     align-items: center;
     position: absolute;
     bottom: 15px;
@@ -12,6 +12,3 @@ export const ButtonContainer = styled.View`
     justify-content: center;
 `
 
-export const FloatingButton = styled.TouchableOpacity`
-    align-items: center;
-`
