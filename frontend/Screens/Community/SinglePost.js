@@ -41,6 +41,7 @@ const SinglePost = (props) => {
     
     const context = useContext(AuthGlobal);
 
+    const [name, setName] = useState(props.route.params.content.name);
     const [text, setText] = useState(props.route.params.content.text);
     const [image, setImage] = useState(props.route.params.content.image);
     const [id, setId] = useState(props.route.params.content.id);
@@ -106,7 +107,7 @@ const SinglePost = (props) => {
                             />
                             <View style={{paddingLeft: 10}}>
                                 <User>
-                                    {"sdf"}
+                                    {name}
                                 </User>
                                 
                                 <Row>

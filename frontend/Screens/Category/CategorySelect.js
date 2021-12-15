@@ -77,7 +77,7 @@ const CategorySelect = (props) => {
             }}
           >
               <Icon
-                name={item.icon}
+                name={"star"}
                 size={25}
               />
             <Text>{item.name}</Text>

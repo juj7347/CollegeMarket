@@ -107,7 +107,7 @@ const Card = ({tag, id, name, text, image, time, ...props}) => {
             />
         </Box>
         <TouchableOpacity
-            onPress={()=>props.navigation.navigate("SinglePost", {content: {text: text, image: image, id: id, time: time}})}
+            onPress={()=>props.navigation.navigate("SinglePost", {content: {text: text, image: image, id: id, time: time, name: name}})}
         >
             <BoxBottom/>
         </TouchableOpacity>

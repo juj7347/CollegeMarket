@@ -95,6 +95,7 @@ const MyPosts = (props) => {
                     image={content.image}
                     name={content.userName}
                     tag={content.tagName}
+                    time={content.createdAt}
                     {...props}
                 />
                 )}

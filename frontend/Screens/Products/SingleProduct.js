@@ -119,7 +119,7 @@ const SingleProduct = (props) => {
         axios
             .put(`${baseURL}wishlist/product/like/${context.stateUser.user.userId}`, {like: !liked, itemId: item._id}, config)
             .then((res)=>{
-                if(res.status == 200 || res.status == 201) {
+                if((res.status == 200 || res.status == 201) && !liked) {
                     Toast.show({
                         topOffset: 60,
                         type: "success",

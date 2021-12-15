@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState ,useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import {
     View,
     Dimensions,
@@ -37,20 +38,25 @@ const WishList = (props) => {
 
     const [wishlist, setWishlist] = useState([]);
 
-    useEffect(() => {
-        axios
-            .get(`${baseURL}wishlist/product/${context.stateUser.user.userId}`)
-            .then((res) => {
-                setWishlist(res.data.productList);
-            })
-            .catch((error)=>{
-                console.log("wishlist get failed");
-            })
-    },[])
+    useFocusEffect((
+        useCallback(()=>{
+            axios
+                .get(`${baseURL}wishlist/product/${context.stateUser.user.userId}`)
+                .then((res) => {
+                    setWishlist(res.data.productList);
+                })
+                .catch((error)=>{
+                    console.log("wishlist get failed");
+                })
+            return () => {
+                setWishlist([])
+            }
+        },[])
+    ))
 
     return (
         <>
-        <ScrollView>
+        <ScrollView style={{backgroundColor: 'white'}}>
             {wishlist.length ?  (
                 <ListContainer>
                     {wishlist.map((item)=>{

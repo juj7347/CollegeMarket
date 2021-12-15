@@ -87,14 +87,6 @@ const UserProfile = (props) => {
                     </Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("CommentPosts")}>
-                <View style={styles.menuItem}>
-                <Icon name="md-journal-sharp" size={25}/>
-                <Text style={styles.menuItemText}>
-                        덧글 목록
-                    </Text>
-                </View>
-            </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("LikedPosts")}>
                 <View style={styles.menuItem}>
                 <Icon name="md-heart-sharp" size={25}/>
